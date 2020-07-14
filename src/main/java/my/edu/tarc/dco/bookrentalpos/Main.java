@@ -11,6 +11,7 @@ public class Main {
         DBManager db = new DBManager();  
 	StaffManager stf = new StaffManager(db);
 	stf.registerStaff(new Staff("loo32z", "84329df"));
+//f sdhjfdshf
         
     }
 }
