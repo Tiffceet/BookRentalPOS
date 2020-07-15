@@ -10,6 +10,14 @@ public class Member extends Entity {
     private String email;
     private String icNo;    
 
+    public Member(String icNo, String name)
+    {
+	this.icNo = icNo;
+	setName(name);
+	this.phoneNo = "";
+	this.email = "";
+    }
+    
     public Member(String icNo, String name, String phoneNo, String email) {
 	this.icNo = icNo;
 	setName(name);
@@ -18,6 +26,14 @@ public class Member extends Entity {
     }
 
     // Constructor for import use
+    public Member(String id, String date, String name, String phoneNo, String email, String icNo) {
+	setID(id);
+	setDateCreated(date);
+	setName(name);
+	this.phoneNo = phoneNo;
+	this.email = email;
+	this.icNo = icNo;
+    }
     
     public String getContacts(ContactType type) {
 	if (type == ContactType.EMAIL) {
