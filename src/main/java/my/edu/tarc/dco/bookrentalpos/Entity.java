@@ -1,18 +1,36 @@
 package my.edu.tarc.dco.bookrentalpos;
 
-
 /**
  *
  * @author Looz
  */
-public abstract class Entity {
-    protected String id;
-    protected String name;
-    protected String dateCreated;
-    public abstract String getID();
-    public abstract String getName();
-    public abstract String getDateCreated();
-    public abstract void setID(String id);
-    public abstract void setName(String name);
-    public abstract void setDateCreated(String date);
+public class Entity {
+
+    private String id;
+    private String name;
+    private String dateCreated;
+
+    public final String getID() {
+	return this.id;
+    }
+
+    public final String getName() {
+	return this.name;
+    }
+
+    public final String getDateCreated() {
+	return this.dateCreated;
+    }
+
+    protected final void setID(String id) {
+	this.id = id;
+    }
+
+    protected final void setName(String name) {
+	this.name = name;
+    }
+
+    protected final void setDateCreated(String date) {
+	this.dateCreated = date;
+    }
 }

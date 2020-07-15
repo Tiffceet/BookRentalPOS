@@ -1,6 +1,5 @@
 package my.edu.tarc.dco.bookrentalpos;
 
-
 /**
  *
  * @author Looz
@@ -28,37 +27,7 @@ public class Staff extends Entity {
 	return this.isAdmin;
     }
 
-    @Override
-    public String getID() {
-	return this.id;
-    }
-
-    @Override
-    public String getName() {
-	return this.name;
-    }
-
-    @Override
-    public String getDateCreated() {
-	return this.dateCreated;
-    }
-
     public String getPW() {
 	return this.pwHash;
-    }
-
-    @Override
-    public void setID(String id) {
-	this.id = id;
-    }
-
-    @Override
-    public void setName(String name) {
-	this.name = name;
-    }
-
-    @Override
-    public void setDateCreated(String date) {
-	this.dateCreated = date;
     }
 }
