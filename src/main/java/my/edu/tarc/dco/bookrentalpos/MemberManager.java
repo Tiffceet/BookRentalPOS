@@ -2,7 +2,6 @@ package my.edu.tarc.dco.bookrentalpos;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 /**
  *
@@ -10,11 +9,14 @@ import java.util.ArrayList;
  */
 public class MemberManager {
 
-    private ArrayList<Member> memberList;
+    private Member[] memberList;
+    private int memberCount;
     private DBManager db;
+    private final int ARRAY_SIZE = 100;
 
     public MemberManager(DBManager db) {
-	memberList = new ArrayList<Member>();
+	memberCount = 0;
+	memberList = new Member[ARRAY_SIZE];
 	this.db = db;
 	String sql = "SELECT * FROM member;";
 	try {
@@ -28,7 +30,7 @@ public class MemberManager {
 			rs.getString("email"),
 			rs.getString("IC")
 		);
-		memberList.add(s);
+		memberList[memberCount++] = s;
 	    }
 	} catch (java.sql.SQLException err) {
 	    System.out.println(err.getMessage());
@@ -36,9 +38,9 @@ public class MemberManager {
     }
 
     public Member getMember(String memID) {
-	for (int i = 0; i < memberList.size(); i++) {
-	    if (memberList.get(i).getID().equals(memID)) {
-		return memberList.get(i);
+	for (int i = 0; i < memberCount; i++) {
+	    if (memberList[i].getID().equals(memID)) {
+		return memberList[i];
 	    }
 	}
 	return null;
@@ -59,7 +61,7 @@ public class MemberManager {
 		mem.setDateCreated(rs.getString("date"));
 
 		// store in my preloaded database
-		memberList.add(mem);
+		memberList[memberCount++] = mem;
 	    } catch (SQLException err) {
 		System.out.println(err.getMessage());
 	    }
@@ -71,8 +73,16 @@ public class MemberManager {
 
     public boolean removeMember(String memID) {
 	String sql = String.format("DELETE FROM member WHERE id=\"%s\"", memID);
+	Member[] tmpList = new Member[ARRAY_SIZE];
 	if (db.updateQuery(sql) == 1) {
-	    memberList.removeIf(e -> e.getID().equals(memID));
+	    int b = 0;
+	    for (int a = 0; a < memberCount; a++) {
+		if (!memberList[a].getID().equals(memID)) {
+		    tmpList[b++] = memberList[a];
+		}
+	    }
+	    memberList = tmpList.clone();
+	    memberCount--;
 	    return true;
 	} else {
 	    return false;

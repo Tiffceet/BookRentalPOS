@@ -6,22 +6,24 @@ package my.edu.tarc.dco.bookrentalpos;
  */
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class StaffManager {
 
-    private ArrayList<Staff> staffList;
+    private Staff[] staffList;
+    private int staffCount;
     private DBManager db;
+    private final int ARRAY_SIZE = 100;
 
     public StaffManager(DBManager db) {
 	this.db = db;
-	staffList = new ArrayList<Staff>();
+	staffCount = 0;
+	staffList = new Staff[ARRAY_SIZE];
 	String sql = "SELECT * FROM staff;";
 	try {
 	    java.sql.ResultSet rs = db.resultQuery(sql);
 	    while (rs.next()) {
 		Staff s = new Staff(rs.getInt("id") + "", rs.getString("date"), rs.getString("name"), rs.getString("password"));
-		staffList.add(s);
+		staffList[staffCount++] = s;
 	    }
 	} catch (java.sql.SQLException err) {
 	    System.out.println(err.getMessage());
@@ -30,8 +32,8 @@ public class StaffManager {
     }
 
     public boolean login(String usrName, String pw) {
-	for (int i = 0; i < staffList.size(); i++) {
-	    if (staffList.get(i).getName().equals(usrName) && staffList.get(i).getPW().equals(CustomUtil.md5Hash(pw))) {
+	for (int i = 0; i < staffCount; i++) {
+	    if (staffList[i].getName().equals(usrName) && staffList[i].getPW().equals(CustomUtil.md5Hash(pw))) {
 		return true;
 	    }
 	}
@@ -39,9 +41,9 @@ public class StaffManager {
     }
 
     public Staff getStaff(String staffID) {
-	for (int i = 0; i < staffList.size(); i++) {
-	    if (staffList.get(i).getID().equals(staffID)) {
-		return staffList.get(i);
+	for (int i = 0; i < staffCount; i++) {
+	    if (staffList[i].getID().equals(staffID)) {
+		return staffList[i];
 	    }
 	}
 	return null;
@@ -60,9 +62,9 @@ public class StaffManager {
 		ResultSet rs = db.resultQuery("SELECT id, date FROM staff WHERE id = (SELECT seq FROM sqlite_sequence WHERE name='staff')");
 		stf.setID(rs.getInt("id") + "");
 		stf.setDateCreated(rs.getString("date"));
-		
+
 		// store in my preloaded database
-		staffList.add(stf);
+		staffList[staffCount++] = stf;
 	    } catch (SQLException err) {
 		System.out.println(err.getMessage());
 	    }
@@ -74,8 +76,16 @@ public class StaffManager {
 
     public boolean removeStaff(String staffID) {
 	String sql = String.format("DELETE FROM staff WHERE id=\"%s\"", staffID);
+	Staff[] tmpList = new Staff[ARRAY_SIZE];
 	if (db.updateQuery(sql) == 1) {
-	    staffList.removeIf(e -> e.getID().equals(staffID));
+	    int b = 0;
+	    for (int a = 0; a < staffCount; a++) {
+		if (!staffList[a].getID().equals(staffID)) {
+		    tmpList[b++] = staffList[a];
+		}
+	    }
+	    staffList = tmpList.clone();
+	    staffCount--;
 	    return true;
 	} else {
 	    return false;
