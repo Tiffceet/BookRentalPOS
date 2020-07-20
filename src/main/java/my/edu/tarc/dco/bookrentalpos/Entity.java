@@ -14,6 +14,10 @@ public class Entity {
 	return this.id;
     }
 
+    public final int getIntID() {
+	return Integer.parseInt(this.id);
+    }
+    
     public final String getName() {
 	return this.name;
     }
