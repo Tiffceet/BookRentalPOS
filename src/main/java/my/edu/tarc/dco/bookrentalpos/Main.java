@@ -12,5 +12,6 @@ public class Main {
 	DBManager db = new DBManager();
 	StaffManager stf = new StaffManager(db);
 	BookManager book = new BookManager(db);
+	book.addBook(new Book("Book B",10.1));
  }
 }
