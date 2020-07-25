@@ -20,7 +20,11 @@ public class BookManager {
 	    while (rs.next()) {
 		Book s = new Book(
 			rs.getInt("id") + "",
-			rs.getString("name")
+			rs.getString("title"),
+            rs.getString("date"),
+            rs.getDouble("rentalPrice"),
+            rs.getInt("lastRentedBy"),
+            rs.getInt("lastReservedBy")
 		);
 		bookList[bookCount++] = s;
 	    }
@@ -39,9 +43,10 @@ public class BookManager {
     }
 
     public boolean addBook(Book book) {
-	String sql = String.format("INSERT INTO book(name, rental price) VALUES('%s', '%.2f')",
+	String sql = String.format("INSERT INTO book(title, rentalPrice, lastRentedBy) VALUES('%s', '%f', '%d')",
 		book.getName(),
-        book.getRentalPrice()
+		book.getRentalPrice(),
+		book.getLastRentedBy()
         );
 	if (db.updateQuery(sql) == 1) {
 	    try {

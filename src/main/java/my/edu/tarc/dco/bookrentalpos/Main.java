@@ -11,7 +11,6 @@ public class Main {
 
 	DBManager db = new DBManager();
 	StaffManager stf = new StaffManager(db);
-	MemberManager mem = new MemberManager(db);
-	
-    }
+	BookManager book = new BookManager(db);
+ }
 }
