@@ -29,7 +29,7 @@ public class Book extends Entity {
         setRentalPrice(rentalPrice);
     }
 
-    public Book(String id, String name,String date,double rentalPrice, int lastRentedBy, int lastReservedBy){
+    public Book(int id, String name,String date,double rentalPrice, int lastRentedBy, int lastReservedBy){
        setID(id);
        setDateCreated(date);
        setName(name);

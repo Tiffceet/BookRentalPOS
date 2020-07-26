@@ -6,16 +6,12 @@ package my.edu.tarc.dco.bookrentalpos;
  */
 public class Entity {
 
-    private String id;
+    private int id;
     private String name;
     private String dateCreated;
 
-    public final String getID() {
+    public final int getID() {
 	return this.id;
-    }
-
-    public final int getIntID() {
-	return Integer.parseInt(this.id);
     }
     
     public final String getName() {
@@ -26,7 +22,7 @@ public class Entity {
 	return this.dateCreated;
     }
 
-    protected final void setID(String id) {
+    protected final void setID(int id) {
 	this.id = id;
     }
 

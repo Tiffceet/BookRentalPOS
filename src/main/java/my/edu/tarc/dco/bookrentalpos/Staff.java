@@ -16,7 +16,7 @@ public class Staff extends Entity {
     }
 
     // Constructor used for - staff data import
-    public Staff(String id, String dateCreated, String usrname, String hashedPW) {
+    public Staff(int id, String dateCreated, String usrname, String hashedPW) {
 	setID(id);
 	setName(usrname);
 	setDateCreated(dateCreated);

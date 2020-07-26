@@ -8,12 +8,12 @@ public class Transaction extends Entity {
 
     private int rentDurationInDays;
     private TransactionType type;
-    private Staff staffHandled;
-    private Member memberInvovled;
-    private Book bookInvovled;
+    private int staffHandled;
+    private int memberInvovled;
+    private int bookInvovled;
 
     // for new transaction use
-    public Transaction(TransactionType type, Staff staff, Member memberInvovled, Book bookInvovled, int rentDurationInDays) {
+    public Transaction(TransactionType type, int staff, int memberInvovled, int bookInvovled, int rentDurationInDays) {
 	this.type = type;
 	this.rentDurationInDays = rentDurationInDays;
 	this.staffHandled = staff;
@@ -22,7 +22,7 @@ public class Transaction extends Entity {
     }
 
     // Constructor for import use
-    public Transaction(String id, String date, TransactionType type, Staff staff, Member memberInvovled, Book bookInvovled, int rentDurationInDays) {
+    public Transaction(int id, String date, TransactionType type, int staff, int memberInvovled, int bookInvovled, int rentDurationInDays) {
 	setID(id);
 	setDateCreated(date);
 	this.type = type;
@@ -40,18 +40,6 @@ public class Transaction extends Entity {
 	return type;
     }
 
-    public Staff getStaffHandled() {
-	return staffHandled;
-    }
-
-    public Member getMemberInvovled() {
-	return memberInvovled;
-    }
-
-    public Book getBookInvovled() {
-	return bookInvovled;
-    }
-
     public void setRentDurationInDays(int rentDurationInDays) {
 	this.rentDurationInDays = rentDurationInDays;
     }
@@ -60,16 +48,29 @@ public class Transaction extends Entity {
 	this.type = type;
     }
 
-    public void setStaffHandled(Staff staffHandled) {
+    public int getStaffHandled() {
+	return staffHandled;
+    }
+
+    public void setStaffHandled(int staffHandled) {
 	this.staffHandled = staffHandled;
     }
 
-    public void setMemberInvovled(Member memberInvovled) {
+    public int getMemberInvovled() {
+	return memberInvovled;
+    }
+
+    public void setMemberInvovled(int memberInvovled) {
 	this.memberInvovled = memberInvovled;
     }
 
-    public void setBookInvovled(Book bookInvovled) {
+    public int getBookInvovled() {
+	return bookInvovled;
+    }
+
+    public void setBookInvovled(int bookInvovled) {
 	this.bookInvovled = bookInvovled;
     }
+    
 
 }

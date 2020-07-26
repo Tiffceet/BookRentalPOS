@@ -26,7 +26,7 @@ public class Member extends Entity {
     }
 
     // Constructor for import use
-    public Member(String id, String date, String name, String phoneNo, String email, String icNo) {
+    public Member(int id, String date, String name, String phoneNo, String email, String icNo) {
 	setID(id);
 	setDateCreated(date);
 	setName(name);
