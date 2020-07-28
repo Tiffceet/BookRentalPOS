@@ -74,6 +74,19 @@ public class StaffManager {
 	}
     }
 
+    public boolean updateStaff(Staff stf) {
+	if (stf.getID() == 0) {
+	    return false;
+	}
+	String sql = String.format("UPDATE staff\n"
+		+ "SET name='%s', password='%s'\n"
+		+ "WHERE id=%d;", stf.getName(), stf.getPW(), stf.getID());
+	if (db.updateQuery(sql) == 1) {
+	    return true;
+	}
+	return false;
+    }
+
     public boolean removeStaff(int staffID) {
 	String sql = String.format("DELETE FROM staff WHERE id=%d", staffID);
 	Staff[] tmpList = new Staff[ARRAY_SIZE];

@@ -65,6 +65,19 @@ public class MemberManager {
 	}
     }
 
+    public boolean updateMember(Member mem) {
+	if (mem.getID() == 0) {
+	    return false;
+	}
+	String sql = String.format("UPDATE member\n"
+		+ "SET name='%s', phoneNo='%s', email='%s',IC='%s'\n"
+		+ "WHERE id=%d;", mem.getName(), mem.getContacts(ContactType.PHONE), mem.getContacts(ContactType.EMAIL), mem.getICNo(), mem.getID());
+	if (db.updateQuery(sql) == 1) {
+	    return true;
+	}
+	return false;
+    }
+
     public boolean removeMember(int memID) {
 	String sql = String.format("DELETE FROM member WHERE id=%d", memID);
 	Member[] tmpList = new Member[ARRAY_SIZE];

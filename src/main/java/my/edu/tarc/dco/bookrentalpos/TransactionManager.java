@@ -25,9 +25,9 @@ public class TransactionManager {
 	String sql = String.format(
 		"INSERT INTO transactions(type, staffHandled, memberInvolved, bookInvolved, rentDurationInDays) VALUES('%s',%d,%d,%d,%d)",
 		trans.getType(),
-		trans.getStaffHandled().getID(),
-		trans.getMemberInvovled().getID(),
-		trans.getBookInvovled().getID(),
+		trans.getStaffHandled(),
+		trans.getMemberInvovled(),
+		trans.getBookInvovled(),
 		trans.getRentDurationInDays());
 	if (db.updateQuery(sql) == 1) {
 	    try {

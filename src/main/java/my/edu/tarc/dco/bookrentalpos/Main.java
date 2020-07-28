@@ -4,7 +4,6 @@ package my.edu.tarc.dco.bookrentalpos;
  *
  * @author Looz
  */
-
 public class Main {
 
     public static void main(String[] args) {
@@ -12,5 +11,6 @@ public class Main {
 	DBManager db = new DBManager();
 	StaffManager stf = new StaffManager(db);
 	BookManager book = new BookManager(db);
- }
+	MemberManager mm = new MemberManager(db);
+    }
 }

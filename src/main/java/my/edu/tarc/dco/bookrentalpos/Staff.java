@@ -27,6 +27,10 @@ public class Staff extends Entity {
 	return this.isAdmin;
     }
 
+    public void setPassword(String password) {
+	this.pwHash = CustomUtil.md5Hash(password);
+    }
+
     public String getPW() {
 	return this.pwHash;
     }
