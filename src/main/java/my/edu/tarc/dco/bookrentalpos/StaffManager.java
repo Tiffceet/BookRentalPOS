@@ -1,8 +1,10 @@
 package my.edu.tarc.dco.bookrentalpos;
 
 /**
+ * Class used to load Staff Data into the POS system
  *
  * @author Looz
+ * @version 1.0
  */
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,6 +33,13 @@ public class StaffManager {
 
     }
 
+    /**
+     * Used to check if the provided username and password matches database
+     *
+     * @param usrName username of the Staff
+     * @param pw password of the staff in plain text
+     * @return true if it matches database
+     */
     public boolean login(String usrName, String pw) {
 	for (int i = 0; i < staffCount; i++) {
 	    if (staffList[i].getName().equals(usrName) && staffList[i].getPW().equals(CustomUtil.md5Hash(pw))) {
@@ -40,6 +49,13 @@ public class StaffManager {
 	return false;
     }
 
+    /**
+     * Get staff object reference
+     *
+     * @param staffID StaffID
+     * @return Staff object reference of specified ID, return null if StaffID
+     * was not found
+     */
     public Staff getStaff(int staffID) {
 	for (int i = 0; i < staffCount; i++) {
 	    if (staffList[i].getID() == staffID) {
@@ -49,8 +65,14 @@ public class StaffManager {
 	return null;
     }
 
-    // return true if registeration successful
-    // return false if same name existed
+    /**
+     * Register a new staff into database
+     *
+     * @param stf Staff object without ID
+     * @see Staff#Staff(java.lang.String, java.lang.String)
+     * @return true if registration was successful, false if same staff name
+     * existed
+     */
     public boolean registerStaff(Staff stf) {
 
 	String sql = String.format("INSERT INTO staff(name, password) VALUES(\"%s\", \"%s\")", stf.getName(), stf.getPW());
@@ -74,6 +96,13 @@ public class StaffManager {
 	}
     }
 
+    /**
+     * Update staff information to database
+     *
+     * @param stf Staff object, expecting Staff object reference instead of new
+     * Staff object
+     * @return true if staff info was updated successfully
+     */
     public boolean updateStaff(Staff stf) {
 	if (stf.getID() == 0) {
 	    return false;
@@ -87,6 +116,11 @@ public class StaffManager {
 	return false;
     }
 
+    /**
+     * Remove staff from the database
+     * @param staffID int
+     * @return true if staff was removed successfully
+     */
     public boolean removeStaff(int staffID) {
 	String sql = String.format("DELETE FROM staff WHERE id=%d", staffID);
 	Staff[] tmpList = new Staff[ARRAY_SIZE];

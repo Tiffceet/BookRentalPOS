@@ -11,6 +11,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * Class used to execute queries for database
+ *
+ * @author Looz
+ * @version 1.0
+ */
 public class DBManager {
 
     private String lastErrorMessage;
@@ -18,14 +24,20 @@ public class DBManager {
     private final String dbPath = System.getenv("APPDATA") + "\\BookRentalPos\\";
     private final String dbName = "data.db";
 
-    // Constructor
+    /**
+     * Only call once throughout the project and pass the reference around
+     * thanks
+     */
     public DBManager() {
 	conn = null;
 	connectDB();
 	prepareTable();
-	
+
     }
 
+    /**
+     * Connect to Database
+     */
     private void connectDB() {
 	// make sure directory exist
 	new File(dbPath).mkdir();
@@ -45,7 +57,9 @@ public class DBManager {
 	}
     }
 
-    // Setting up database schema
+    /**
+     * Set up database schema
+     */
     private void prepareTable() {
 	String tab1 = "CREATE TABLE IF NOT EXISTS staff (\n"
 		+ "	id INTEGER PRIMARY KEY AUTOINCREMENT,\n"
@@ -68,9 +82,12 @@ public class DBManager {
 		+ "	rentalPrice DOUBLE NOT NULL,\n"
 		+ "	lastRentedBy INTEGER,\n"
 		+ "	lastReservedBy INTEGER,\n"
+		+ "     isRented INTEGER,\n"
+		+ "     isReserved INTEGER,\n"
 		+ "	FOREIGN KEY (lastRentedBy) REFERENCES member(id),\n"
 		+ "	FOREIGN KEY (lastReservedBy) REFERENCES member(id)\n"
 		+ ");";
+
 	String tab4 = "CREATE TABLE IF NOT EXISTS transactions (\n"
 		+ "	id INTEGER PRIMARY KEY AUTOINCREMENT,\n"
 		+ "	date datetime default current_timestamp,\n"
@@ -97,7 +114,12 @@ public class DBManager {
 	}
     }
 
-    // return how many rows are affected, return -1 if SQLException thrown
+    /**
+     * Execute update Query
+     *
+     * @param q SQLITE query
+     * @return rows are affected, return -1 if SQLException thrown
+     */
     public int updateQuery(String q) {
 	try {
 	    Statement stmt = conn.createStatement();
@@ -109,7 +131,12 @@ public class DBManager {
 	}
     }
 
-    // return true if the query returned a ResultSet
+    /**
+     * Execute query
+     *
+     * @param q SQLITE Query
+     * @return true if the query returned a ResultSet
+     */
     public boolean execQuery(String q) {
 	try {
 	    Statement stmt = conn.createStatement();
@@ -121,7 +148,12 @@ public class DBManager {
 	}
     }
 
-    // return null if SQLException thrown
+    /**
+     * Execute query that returns rows of data
+     *
+     * @param q SQLITE query
+     * @return ResultSet of the query, will return null if SQLException thrown
+     */
     public ResultSet resultQuery(String q) {
 	try {
 	    Statement stmt = conn.createStatement();
@@ -133,6 +165,10 @@ public class DBManager {
 	}
     }
 
+    /**
+     *
+     * @return Last error message that is logged when using this class
+     */
     public String getLastErrorMsg() {
 	return this.lastErrorMessage;
     }
@@ -160,6 +196,8 @@ public class DBManager {
 //	rentalPrice DOUBLE NOT NULL,
 //	lastRentedBy INTEGER,
 //	lastReservedBy INTEGER,
+//      isRented INTEGER,
+//      isReserved INTEGER,
 //	FOREIGN KEY (lastRentedBy) REFERENCES member(id),
 //	FOREIGN KEY (lastReservedBy) REFERENCES member(id)
 //);
@@ -169,7 +207,7 @@ public class DBManager {
 //	date datetime default current_timestamp,
 //	rentDurationInDays INTEGER,
 //	type TEXT,
-//	staffHandled INTEGER NOT NULL,
+//	staffHandled INTEGER,
 //	memberInvolved INTEGER,
 //	bookInvolved INTEGER,
 //	FOREIGN KEY (staffHandled) REFERENCES staff(id),

@@ -4,23 +4,30 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- *
+ * Used to load all transactions from the database
  * @author Looz
+ * @version 1.0
  */
 public class TransactionManager {
 
     private Transaction[] transactionList;
     private final int ARRAY_SIZE = 100;
     private DBManager db;
+    private BookManager bm;
     private int transactionCount;
 
-    public TransactionManager(DBManager db) {
+    public TransactionManager(DBManager db, BookManager bm) {
 	this.db = db;
+	this.bm = bm;
 	transactionCount = 0;
 	transactionList = new Transaction[ARRAY_SIZE];
     }
 
-    // this function accepts transaction object where there is no id and date
+    /***
+     * this function accepts transaction object where there is no id and date`
+     * @param trans accept Transaction object
+     * @return Return true if the transaction was added into database successfully
+     */
     public boolean addTransaction(Transaction trans) {
 	String sql = String.format(
 		"INSERT INTO transactions(type, staffHandled, memberInvolved, bookInvolved, rentDurationInDays) VALUES('%s',%d,%d,%d,%d)",
@@ -39,6 +46,27 @@ public class TransactionManager {
 
 		// store in my preloaded database
 		transactionList[transactionCount++] = trans;
+		
+		// Update respective table based on the transaction type
+		Book b = bm.getbook(trans.getBookInvovled());
+		switch (trans.getType()) {
+		    case RENT:
+			b.setLastRentedBy(trans.getMemberInvovled());
+			b.setRented(true);
+			b.setReserved(false);
+			bm.updateBook(b);
+			break;
+		    case RETURN:
+			b.setRented(false);
+			bm.updateBook(b);
+			break;
+		    case RESERVE:
+			b.setLastReservedBy(trans.getMemberInvovled());
+			b.setReserved(true);
+			bm.updateBook(b);
+			break;
+		}
+		
 	    } catch (SQLException err) {
 		System.out.println(err.getMessage());
 	    }

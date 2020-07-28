@@ -3,6 +3,12 @@ package my.edu.tarc.dco.bookrentalpos;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Class used to load all the Book data from the database
+ *
+ * @author Looz
+ * @version 1.0
+ */
 public class BookManager {
 
     private Book[] bookList;
@@ -17,14 +23,16 @@ public class BookManager {
 	String sql = "SELECT * FROM book;";
 	try {
 	    java.sql.ResultSet rs = db.resultQuery(sql);
-	    while (rs.next()) {		
+	    while (rs.next()) {
 		Book s = new Book(
 			rs.getInt("id"),
 			rs.getString("title"),
 			rs.getString("date"),
 			rs.getDouble("rentalPrice"),
 			rs.getInt("lastRentedBy"),
-			rs.getInt("lastReservedBy")
+			rs.getInt("lastReservedBy"),
+			rs.getInt("isRented") == 0 ? false : true,
+			rs.getInt("isReserved") == 0 ? false : true
 		);
 		bookList[bookCount++] = s;
 	    }
@@ -33,6 +41,12 @@ public class BookManager {
 	}
     }
 
+    /**
+     * Get the reference to the book object with specified ID
+     *
+     * @return Reference to the book object in this class. Will return null if
+     * book of specified ID was not found
+     */
     public Book getbook(int bookID) {
 	for (int i = 0; i < bookCount; i++) {
 	    if (bookList[i].getID() == bookID) {
@@ -42,6 +56,13 @@ public class BookManager {
 	return null;
     }
 
+    /**
+     * Add new book entry to the database
+     *
+     * @param book Book object (without ID)
+     * @see Book#Book(java.lang.String, double)
+     * @return True if the book is added to database successfully
+     */
     public boolean addBook(Book book) {
 	String sql = String.format("INSERT INTO book(title, rentalPrice, lastRentedBy, lastReservedBy) VALUES('%s', '%f', %s, %s)",
 		book.getName(),
@@ -68,17 +89,26 @@ public class BookManager {
 	}
     }
 
+    /**
+     * Update the book entry into database
+     *
+     * @param bk Book Object to be updated (must contain ID)
+     * @return True if the book is successfuly updated. Will return false if it
+     * failed or the provided Book object dont contain ID
+     */
     public boolean updateBook(Book bk) {
 	if (bk.getID() == 0) {
 	    return false;
 	}
 	String sql = String.format("UPDATE book\n"
-		+ "SET title='%s', rentalPrice=%f, lastRentedBy=%s, lastReservedBy=%s\n"
+		+ "SET title='%s', rentalPrice=%f, lastRentedBy=%s, lastReservedBy=%s, isRented=%d, isReserved=%d\n"
 		+ "WHERE id=%d;",
 		bk.getName(),
 		bk.getRentalPrice(),
 		bk.getLastRentedBy() == 0 ? "null" : bk.getLastRentedBy() + "",
 		bk.getLastReservedBy() == 0 ? "null" : bk.getLastReservedBy() + "",
+		bk.isRented() ? 1 : 0,
+		bk.isReserved() ? 1 : 0,
 		bk.getID());
 	if (db.updateQuery(sql) == 1) {
 	    return true;
@@ -86,7 +116,13 @@ public class BookManager {
 	return false;
     }
 
-    public boolean removebBook(int bookID) {
+    /**
+     * Remove the book from the database
+     *
+     * @param bookID BookID to be removed
+     * @return True if the book is removed successfully
+     */
+    public boolean removeBook(int bookID) {
 	String sql = String.format("DELETE FROM book WHERE id=%d", bookID);
 	Book[] tmpList = new Book[ARRAY_SIZE];
 	if (db.updateQuery(sql) == 1) {

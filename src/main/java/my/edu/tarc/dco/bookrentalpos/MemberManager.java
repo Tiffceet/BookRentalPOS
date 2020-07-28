@@ -4,8 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
+ * Class to load Member data for the POS system
  *
  * @author Looz
+ * @version 1.0
  */
 public class MemberManager {
 
@@ -15,7 +17,6 @@ public class MemberManager {
     private final int ARRAY_SIZE = 100;
 
     public MemberManager(DBManager db) {
-	System.out.println("cons");
 	memberCount = 0;
 	memberList = new Member[ARRAY_SIZE];
 	this.db = db;
@@ -32,6 +33,11 @@ public class MemberManager {
 	}
     }
 
+    /**
+     * Get reference to member object with specified ID
+     *
+     * @return Member object reference
+     */
     public Member getMember(int memID) {
 	for (int i = 0; i < memberCount; i++) {
 	    if (memberList[i].getID() == memID) {
@@ -41,6 +47,13 @@ public class MemberManager {
 	return null;
     }
 
+    /**
+     * Register a new member to database
+     *
+     * @param mem Member object without ID
+     * @see Member#Member(java.lang.String, java.lang.String)
+     * @return True if member is successfully registered
+     */
     public boolean registerMember(Member mem) {
 	String sql = String.format("INSERT INTO member(name, phoneNo, email, IC) VALUES('%s', '%s', '%s', '%s')",
 		mem.getName(), mem.getContacts(ContactType.PHONE), mem.getContacts(ContactType.EMAIL), mem.getICNo());
@@ -65,6 +78,12 @@ public class MemberManager {
 	}
     }
 
+    /**
+     * Update data of existing member to database
+     * @param mem Member Object with ID, expecting a Member object reference
+     * instead of new Member object
+     * @return True if the member's data is updated successfully
+     */
     public boolean updateMember(Member mem) {
 	if (mem.getID() == 0) {
 	    return false;
@@ -78,6 +97,11 @@ public class MemberManager {
 	return false;
     }
 
+    /**
+     * Remove a member from database
+     * @param memID MemberID which to be removed
+     * @return true if member was removed successfully
+     */
     public boolean removeMember(int memID) {
 	String sql = String.format("DELETE FROM member WHERE id=%d", memID);
 	Member[] tmpList = new Member[ARRAY_SIZE];
