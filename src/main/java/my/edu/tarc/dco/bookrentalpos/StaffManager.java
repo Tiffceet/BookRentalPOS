@@ -117,11 +117,16 @@ public class StaffManager {
     }
 
     /**
-     * Remove staff from the database
+     * Remove staff from the database<br>
+     * NOTE: The removed staff will not appear in other table as well
+     *
      * @param staffID int
      * @return true if staff was removed successfully
      */
     public boolean removeStaff(int staffID) {
+	db.execQuery("UPDATE transactions\n"
+		+ "SET staffHandled=NULL\n"
+		+ "WHERE staffHandled=" + staffID);
 	String sql = String.format("DELETE FROM staff WHERE id=%d", staffID);
 	Staff[] tmpList = new Staff[ARRAY_SIZE];
 	if (db.updateQuery(sql) == 1) {

@@ -64,11 +64,13 @@ public class BookManager {
      * @return True if the book is added to database successfully
      */
     public boolean addBook(Book book) {
-	String sql = String.format("INSERT INTO book(title, rentalPrice, lastRentedBy, lastReservedBy) VALUES('%s', '%f', %s, %s)",
+	String sql = String.format("INSERT INTO book(title, rentalPrice, lastRentedBy, lastReservedBy, isRented, isReserved) VALUES('%s', '%f', %s, %s, %d, %d)",
 		book.getName(),
 		book.getRentalPrice(),
 		book.getLastRentedBy() == 0 ? "null" : book.getLastRentedBy() + "",
-		book.getLastReservedBy() == 0 ? "null" : book.getLastReservedBy() + ""
+		book.getLastReservedBy() == 0 ? "null" : book.getLastReservedBy() + "",
+		book.isRented() ? 1 : 0,
+		book.isReserved() ? 1 : 0
 	);
 	if (db.updateQuery(sql) == 1) {
 	    try {
@@ -117,12 +119,16 @@ public class BookManager {
     }
 
     /**
-     * Remove the book from the database
+     * Remove the book from the database<br>
+     * NOTE: All the related table will have this book removed as well
      *
      * @param bookID BookID to be removed
      * @return True if the book is removed successfully
      */
     public boolean removeBook(int bookID) {
+	db.execQuery("UPDATE transactions\n"
+		+ "SET bookInvovled=NULL\n"
+		+ "WHERE bookInvovled=" + bookID);
 	String sql = String.format("DELETE FROM book WHERE id=%d", bookID);
 	Book[] tmpList = new Book[ARRAY_SIZE];
 	if (db.updateQuery(sql) == 1) {

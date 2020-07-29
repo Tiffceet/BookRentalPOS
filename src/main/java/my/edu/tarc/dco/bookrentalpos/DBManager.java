@@ -93,7 +93,7 @@ public class DBManager {
 		+ "	date datetime default current_timestamp,\n"
 		+ "	rentDurationInDays INTEGER,\n"
 		+ "	type TEXT,\n"
-		+ "	staffHandled INTEGER NOT NULL,\n"
+		+ "	staffHandled INTEGER,\n"
 		+ "	memberInvolved INTEGER,\n"
 		+ "	bookInvolved INTEGER,\n"
 		+ "	FOREIGN KEY (staffHandled) REFERENCES staff(id),\n"

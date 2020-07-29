@@ -13,6 +13,8 @@ public class Main {
 	BookManager book = new BookManager(db);
 	MemberManager mm = new MemberManager(db);
 	TransactionManager tm = new TransactionManager(db, book);
+	stf.removeStaff(1);
+	mm.removeMember(1);
 //	stf.registerStaff(new Staff("looz", "010802"));
 //	book.addBook(new Book("Book1", 3.4));
 //	book.addBook(new Book("Book2", 6.4));

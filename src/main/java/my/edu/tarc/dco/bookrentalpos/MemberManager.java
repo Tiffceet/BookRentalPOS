@@ -80,6 +80,7 @@ public class MemberManager {
 
     /**
      * Update data of existing member to database
+     *
      * @param mem Member Object with ID, expecting a Member object reference
      * instead of new Member object
      * @return True if the member's data is updated successfully
@@ -98,11 +99,23 @@ public class MemberManager {
     }
 
     /**
-     * Remove a member from database
+     * Remove a member from database<br>
+     * NOTE: The removed member's data will be removed from other related table
+     * as well
+     *
      * @param memID MemberID which to be removed
      * @return true if member was removed successfully
      */
     public boolean removeMember(int memID) {
+	db.execQuery("UPDATE book\n"
+		+ "SET lastRentedBy=NULL\n"
+		+ "WHERE lastRentedBy=" + memID);
+	db.execQuery("UPDATE book\n"
+		+ "SET lastReservedBy=NULL\n"
+		+ "WHERE lastReservedBy=" + memID);
+	db.execQuery("UPDATE transactions\n"
+		+ "SET memberInvolved=NULL\n"
+		+ "WHERE memberInvolved=" + memID);
 	String sql = String.format("DELETE FROM member WHERE id=%d", memID);
 	Member[] tmpList = new Member[ARRAY_SIZE];
 
