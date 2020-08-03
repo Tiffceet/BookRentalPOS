@@ -1,0 +1,50 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jul 26, 2020, 12:25:37 PM
+    Author     : cafer
+*/
+
+.root {
+    -fx-background-color: #FFFFFF;
+    -fx-font: 15px "Berlin Sans FB";
+}
+
+Label.upperTitle {
+    -fx-text-fill: #513828;
+    -fx-font: 25px "Berlin Sans FB";
+}
+
+HBox.upper {
+    -fx-background-color: linear-gradient(#BCFFFF 55%, #FFFFFF);
+}
+
+VBox.upper {
+    -fx-background-color: linear-gradient(#BCFFFF 55%, #FFFFFF);
+}
+
+HBox.lower {
+    -fx-background-color: linear-gradient(#FFFFFF 80%, #808080);
+}
+
+TextField {
+    -fx-background-radius: 10;
+}
+
+Button {
+    -fx-background-color: linear-gradient(#FFFFFF 5%, #00FFD4 85%, #00AF8F);
+    -fx-effect: dropshadow(one-pass-box, black, 8, 0.0, 0, 2 );
+    -fx-background-radius: 10;
+
+}
+
+Button:hover {
+    -fx-background-color: linear-gradient(#FFFFFF, #FFF0DD);
+}
+
+.table-view .column-header .label {
+    -fx-font-weight: 400;
+}
