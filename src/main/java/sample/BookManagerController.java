@@ -1,10 +1,12 @@
 package sample;
 
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -12,7 +14,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import javax.annotation.Resources;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class BookManagerController {
     public static Stage getWindow;
@@ -34,7 +39,7 @@ public class BookManagerController {
         Parent mainMenuParent = FXMLLoader.load(getClass().getResource("/FXML/mainMenu.fxml"));
         Scene mainMenuScene = new Scene(mainMenuParent);
 
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setTitle("Main Menu - Huahee Library");
         window.setScene(mainMenuScene);
     }
@@ -73,14 +78,14 @@ public class BookManagerController {
     }
 
     public void cancelButton(MouseEvent event) {
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.close();
     }
-    
+
     public void confirmAddButton(MouseEvent event) throws IOException {
         // Add to database.
         // Need to do validation.
-        getWindow = (Stage)((Node)event.getSource()).getScene().getWindow();
+        getWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
         String bookName = bookNameField.getText();
         String bookPrice = bookPriceField.getText();
         String bookQuantity = bookQuantityField.getText();
@@ -96,14 +101,14 @@ public class BookManagerController {
         bookAddedWindow.setScene(new Scene(bookAddedParent, 400, 100));
         bookAddedWindow.showAndWait();
 
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.close();
     }
 
     public void confirmEditButton(MouseEvent event) throws IOException {
         // Add to database.
         // Need to do validation.
-        getWindow = (Stage)((Node)event.getSource()).getScene().getWindow();
+        getWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
         String bookName = bookNameField.getText();
         String bookPrice = bookPriceField.getText();
         String bookQuantity = bookQuantityField.getText();
@@ -119,7 +124,7 @@ public class BookManagerController {
         bookAddedWindow.setScene(new Scene(bookAddedParent, 400, 100));
         bookAddedWindow.showAndWait();
 
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.close();
     }
 
@@ -135,7 +140,7 @@ public class BookManagerController {
         bookAddedWindow.setScene(new Scene(bookAddedParent, 400, 100));
         bookAddedWindow.showAndWait();
 
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.close();
     }
 }

@@ -58,7 +58,7 @@ public class StaffManager {
      */
     public Staff getStaff(int staffID) {
 	for (int i = 0; i < staffCount; i++) {
-	    if (staffList[i].getID() == staffID) {
+	    if (staffList[i].getId() == staffID) {
 		return staffList[i];
 	    }
 	}
@@ -104,12 +104,12 @@ public class StaffManager {
      * @return true if staff info was updated successfully
      */
     public boolean updateStaff(Staff stf) {
-	if (stf.getID() == 0) {
+	if (stf.getId() == 0) {
 	    return false;
 	}
 	String sql = String.format("UPDATE staff\n"
 		+ "SET name='%s', password='%s'\n"
-		+ "WHERE id=%d;", stf.getName(), stf.getPW(), stf.getID());
+		+ "WHERE id=%d;", stf.getName(), stf.getPW(), stf.getId());
 	if (db.updateQuery(sql) == 1) {
 	    return true;
 	}
@@ -132,7 +132,7 @@ public class StaffManager {
 	if (db.updateQuery(sql) == 1) {
 	    int b = 0;
 	    for (int a = 0; a < staffCount; a++) {
-		if (staffList[a].getID() != staffID) {
+		if (staffList[a].getId() != staffID) {
 		    tmpList[b++] = staffList[a];
 		}
 	    }

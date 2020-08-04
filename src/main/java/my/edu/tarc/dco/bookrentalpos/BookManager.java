@@ -49,7 +49,7 @@ public class BookManager {
      */
     public Book getbook(int bookID) {
 	for (int i = 0; i < bookCount; i++) {
-	    if (bookList[i].getID() == bookID) {
+	    if (bookList[i].getId() == bookID) {
 		return bookList[i];
 	    }
 	}
@@ -99,7 +99,7 @@ public class BookManager {
      * failed or the provided Book object dont contain ID
      */
     public boolean updateBook(Book bk) {
-	if (bk.getID() == 0) {
+	if (bk.getId() == 0) {
 	    return false;
 	}
 	String sql = String.format("UPDATE book\n"
@@ -111,7 +111,7 @@ public class BookManager {
 		bk.getLastReservedBy() == 0 ? "null" : bk.getLastReservedBy() + "",
 		bk.isRented() ? 1 : 0,
 		bk.isReserved() ? 1 : 0,
-		bk.getID());
+		bk.getId());
 	if (db.updateQuery(sql) == 1) {
 	    return true;
 	}
@@ -134,7 +134,7 @@ public class BookManager {
 	if (db.updateQuery(sql) == 1) {
 	    int b = 0;
 	    for (int a = 0; a < bookCount; a++) {
-		if (bookList[a].getID() != bookID) {
+		if (bookList[a].getId() != bookID) {
 		    tmpList[b++] = bookList[a];
 		}
 	    }

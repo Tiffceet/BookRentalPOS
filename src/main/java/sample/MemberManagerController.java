@@ -2,20 +2,26 @@ package sample;
 
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import my.edu.tarc.dco.bookrentalpos.ContactType;
+import my.edu.tarc.dco.bookrentalpos.Member;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class MemberManagerController {
+public class MemberManagerController implements Initializable {
     public Button backButton;
     public static Stage getWindow;
     public JFXTextField memberNameField;
@@ -31,11 +37,33 @@ public class MemberManagerController {
     public Button cancelDeleteButton;
     public Button confirmDeleteButton;
 
+    public TableView memberTableView;
+
+    // Overriding initialize so that when MemberManager FXML is first loaded, it gets data from database
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        System.out.println("Member Manager loaded.");
+        reloadTableView();
+    }
+
+    public void reloadTableView() {
+        // clear the current list items first
+        if (memberTableView == null)
+            return;
+        memberTableView.getItems().clear();
+
+        Member[] mem = Main.mm.getMemberListCache(); // get member List
+        // As stated in getMemberListCache() javadoc, you could obtain the length of the array through getMemberCount
+        for (int a = 0; a < Main.mm.getMemberCount(); a++) {
+            memberTableView.getItems().add(mem[a]);
+        }
+    }
+
     public void backToMain(MouseEvent event) throws IOException {
         Parent mainMenuParent = FXMLLoader.load(getClass().getResource("/FXML/mainMenu.fxml"));
         Scene mainMenuScene = new Scene(mainMenuParent);
 
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setTitle("Main Menu - Huahee Library");
         window.setScene(mainMenuScene);
     }
@@ -49,6 +77,7 @@ public class MemberManagerController {
         addMemberWindow.getIcons().add(new Image(Main.class.getResourceAsStream("/Image/icon.png")));
         addMemberWindow.setScene(new Scene(addMemberParent, 800, 600));
         addMemberWindow.showAndWait();
+        reloadTableView(); // Glad showAndWait() is not asynchronous xd
     }
 
     public void popEditMember() throws IOException {
@@ -63,7 +92,20 @@ public class MemberManagerController {
     }
 
     public void popDeleteMember(MouseEvent event) throws IOException {
-        Parent deleteMemberParent = FXMLLoader.load(getClass().getResource("/FXML/MemberManager/memberManagerDelete.fxml"));
+
+        Member memToDelete = (Member) memberTableView.getSelectionModel().getSelectedItem();
+        if (memToDelete == null) {
+            // User didnt select the row to delete
+            System.out.println("You didnt tell me what to delete");
+            return;
+        }
+
+        // I changed the code here so it uses YesNoDialogController to track the response
+        // Parent deleteMemberParent = FXMLLoader.load(getClass().getResource("/FXML/MemberManager/memberManagerDelete.fxml"));
+        FXMLLoader fl = new FXMLLoader(getClass().getResource("/FXML/MemberManager/memberManagerDelete.fxml"));
+        Parent deleteMemberParent = (Parent) fl.load();
+        YesNoDialogController ync = fl.getController(); // get the controller of this fxml
+
         Stage deleteMemberWindow = new Stage();
 
         deleteMemberWindow.initModality(Modality.APPLICATION_MODAL);
@@ -71,6 +113,15 @@ public class MemberManagerController {
         deleteMemberWindow.getIcons().add(new Image(Main.class.getResourceAsStream("/Image/icon.png")));
         deleteMemberWindow.setScene(new Scene(deleteMemberParent, 400, 150));
         deleteMemberWindow.showAndWait();
+
+        if(ync.response == 1) {
+            if (Main.mm.removeMember(memToDelete.getId())) {
+                showMemberDeleteSuccessPopUp();
+            } else {
+                // Somewhere in the database went wrong
+            }
+        }
+        reloadTableView();
     }
 
     public void cancelButton(MouseEvent event) {
@@ -81,14 +132,30 @@ public class MemberManagerController {
     public void confirmAddButton(MouseEvent event) throws IOException {
         // Add to database.
         // Need to do validation.
-        getWindow = (Stage)((Node)event.getSource()).getScene().getWindow();
+        getWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
         String memberName = memberNameField.getText();
         String memberIC = memberICField.getText();
         String memberPhone = memberPhoneField.getText();
         String memberEmail = memberEmailField.getText();
 
+        // Input Validation Code here
+        //     if you are reading this, code the validation for email, phone number and IC number here thanks
+        if(memberName.trim().isEmpty() || memberIC.trim().isEmpty()) {
+            System.out.println("Oi, empty input.");
+            return;
+        }
 
-        //If validated.
+        // Code to add entry to database
+        if (!Main.mm.registerMember(new Member(memberIC, memberName, memberPhone, memberEmail))) {
+            // if fail to register
+            // you might want to show error pop out or something?
+            // Usually if there is error here its related to the database
+            // Use this to get database error:
+            //     Main.db.getLastErrorMsg();
+            return;
+        }
+
+        // If validated.
         Parent memberAddedParent = FXMLLoader.load(getClass().getResource("/FXML/MemberManager/memberAdded.fxml"));
         Stage memberAddedWindow = new Stage();
 
@@ -98,14 +165,14 @@ public class MemberManagerController {
         memberAddedWindow.setScene(new Scene(memberAddedParent, 400, 100));
         memberAddedWindow.showAndWait();
 
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.close();
     }
 
     public void confirmEditButton(MouseEvent event) throws IOException {
         // Add to database.
         // Need to do validation.
-        getWindow = (Stage)((Node)event.getSource()).getScene().getWindow();
+        getWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
         String memberName = memberNameField.getText();
         String memberIC = memberICField.getText();
         String memberPhone = memberPhoneField.getText();
@@ -122,11 +189,11 @@ public class MemberManagerController {
         memberAddedWindow.setScene(new Scene(memberAddedParent, 400, 100));
         memberAddedWindow.showAndWait();
 
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.close();
     }
 
-    public void confirmMemberDelete(MouseEvent event) throws IOException {
+    public void showMemberDeleteSuccessPopUp() throws IOException {
         // Delete from database.
 
         Parent bookAddedParent = FXMLLoader.load(getClass().getResource("/FXML/MemberManager/memberDeleted.fxml"));
@@ -137,8 +204,5 @@ public class MemberManagerController {
         bookAddedWindow.setTitle("");
         bookAddedWindow.setScene(new Scene(bookAddedParent, 400, 100));
         bookAddedWindow.showAndWait();
-
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.close();
     }
 }

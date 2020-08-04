@@ -6,7 +6,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="400.0" stylesheets="/ManagerStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MemberManagerController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="400.0" stylesheets="/ManagerStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.YesNoDialogController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -18,8 +18,8 @@
       <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.rowIndex="1">
          <children>
             <Pane HBox.hgrow="ALWAYS" />
-             <Button fx:id="cancelDeleteButton" mnemonicParsing="false" onMouseClicked="#cancelButton" prefWidth="90.0" text="Cancel" />
-            <Button fx:id="confirmDeleteButton" mnemonicParsing="false" onMouseClicked="#confirmMemberDelete" prefWidth="90.0" text="Confirm" />
+             <Button fx:id="cancelDeleteButton" mnemonicParsing="false" onMouseClicked="#noEvent" prefWidth="90.0" text="Cancel" />
+            <Button fx:id="confirmDeleteButton" mnemonicParsing="false" onMouseClicked="#yesEvent" prefWidth="90.0" text="Confirm" />
          </children>
          <padding>
             <Insets left="10.0" right="10.0" top="35.0" />
