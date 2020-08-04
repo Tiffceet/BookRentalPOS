@@ -44,32 +44,32 @@
             <Button layoutX="209.0" layoutY="333.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="135.0" styleClass="upperTitle" text="Cancel" fx:id="cancelButton" onMouseClicked="#cancelButton" />
             <ImageView fitHeight="82.0" fitWidth="88.0" layoutX="93.0" layoutY="317.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@Image/MemberRegister/cancel.png" />
+                  <Image url="/Image/MemberRegister/cancel.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="99.0" fitWidth="135.0" layoutX="448.0" layoutY="314.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@Image/MemberRegister/comfirm.jpg" />
+                  <Image url="/Image/MemberRegister/comfirm.jpg" />
                </image>
             </ImageView>
             <ImageView fitHeight="94.0" fitWidth="88.0" layoutX="21.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@Image/MemberRegister/name.png" />
+                  <Image url="/Image/MemberRegister/name.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="78.0" fitWidth="71.0" layoutX="30.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@Image/MemberRegister/ic.png" />
+                  <Image url="/Image/MemberRegister/ic.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="62.0" fitWidth="88.0" layoutX="18.0" layoutY="171.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@Image/MemberRegister/phone.png" />
+                  <Image url="/Image/MemberRegister/phone.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="75.0" fitWidth="77.0" layoutX="27.0" layoutY="233.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@Image/MemberRegister/download.png" />
+                  <Image url="/Image/MemberRegister/download.png" />
                </image>
             </ImageView>
          </children>
