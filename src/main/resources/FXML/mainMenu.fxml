@@ -6,7 +6,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" stylesheets="/ManagerStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MainMenuController" >
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" stylesheets="@../ManagerStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MainMenuController" >
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -42,7 +42,7 @@
                   </Button>
                   <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
                      <image>
-                        <Image url="/Image/StaffAdminInterface/bill.jpg" />
+                        <Image url="@../Image/StaffAdminInterface/bill.jpg" />
                      </image>
                   </ImageView>
                </children>
@@ -62,7 +62,7 @@
                      </GridPane.margin></Button>
                   <ImageView fitHeight="222.0" fitWidth="256.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
                      <image>
-                        <Image url="/Image/StaffAdminInterface/book.png" />
+                        <Image url="@../Image/StaffAdminInterface/book.png" />
                      </image>
                   </ImageView>
                </children>
@@ -82,7 +82,7 @@
                      </GridPane.margin></Button>
                   <ImageView fitHeight="168.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
                      <image>
-                        <Image url="/Image/StaffAdminInterface/member.png" />
+                        <Image url="@../Image/StaffAdminInterface/member.png" />
                      </image>
                   </ImageView>
                </children>
@@ -102,7 +102,7 @@
                      </GridPane.margin></Button>
                   <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
                      <image>
-                        <Image url="/Image/StaffAdminInterface/Profile.png" />
+                        <Image url="@../Image/StaffAdminInterface/Profile.png" />
                      </image>
                   </ImageView>
                </children>
@@ -114,7 +114,7 @@
             </Button>
             <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <image>
-                  <Image url="/Image/StaffAdminInterface/exit.png" />
+                  <Image url="@../Image/StaffAdminInterface/exit.png" />
                </image>
                <GridPane.margin>
                   <Insets bottom="10.0" left="420.0" top="30.0" />
