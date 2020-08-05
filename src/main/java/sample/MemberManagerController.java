@@ -17,6 +17,7 @@ import javafx.stage.StageStyle;
 import my.edu.tarc.dco.bookrentalpos.ContactType;
 import my.edu.tarc.dco.bookrentalpos.Member;
 
+import javax.xml.soap.Text;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -28,6 +29,10 @@ public class MemberManagerController implements Initializable {
     public JFXTextField memberICField;
     public JFXTextField memberPhoneField;
     public JFXTextField memberEmailField;
+    public TextField memberID; // used for edit popup
+    public TextField searchByNameField;
+    public TextField searchByICField;
+    public TextField searchByIDField;
     public Button addMemberButton;
     public Button editMemberButton;
     public Button deleteMemberButton;
@@ -42,7 +47,6 @@ public class MemberManagerController implements Initializable {
     // Overriding initialize so that when MemberManager FXML is first loaded, it gets data from database
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("Member Manager loaded.");
         reloadTableView();
     }
 
@@ -81,7 +85,22 @@ public class MemberManagerController implements Initializable {
     }
 
     public void popEditMember() throws IOException {
-        Parent editMemberParent = FXMLLoader.load(getClass().getResource("/FXML/MemberManager/memberManagerEdit.fxml"));
+        Member memToDelete = (Member) memberTableView.getSelectionModel().getSelectedItem();
+        if (memToDelete == null) {
+            // User didnt select the row to delete
+            System.out.println("You didnt tell me what to delete");
+            return;
+        }
+
+        FXMLLoader fl = new FXMLLoader(getClass().getResource("/FXML/MemberManager/memberManagerEdit.fxml"));
+        Parent editMemberParent = (Parent) fl.load();
+        MemberManagerController mmc = fl.getController();
+        mmc.memberID.setText(memToDelete.getId() + "");
+        mmc.memberNameField.setText(memToDelete.getName());
+        mmc.memberEmailField.setText(memToDelete.getEmail());
+        mmc.memberPhoneField.setText(memToDelete.getPhoneNo());
+        mmc.memberICField.setText(memToDelete.getIcNo());
+
         Stage editMemberWindow = new Stage();
 
         editMemberWindow.initModality(Modality.APPLICATION_MODAL);
@@ -89,6 +108,7 @@ public class MemberManagerController implements Initializable {
         editMemberWindow.getIcons().add(new Image(Main.class.getResourceAsStream("/Image/icon.png")));
         editMemberWindow.setScene(new Scene(editMemberParent, 800, 600));
         editMemberWindow.showAndWait();
+        reloadTableView();
     }
 
     public void popDeleteMember(MouseEvent event) throws IOException {
@@ -114,7 +134,7 @@ public class MemberManagerController implements Initializable {
         deleteMemberWindow.setScene(new Scene(deleteMemberParent, 400, 150));
         deleteMemberWindow.showAndWait();
 
-        if(ync.response == 1) {
+        if (ync.response == 1) {
             if (Main.mm.removeMember(memToDelete.getId())) {
                 showMemberDeleteSuccessPopUp();
             } else {
@@ -125,7 +145,7 @@ public class MemberManagerController implements Initializable {
     }
 
     public void cancelButton(MouseEvent event) {
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.close();
     }
 
@@ -140,7 +160,7 @@ public class MemberManagerController implements Initializable {
 
         // Input Validation Code here
         //     if you are reading this, code the validation for email, phone number and IC number here thanks
-        if(memberName.trim().isEmpty() || memberIC.trim().isEmpty()) {
+        if (memberName.trim().isEmpty() || memberIC.trim().isEmpty()) {
             System.out.println("Oi, empty input.");
             return;
         }
@@ -173,11 +193,22 @@ public class MemberManagerController implements Initializable {
         // Add to database.
         // Need to do validation.
         getWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        int memID = Integer.parseInt(memberID.getText()); // hidden Text Field to store member ID
         String memberName = memberNameField.getText();
         String memberIC = memberICField.getText();
         String memberPhone = memberPhoneField.getText();
         String memberEmail = memberEmailField.getText();
 
+        // Modify the member
+        Member m = Main.mm.getMember(memID);
+        m.setName(memberName);
+        m.setIcNo(memberIC);
+        m.setEmail(memberEmail);
+        m.setPhoneNo(memberPhone);
+        if (!Main.mm.updateMember(m)) {
+            // database went wrong
+            return;
+        }
 
         //If validated.
         Parent memberAddedParent = FXMLLoader.load(getClass().getResource("/FXML/MemberManager/memberEdited.fxml"));
@@ -204,5 +235,44 @@ public class MemberManagerController implements Initializable {
         bookAddedWindow.setTitle("");
         bookAddedWindow.setScene(new Scene(bookAddedParent, 400, 100));
         bookAddedWindow.showAndWait();
+    }
+
+    public void clearButtonClicked(MouseEvent event) throws IOException {
+        reloadTableView();
+        searchByICField.setText("");
+        searchByIDField.setText("");
+        searchByNameField.setText("");
+    }
+
+    public void searchButtonClicked(MouseEvent event) throws IOException {
+        // clear the current list items first
+        if (memberTableView == null)
+            return;
+        memberTableView.getItems().clear();
+
+        // load the cache from MemberManager
+        Member[] mem = Main.mm.getMemberListCache();
+        String nameQuery = searchByNameField.getText();
+        String icQuery = searchByICField.getText();
+        String idQuery = searchByIDField.getText();
+        for (int a = 0; a < Main.mm.getMemberCount(); a++) {
+            if (!nameQuery.trim().isEmpty()) {
+                if (!mem[a].getName().equals(nameQuery)) {
+                    continue;
+                }
+            }
+            if(!icQuery.trim().isEmpty()) {
+                if(!mem[a].getIcNo().equals(icQuery)) {
+                    continue;
+                }
+            }
+            if(!idQuery.trim().isEmpty()) {
+                if(!(mem[a].getId() + "").equals(idQuery)) {
+                    continue;
+                }
+            }
+            memberTableView.getItems().add(mem[a]);
+        }
+
     }
 }

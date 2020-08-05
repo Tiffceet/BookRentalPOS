@@ -65,6 +65,22 @@ public class Member extends Entity {
         return null;
     }
 
+    /**
+     *
+     * @param ic set NRIC in string
+     */
+    public void setIcNo(String ic) {
+        this.icNo = ic;
+    }
+
+    public void setPhoneNo(String phone) {
+        this.phoneNo = phone;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     // ============================================================================================================
     // Functions below this point is for the PropertyValueFactory in JavaFx to fetch data from this class
     // ============================================================================================================
@@ -76,8 +92,12 @@ public class Member extends Entity {
         return this.icNo;
     }
 
-    public String getPhoneNo() { return this.phoneNo; }
+    public String getPhoneNo() {
+        return this.phoneNo;
+    }
 
-    public String getEmail() { return this.email; }
+    public String getEmail() {
+        return this.email;
+    }
 
 }
