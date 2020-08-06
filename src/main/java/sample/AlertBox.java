@@ -24,7 +24,8 @@ public class AlertBox {
         label.setAlignment(Pos.CENTER);
         label.setMaxWidth(1.7976931348623157E308);
         label.setFont(Font.font("Bodoni MT", 20));
-        VBox.setMargin(label, new Insets(5, 0, 0, 0));
+        label.setWrapText(true);
+        VBox.setMargin(label, new Insets(5, 5, 0, 5));
 
         Button closeButton = new Button("Ok");
         closeButton.setPrefWidth(60.0);
@@ -32,11 +33,12 @@ public class AlertBox {
         VBox.setMargin(closeButton, new Insets(15, 0, 0, 170));
 
         VBox layout = new VBox(0);
-        layout.setPrefSize(400, 100);
+        int windowHeight = 100 + (message.length() / 40) * 30;
+        layout.setPrefSize(400, windowHeight);
         layout.getStyleClass().add("upper");
         layout.getChildren().addAll(label, closeButton);
 
-        Scene scene = new Scene(layout, 400, 100);
+        Scene scene = new Scene(layout, 400, windowHeight);
         scene.getStylesheets().add("@../../ManagerStyle.css");
         window.setScene(scene);
         window.showAndWait();
