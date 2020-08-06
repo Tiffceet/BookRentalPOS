@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import my.edu.tarc.dco.bookrentalpos.Staff;
 
 import java.io.IOException;
 
@@ -51,7 +52,12 @@ public class MainMenuController {
     }
 
     public void popEditProfile() throws IOException {
-        Parent editProfileParent = FXMLLoader.load(getClass().getResource("/FXML/EditProfile/editProfile.fxml"));
+        FXMLLoader fl = new FXMLLoader(getClass().getResource("/FXML/EditProfile/editProfile.fxml"));
+        Parent editProfileParent = (Parent) fl.load();
+        EditProfileController epc = fl.getController();
+        epc.nameField.setText(Main.sm.getLogOnStaff().getName());
+        epc.staffIDLabel.setText(Main.sm.getLogOnStaff().getId() + "");
+
         Stage profileWindow = new Stage();
 
         profileWindow.initModality(Modality.APPLICATION_MODAL);
@@ -75,6 +81,7 @@ public class MainMenuController {
     }
 
     public void confirmLogOut(MouseEvent event) throws IOException {
+        Main.sm.logOut();
         Parent loginScreenParent = FXMLLoader.load(getClass().getResource("/FXML/loginInterface.fxml"));
         Scene loginScreenScene = new Scene(loginScreenParent, 800, 600);
 

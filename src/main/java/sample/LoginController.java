@@ -20,18 +20,21 @@ public class LoginController {
 
     // Need combine with enter key but don't know how yet...
     public void validateAccount(MouseEvent event) throws IOException {
-	String username = usernameTextField.getText();
-	String password = passwordTextField.getText();
+        String username = usernameTextField.getText();
+        String password = passwordTextField.getText();
 
-	// Validate database eeee...
-	if (Main.sm.login(username, password)) {
-	    Parent mainMenuParent = FXMLLoader.load(getClass().getResource("/FXML/mainMenu.fxml"));
-	    Scene mainMenuScene = new Scene(mainMenuParent, 1366, 768);
+        // Validate database eeee...
+        int staffID = Main.sm.login(username, password);
+        // if login() returns -1, meaning the username or password is wrong
+        if (staffID != -1) {
+            Parent mainMenuParent = FXMLLoader.load(getClass().getResource("/FXML/mainMenu.fxml"));
 
-	    Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-	    window.setTitle("Main Menu - Huahee Library");
-	    window.setScene(mainMenuScene);
-	    window.centerOnScreen();
-	}
+            Scene mainMenuScene = new Scene(mainMenuParent, 1366, 768);
+
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setTitle("Main Menu - Huahee Library");
+            window.setScene(mainMenuScene);
+            window.centerOnScreen();
+        }
     }
 }
