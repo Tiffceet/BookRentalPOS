@@ -2,6 +2,7 @@ package sample;
 
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -19,7 +20,7 @@ public class LoginController {
     public Button loginButton;
 
     // Need combine with enter key but don't know how yet...
-    public void validateAccount(MouseEvent event) throws IOException {
+    public void validateAccount(Event event) throws IOException {
         String username = usernameTextField.getText();
         String password = passwordTextField.getText();
 
@@ -35,6 +36,12 @@ public class LoginController {
             window.setTitle("Main Menu - Huahee Library");
             window.setScene(mainMenuScene);
             window.centerOnScreen();
+        } else {
+            AlertBox.display("Wrong username or password");
         }
+    }
+
+    public void forgetPassword(MouseEvent event) {
+        AlertBox.display("Please contact the admin to retrieve your password");
     }
 }

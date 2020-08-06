@@ -1,10 +1,7 @@
 package sample;
 
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import my.edu.tarc.dco.bookrentalpos.Staff;
@@ -28,14 +25,19 @@ public class EditProfileController {
 
         Staff stfToEdit = Main.sm.getLogOnStaff();
         if (!passwordField.getText().equals(confirmPasswordField.getText())) {
-            System.out.println("Password do not match");
+            AlertBox.display("Password do not match");
+            return;
+        }
+
+        if (newPW.isEmpty()) {
+            AlertBox.display("Password can not be empty.");
             return;
         }
 
         // if username already exist
         // only check usernames of other staff and not self
         if (Main.sm.getStaffByName(newUsername) != null && Main.sm.getStaffByName(newUsername).getId() != stfToEdit.getId()) {
-            System.out.println("Username already exist");
+            AlertBox.display("Username already exist");
             return;
         }
         stfToEdit.setPassword(passwordField.getText());
@@ -43,10 +45,10 @@ public class EditProfileController {
 
         // update staff to database
         if (!Main.sm.updateStaff(stfToEdit)) {
-            // if failed
+            AlertBox.display("Something went wrong. Please contact the admin.");
         }
 
-        System.out.println("Edit Profile Done");
+        AlertBox.display("Your profile have been successfully updated.");
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.close();
 

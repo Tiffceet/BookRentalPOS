@@ -15,11 +15,13 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import my.edu.tarc.dco.bookrentalpos.ContactType;
+import my.edu.tarc.dco.bookrentalpos.CustomUtil;
 import my.edu.tarc.dco.bookrentalpos.Member;
 
 import javax.xml.soap.Text;
 import java.io.IOException;
 import java.net.URL;
+import java.rmi.AlreadyBoundException;
 import java.util.ResourceBundle;
 
 public class MemberManagerController implements Initializable {
@@ -161,43 +163,68 @@ public class MemberManagerController implements Initializable {
         // Input Validation Code here
         //     if you are reading this, code the validation for email, phone number and IC number here thanks
         if (memberName.trim().isEmpty() || memberIC.trim().isEmpty()) {
-            System.out.println("Oi, empty input.");
+            AlertBox.display("Empty name or IC is not allowed");
+            return;
+        }
+
+        if (!CustomUtil.checkIC(memberIC)) {
+            AlertBox.display("Invalid IC");
+            return;
+        }
+
+        if (!memberEmail.isEmpty() && !CustomUtil.checkEmail(memberEmail)) {
+            AlertBox.display("Invalid Email");
+            return;
+        }
+
+        if (!memberPhone.isEmpty() && !CustomUtil.checkPhoneNo(memberPhone)) {
+            AlertBox.display("Invalid Phone number.");
             return;
         }
 
         // Code to add entry to database
         if (!Main.mm.registerMember(new Member(memberIC, memberName, memberPhone, memberEmail))) {
-            // if fail to register
-            // you might want to show error pop out or something?
-            // Usually if there is error here its related to the database
-            // Use this to get database error:
-            //     Main.db.getLastErrorMsg();
+            AlertBox.display("Same IC number have been registered before");
             return;
         }
 
         // If validated.
-        Parent memberAddedParent = FXMLLoader.load(getClass().getResource("/FXML/MemberManager/memberAdded.fxml"));
-        Stage memberAddedWindow = new Stage();
-
-        memberAddedWindow.initModality(Modality.APPLICATION_MODAL);
-        memberAddedWindow.initStyle(StageStyle.UTILITY);
-        memberAddedWindow.setTitle("");
-        memberAddedWindow.setScene(new Scene(memberAddedParent, 400, 100));
-        memberAddedWindow.showAndWait();
+        AlertBox.display("The member has successfully added!");
 
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.close();
     }
 
     public void confirmEditButton(MouseEvent event) throws IOException {
-        // Add to database.
-        // Need to do validation.
         getWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
         int memID = Integer.parseInt(memberID.getText()); // hidden Text Field to store member ID
         String memberName = memberNameField.getText();
         String memberIC = memberICField.getText();
         String memberPhone = memberPhoneField.getText();
         String memberEmail = memberEmailField.getText();
+
+        // validation
+        // Input Validation Code here
+        //     if you are reading this, code the validation for email, phone number and IC number here thanks
+        if (memberName.trim().isEmpty() || memberIC.trim().isEmpty()) {
+            AlertBox.display("Empty name or IC is not allowed");
+            return;
+        }
+
+        if (!CustomUtil.checkIC(memberIC)) {
+            AlertBox.display("Invalid IC");
+            return;
+        }
+
+        if (!memberEmail.isEmpty() && !CustomUtil.checkEmail(memberEmail)) {
+            AlertBox.display("Invalid Email");
+            return;
+        }
+
+        if (!memberPhone.isEmpty() && !CustomUtil.checkPhoneNo(memberPhone)) {
+            AlertBox.display("Invalid Phone number.");
+            return;
+        }
 
         // Modify the member
         Member m = Main.mm.getMember(memID);
@@ -206,19 +233,12 @@ public class MemberManagerController implements Initializable {
         m.setEmail(memberEmail);
         m.setPhoneNo(memberPhone);
         if (!Main.mm.updateMember(m)) {
-            // database went wrong
+            AlertBox.display("Same IC number have been registered before");
             return;
         }
 
         //If validated.
-        Parent memberAddedParent = FXMLLoader.load(getClass().getResource("/FXML/MemberManager/memberEdited.fxml"));
-        Stage memberAddedWindow = new Stage();
-
-        memberAddedWindow.initModality(Modality.APPLICATION_MODAL);
-        memberAddedWindow.initStyle(StageStyle.UTILITY);
-        memberAddedWindow.setTitle("");
-        memberAddedWindow.setScene(new Scene(memberAddedParent, 400, 100));
-        memberAddedWindow.showAndWait();
+        AlertBox.display("The member has successfully edited!");
 
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.close();
@@ -226,15 +246,7 @@ public class MemberManagerController implements Initializable {
 
     public void showMemberDeleteSuccessPopUp() throws IOException {
         // Delete from database.
-
-        Parent bookAddedParent = FXMLLoader.load(getClass().getResource("/FXML/MemberManager/memberDeleted.fxml"));
-        Stage bookAddedWindow = new Stage();
-
-        bookAddedWindow.initModality(Modality.APPLICATION_MODAL);
-        bookAddedWindow.initStyle(StageStyle.UTILITY);
-        bookAddedWindow.setTitle("");
-        bookAddedWindow.setScene(new Scene(bookAddedParent, 400, 100));
-        bookAddedWindow.showAndWait();
+        AlertBox.display("The member has successfully deleted!");
     }
 
     public void clearButtonClicked(MouseEvent event) throws IOException {
@@ -261,13 +273,13 @@ public class MemberManagerController implements Initializable {
                     continue;
                 }
             }
-            if(!icQuery.trim().isEmpty()) {
-                if(!mem[a].getIcNo().equals(icQuery)) {
+            if (!icQuery.trim().isEmpty()) {
+                if (!mem[a].getIcNo().equals(icQuery)) {
                     continue;
                 }
             }
-            if(!idQuery.trim().isEmpty()) {
-                if(!(mem[a].getId() + "").equals(idQuery)) {
+            if (!idQuery.trim().isEmpty()) {
+                if (!(mem[a].getId() + "").equals(idQuery)) {
                     continue;
                 }
             }
