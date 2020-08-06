@@ -30,7 +30,7 @@ HBox.lower {
     -fx-background-color: linear-gradient(#FFFFFF 80%, #808080);
 }
 
-TextField {
+TextField, PasswordField {
     -fx-background-radius: 10;
 }
 
