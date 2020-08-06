@@ -29,14 +29,7 @@ public class CustomUtil {
     }
 	
     public static boolean checkIC(String icNo){
-        char ch2 = icNo.charAt(2);
-        char ch3 = icNo.charAt(3);
-        char ch4 = icNo.charAt(4);
-        char ch5 = icNo.charAt(5);
-        char ch6 = icNo.charAt(6);
-        char ch7 = icNo.charAt(7);
-
-        if(icNo == null || icNo.length() != 12 || (ch2 == '0' && ch3 == '0') || (ch4 == '0' && ch5 == '0') || (ch6 == '0' && ch7 == '0')){
+        if(icNo == null || icNo.length() != 12){
             return false;
         }
         String format = "^[0-9]{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[1-2][0-9]|[3][0-1])(?:0[1-9]|1[0-6]|2[1-9]|[3-5][0-9]|6[0-8]|7[1-2]|7[4-9]|8[2-9]|9[0-3]|9[8-9])[0-9]{4}$";
