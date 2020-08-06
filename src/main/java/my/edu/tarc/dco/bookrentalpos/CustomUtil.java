@@ -27,34 +27,7 @@ public class CustomUtil {
 	    return null;
 	}
     }
-	    private String email;
-    private String icNo;
-    private String phoneNo;
-
-    public String getIcNo() {
-        return this.icNo;
-    }
-
-    public void setIcNo(String icNo) {
-        this.icNo = icNo;
-    }
-
-    public String getPhoneNo() {
-        return this.phoneNo;
-    }
-
-    public void setPhoneNo(String phoneNo) {
-        this.phoneNo = phoneNo;
-    }
-
-    public String getEmail() {
-        return this.email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
+	
     public static boolean checkIC(String icNo){
         char ch2 = icNo.charAt(2);
         char ch3 = icNo.charAt(3);
