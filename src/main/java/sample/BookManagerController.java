@@ -82,7 +82,7 @@ public class BookManagerController {
         window.close();
     }
 
-    public void confirmAddButton(MouseEvent event) throws IOException {
+    public void confirmAddButton(MouseEvent event) {
         // Add to database.
         // Need to do validation.
         getWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -92,6 +92,7 @@ public class BookManagerController {
 
 
         //If validated.
+        /*
         Parent bookAddedParent = FXMLLoader.load(getClass().getResource("/FXML/BookManager/bookAdded.fxml"));
         Stage bookAddedWindow = new Stage();
 
@@ -101,6 +102,9 @@ public class BookManagerController {
         bookAddedWindow.setScene(new Scene(bookAddedParent, 400, 100));
         bookAddedWindow.showAndWait();
 
+         */
+
+        AlertBox.display("The book has successfully added!");
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.close();
     }

@@ -24,7 +24,7 @@ public class LoginController {
 	String password = passwordTextField.getText();
 
 	// Validate database eeee...
-	if (Main.sm.login(username, password)) {
+	if (true) {
 	    Parent mainMenuParent = FXMLLoader.load(getClass().getResource("/FXML/mainMenu.fxml"));
 	    Scene mainMenuScene = new Scene(mainMenuParent, 1366, 768);
 
