@@ -2,6 +2,8 @@ package my.edu.tarc.dco.bookrentalpos;
 
 import java.security.MessageDigest;
 import javax.xml.bind.DatatypeConverter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Contains all the custom utilities function
