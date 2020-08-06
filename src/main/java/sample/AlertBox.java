@@ -30,6 +30,7 @@ public class AlertBox {
         Button closeButton = new Button("Ok");
         closeButton.setPrefWidth(60.0);
         closeButton.setOnAction(event -> window.close());
+        closeButton.setDefaultButton(true);
         VBox.setMargin(closeButton, new Insets(15, 0, 0, 170));
 
         VBox layout = new VBox(0);
@@ -39,7 +40,7 @@ public class AlertBox {
         layout.getChildren().addAll(label, closeButton);
 
         Scene scene = new Scene(layout, 400, windowHeight);
-        scene.getStylesheets().add("@../../ManagerStyle.css");
+        scene.getStylesheets().add("/ManagerStyle.css");
         window.setScene(scene);
         window.showAndWait();
     }
