@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import my.edu.tarc.dco.bookrentalpos.Staff;
@@ -56,6 +58,13 @@ public class MainMenuController {
         Parent editProfileParent = (Parent) fl.load();
         EditProfileController epc = fl.getController();
         epc.nameField.setText(Main.sm.getLogOnStaff().getName());
+        // admin will not be able to change username
+        if(Main.sm.getLogOnStaff().getName().equals("root")) {
+            epc.nameField.setStyle("-fx-text-inner-color: grey;");
+            epc.nameField.setEditable(false);
+            epc.nameField.setFocusTraversable(false);
+            epc.passwordField.requestFocus();
+        }
         epc.staffIDLabel.setText(Main.sm.getLogOnStaff().getId() + "");
 
         Stage profileWindow = new Stage();

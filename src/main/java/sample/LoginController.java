@@ -25,8 +25,7 @@ public class LoginController {
         String password = passwordTextField.getText();
 
         // Validate database eeee...
-        //int staffID = Main.sm.login(username, password);
-        int staffID = 1;
+        int staffID = Main.sm.login(username, password);
         // if login() returns -1, meaning the username or password is wrong
         if (staffID != -1) {
             Parent mainMenuParent = FXMLLoader.load(getClass().getResource("/FXML/mainMenu.fxml"));

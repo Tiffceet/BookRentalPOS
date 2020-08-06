@@ -40,6 +40,13 @@ public class StaffManager {
             System.out.println(err.getMessage());
         }
 
+        // Code to add default 'root' user to database if not exist
+        Staff rootStaff = this.getStaffByName("root");
+        if (rootStaff == null) {
+            rootStaff = new Staff("root", "");
+            this.registerStaff(rootStaff);
+            staffList[staffCount++] = rootStaff;
+        }
     }
 
     /**

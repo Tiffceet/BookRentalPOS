@@ -32,7 +32,6 @@ public class DBManager {
         conn = null;
         connectDB();
         prepareTable();
-
     }
 
     /**
