@@ -35,10 +35,10 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <JFXTextField fx:id="memberNameField" prefHeight="40.0" prefWidth="220.0" promptText="Name" unFocusColor="#2214c7" GridPane.columnIndex="1" />
-                  <JFXTextField fx:id="memberICField" prefHeight="40.0" prefWidth="220.0" promptText="IC Number" unFocusColor="#2214c7" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <JFXTextField fx:id="memberPhoneField" prefHeight="40.0" prefWidth="220.0" promptText="Phone Number" unFocusColor="#2214c7" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <JFXTextField fx:id="memberEmailField" prefHeight="40.0" prefWidth="220.0" promptText="Email" unFocusColor="#2214c7" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <JFXTextField fx:id="memberNameField" onAction="#confirmEditButton" onKeyPressed="#textFieldOnKeyPressed" prefHeight="40.0" prefWidth="220.0" promptText="Name" unFocusColor="#2214c7" GridPane.columnIndex="1" />
+                  <JFXTextField fx:id="memberICField" onAction="#confirmEditButton" onKeyPressed="#textFieldOnKeyPressed" prefHeight="40.0" prefWidth="220.0" promptText="IC Number" unFocusColor="#2214c7" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <JFXTextField fx:id="memberPhoneField" onAction="#confirmEditButton" onKeyPressed="#textFieldOnKeyPressed" prefHeight="40.0" prefWidth="220.0" promptText="Phone Number" unFocusColor="#2214c7" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <JFXTextField fx:id="memberEmailField" onAction="#confirmEditButton" onKeyPressed="#textFieldOnKeyPressed" prefHeight="40.0" prefWidth="220.0" promptText="Email" unFocusColor="#2214c7" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <Label styleClass="upperTitle" text="Name :" />
                   <Label styleClass="upperTitle" text="IC Number :" GridPane.rowIndex="1" />
                   <Label styleClass="upperTitle" text="Phone Number :" GridPane.rowIndex="2" />

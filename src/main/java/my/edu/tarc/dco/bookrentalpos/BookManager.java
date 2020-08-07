@@ -48,13 +48,25 @@ public class BookManager {
      * @return Reference to the book object in this class. Will return null if
      * book of specified ID was not found
      */
-    public Book getbook(int bookID) {
+    public Book getBookById(int bookID) {
         for (int i = 0; i < bookCount; i++) {
             if (bookList[i].getId() == bookID) {
                 return bookList[i];
             }
         }
         return null;
+    }
+
+    /**
+     * Get a copy of the booklist array<br>
+     * For now, you should use BookManager.getBookCount() to get the array size
+     *
+     * @return Book array with constant size of ARRAY_SIZE
+     * @see BookManager#getBookCount()
+     * @see BookManager#ARRAY_SIZE
+     */
+    public Book[] getBooKListCache() {
+        return this.bookList.clone();
     }
 
     /**
@@ -147,6 +159,13 @@ public class BookManager {
         } else {
             return false;
         }
+    }
+
+    /**
+     * @return Book count loaded into this instance from database
+     */
+    public int getBookCount() {
+        return this.bookCount;
     }
 
 }

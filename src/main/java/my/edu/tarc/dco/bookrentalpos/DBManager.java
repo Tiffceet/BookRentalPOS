@@ -72,7 +72,7 @@ public class DBManager {
                 + "	name TEXT NOT NULL,\n"
                 + "	phoneNo TEXT,\n"
                 + "	email TEXT,\n"
-                + "	IC TEXT NOT NULL\n"
+                + "	IC TEXT NOT NULL UNIQUE\n"
                 + ");";
         String tab3 = "CREATE TABLE IF NOT EXISTS book (\n" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +

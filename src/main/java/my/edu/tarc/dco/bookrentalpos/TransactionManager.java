@@ -48,7 +48,7 @@ public class TransactionManager {
 		transactionList[transactionCount++] = trans;
 		
 		// Update respective table based on the transaction type
-		Book b = bm.getbook(trans.getBookInvovled());
+		Book b = bm.getBookById(trans.getBookInvovled());
 		switch (trans.getType()) {
 		    case RENT:
 			b.setLastRentedBy(trans.getMemberInvovled());

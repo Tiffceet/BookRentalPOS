@@ -25,18 +25,6 @@
         <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
-        <HBox prefHeight="50.0" prefWidth="200.0" spacing="10.0" style="-fx-padding: 5 10 0 10;" styleClass="upper">
-            <GridPane.margin>
-                <Insets />
-            </GridPane.margin>
-            <children>
-                <Label styleClass="upperTitle" text="16/04/2020" />
-                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="22.0" styleClass="upperTitle" text="Member Manager" HBox.hgrow="ALWAYS">
-                </Label>
-                <Label styleClass="upperTitle" text="HuaHee Library">
-                </Label>
-            </children>
-        </HBox>
         <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" style="-fx-padding: 0 10 0 10;" GridPane.rowIndex="1">
             <children>
                 <Label maxHeight="30.0" minHeight="30.0" prefHeight="30.0" text="Search Filter:" />
@@ -51,9 +39,21 @@
                 <Button maxHeight="30.0" maxWidth="70.0" minHeight="30.0" minWidth="70.0" mnemonicParsing="false" onMouseClicked="#clearButtonClicked" prefHeight="30.0" prefWidth="70.0" text="Clear" />
             </children>
         </HBox>
+        <HBox prefHeight="50.0" prefWidth="200.0" spacing="10.0" style="-fx-padding: 5 10 0 10;" styleClass="upper">
+            <GridPane.margin>
+                <Insets />
+            </GridPane.margin>
+            <children>
+                <Label styleClass="upperTitle" text="16/04/2020" />
+                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="22.0" styleClass="upperTitle" text="Member Manager" HBox.hgrow="ALWAYS">
+                </Label>
+                <Label styleClass="upperTitle" text="HuaHee Library">
+                </Label>
+            </children>
+        </HBox>
         <HBox prefHeight="100.0" prefWidth="200.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
             <children>
-                <TableView fx:id="memberTableView" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                <TableView fx:id="memberTableView" onKeyPressed="#tableViewOnKeyPressed" onMouseClicked="#tableViewOnClickEvent" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                     <columns>
                         <TableColumn prefWidth="75.0" text="ID">
                             <cellValueFactory>
