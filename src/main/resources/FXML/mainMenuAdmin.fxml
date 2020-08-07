@@ -69,7 +69,7 @@
                   </Button>
                   <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
                      <image>
-                        <Image url="@../Image/StaffAdminInterface/bill.jpg" />
+                        <Image url="@../Image/StaffAdminInterface/bill.png" />
                      </image>
                   </ImageView>
                </children>
