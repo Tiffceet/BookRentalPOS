@@ -1,23 +1,18 @@
-package sample;
+package bookrentalpos;
 
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableView;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
-import javax.annotation.Resources;
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class BookManagerController {
     public static Stage getWindow;
@@ -34,6 +29,11 @@ public class BookManagerController {
     public Button cancelDeleteButton;
     public Button confirmDeleteButton;
     public Button deleteBookButton;
+    public Label dateTime;
+
+    public void initialize() {
+        Clock.display(dateTime);
+    }
 
     public void backToMain(MouseEvent event) throws IOException {
         Parent mainMenuParent = FXMLLoader.load(getClass().getResource("/FXML/mainMenu.fxml"));
@@ -90,20 +90,6 @@ public class BookManagerController {
         String bookPrice = bookPriceField.getText();
         String bookQuantity = bookQuantityField.getText();
 
-
-        //If validated.
-        /*
-        Parent bookAddedParent = FXMLLoader.load(getClass().getResource("/FXML/BookManager/bookAdded.fxml"));
-        Stage bookAddedWindow = new Stage();
-
-        bookAddedWindow.initModality(Modality.APPLICATION_MODAL);
-        bookAddedWindow.initStyle(StageStyle.UTILITY);
-        bookAddedWindow.setTitle("");
-        bookAddedWindow.setScene(new Scene(bookAddedParent, 400, 100));
-        bookAddedWindow.showAndWait();
-
-         */
-
         AlertBox.display("The book has successfully added!");
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.close();
@@ -118,16 +104,7 @@ public class BookManagerController {
         String bookQuantity = bookQuantityField.getText();
 
 
-        //If validated.
-        Parent bookAddedParent = FXMLLoader.load(getClass().getResource("/FXML/BookManager/bookEdited.fxml"));
-        Stage bookAddedWindow = new Stage();
-
-        bookAddedWindow.initModality(Modality.APPLICATION_MODAL);
-        bookAddedWindow.initStyle(StageStyle.UTILITY);
-        bookAddedWindow.setTitle("");
-        bookAddedWindow.setScene(new Scene(bookAddedParent, 400, 100));
-        bookAddedWindow.showAndWait();
-
+        AlertBox.display("The book has successfully edited!");
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.close();
     }
@@ -135,15 +112,7 @@ public class BookManagerController {
     public void confirmBookDelete(MouseEvent event) throws IOException {
         // Delete from database.
 
-        Parent bookAddedParent = FXMLLoader.load(getClass().getResource("/FXML/BookManager/bookDeleted.fxml"));
-        Stage bookAddedWindow = new Stage();
-
-        bookAddedWindow.initModality(Modality.APPLICATION_MODAL);
-        bookAddedWindow.initStyle(StageStyle.UTILITY);
-        bookAddedWindow.setTitle("");
-        bookAddedWindow.setScene(new Scene(bookAddedParent, 400, 100));
-        bookAddedWindow.showAndWait();
-
+        AlertBox.display("The book has successfully deleted!");
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.close();
     }

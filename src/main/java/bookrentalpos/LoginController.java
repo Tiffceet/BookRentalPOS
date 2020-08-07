@@ -1,4 +1,4 @@
-package sample;
+package bookrentalpos;
 
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;

@@ -1,4 +1,4 @@
-package sample;
+package bookrentalpos;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -7,11 +7,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import my.edu.tarc.dco.bookrentalpos.Staff;
 
 import java.io.IOException;
 

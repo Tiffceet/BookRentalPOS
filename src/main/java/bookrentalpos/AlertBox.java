@@ -1,4 +1,4 @@
-package sample;
+package bookrentalpos;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

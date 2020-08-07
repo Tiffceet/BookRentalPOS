@@ -1,4 +1,4 @@
-package sample;
+package bookrentalpos;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -25,7 +25,6 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 800, 600));
         primaryStage.show();
     }
-
 
     public static void main(String[] args) {
         db = new DBManager();
