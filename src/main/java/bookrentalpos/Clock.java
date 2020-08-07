@@ -11,10 +11,16 @@ import java.time.format.DateTimeFormatter;
 
 public class Clock {
 
+    static private Timeline clock;
+
     public static void display(Label dateTime) {
-        Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
+        if (clock != null) {
+            clock.stop();
+            clock = null;
+        }
+        clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-            if(dateTime != null) {
+            if (dateTime != null) {
                 dateTime.setText(LocalDateTime.now().format(formatter));
             }
         }), new KeyFrame(Duration.seconds(1)));
