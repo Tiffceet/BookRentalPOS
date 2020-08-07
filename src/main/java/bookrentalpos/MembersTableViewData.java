@@ -1,6 +1,4 @@
-package sample;
-
-import javafx.beans.property.SimpleStringProperty;
+package bookrentalpos;
 
 public class MembersTableViewData {
     private String id = "";

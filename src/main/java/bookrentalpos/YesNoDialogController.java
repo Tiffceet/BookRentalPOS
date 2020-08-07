@@ -1,4 +1,4 @@
-package sample;
+package bookrentalpos;
 
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;

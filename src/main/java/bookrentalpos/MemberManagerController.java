@@ -1,4 +1,4 @@
-package sample;
+package bookrentalpos;
 
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXMLLoader;
@@ -7,21 +7,18 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import my.edu.tarc.dco.bookrentalpos.ContactType;
 import my.edu.tarc.dco.bookrentalpos.CustomUtil;
 import my.edu.tarc.dco.bookrentalpos.Member;
 
-import javax.xml.soap.Text;
 import java.io.IOException;
 import java.net.URL;
-import java.rmi.AlreadyBoundException;
 import java.util.ResourceBundle;
 
 public class MemberManagerController implements Initializable {
@@ -43,13 +40,16 @@ public class MemberManagerController implements Initializable {
     public Button confirmEditButton;
     public Button cancelDeleteButton;
     public Button confirmDeleteButton;
+    public Label dateTime;
 
     public TableView memberTableView;
 
     // Overriding initialize so that when MemberManager FXML is first loaded, it gets data from database
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         reloadTableView();
+        Clock.display(dateTime);
     }
 
     public void reloadTableView() {
