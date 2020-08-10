@@ -56,6 +56,11 @@ public class MemberManagerController implements Initializable {
             memberTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         }
         reloadTableView();
+
+        // Because some popup uses the controller class, we need to check if its null before allowing the clock to start
+        if (dateTime != null) {
+            Clock.display(dateTime);
+        }
     }
 
     public void reloadTableView() {
@@ -69,7 +74,6 @@ public class MemberManagerController implements Initializable {
         for (int a = 0; a < Main.mm.getMemberCount(); a++) {
             memberTableView.getItems().add(mem[a]);
         }
-        Clock.display(dateTime); // make sure to reload the clock every reload
     }
 
     public void backToMain(MouseEvent event) throws IOException {
@@ -318,12 +322,12 @@ public class MemberManagerController implements Initializable {
     public void tableViewOnKeyPressed(Event event) throws IOException {
         KeyEvent ke = (KeyEvent) event;
         // trigger edit event and delete event
-        if(ke.getCode() == KeyCode.F2) {
+        if (ke.getCode() == KeyCode.F2) {
             // only triger this event when there are row selected
             // prevents the error box saying "Please select a row of data to edit" when user click on blank area of the table view
             if (memberTableView.getSelectionModel().getSelectedItems().size() >= 1)
                 popEditMember();
-        } else if(ke.getCode() == KeyCode.DELETE) {
+        } else if (ke.getCode() == KeyCode.DELETE) {
             // only triger this event when there are row selected
             // prevents the error box saying "Please select a row of data to edit" when user click on blank area of the table view
             if (memberTableView.getSelectionModel().getSelectedItems().size() >= 1)
