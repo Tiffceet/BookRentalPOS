@@ -53,19 +53,6 @@ public class Member extends Entity {
     }
 
     /**
-     * @param type PHONE / EMAIL
-     * @return contacts of the member
-     */
-    public String getContacts(ContactType type) {
-        if (type == ContactType.EMAIL) {
-            return this.email;
-        } else if (type == ContactType.PHONE) {
-            return this.phoneNo;
-        }
-        return null;
-    }
-
-    /**
      *
      * @param ic set NRIC in string
      */

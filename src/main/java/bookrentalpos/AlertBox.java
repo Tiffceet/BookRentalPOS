@@ -22,7 +22,7 @@ public class AlertBox {
 
         Label label = new Label(message);
         label.setAlignment(Pos.CENTER);
-        label.setMaxWidth(1.7976931348623157E308);
+        label.setMaxWidth(Double.MAX_VALUE);
         label.setFont(Font.font("Bodoni MT", 20));
         label.setWrapText(true);
         VBox.setMargin(label, new Insets(5, 5, 0, 5));
