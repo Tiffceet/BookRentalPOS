@@ -26,6 +26,10 @@ VBox.upper {
     -fx-background-color: linear-gradient(#BCFFFF 55%, #FFFFFF);
 }
 
+HBox.lowerMain {
+    -fx-background-color: linear-gradient(#FFFFFF 55%, #BCFFFF);
+}
+
 HBox.lower {
     -fx-background-color: linear-gradient(#FFFFFF 80%, #808080);
 }

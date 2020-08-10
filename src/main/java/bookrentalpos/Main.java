@@ -15,7 +15,7 @@ public class Main extends Application {
     static StaffManager sm;
     static MemberManager mm;
     static TransactionManager tm;
-///123
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/FXML/loginInterface.fxml"));
