@@ -56,7 +56,6 @@ public class MemberManagerController implements Initializable {
             memberTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         }
         reloadTableView();
-        Clock.display(dateTime);
     }
 
     public void reloadTableView() {
@@ -70,6 +69,7 @@ public class MemberManagerController implements Initializable {
         for (int a = 0; a < Main.mm.getMemberCount(); a++) {
             memberTableView.getItems().add(mem[a]);
         }
+        Clock.display(dateTime); // make sure to reload the clock every reload
     }
 
     public void backToMain(MouseEvent event) throws IOException {
