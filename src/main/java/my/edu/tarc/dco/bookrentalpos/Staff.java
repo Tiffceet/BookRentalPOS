@@ -12,13 +12,20 @@ public class Staff extends Entity {
     private String pwHash;
 
     /**
+     * Blank
+     */
+    public Staff() {
+
+    }
+
+    /**
      * Constructor used to create new Staff
      *
      * @param usrname  username, later used to login
      * @param password password in plain text, later used to login
      */
     public Staff(String usrname, String password) {
-        setName(usrname);
+        super(0, usrname, null);
         this.pwHash = CustomUtil.md5Hash(password);
     }
 
@@ -32,9 +39,7 @@ public class Staff extends Entity {
      * @param hashedPW    md5Hash of the password
      */
     public Staff(int id, String dateCreated, String usrname, String hashedPW) {
-        setID(id);
-        setName(usrname);
-        setDateCreated(dateCreated);
+        super(id, usrname, dateCreated);
         this.pwHash = hashedPW;
     }
 

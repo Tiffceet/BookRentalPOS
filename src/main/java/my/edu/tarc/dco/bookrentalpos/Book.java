@@ -16,6 +16,13 @@ public class Book extends Entity {
     private String author;
 
     /**
+     * Blank
+     */
+    public Book() {
+
+    }
+
+    /**
      * Constructor used to create a new Book entry
      *
      * @param name        Book Title
@@ -23,7 +30,7 @@ public class Book extends Entity {
      * @param rentalPrice Book's rental price per day
      */
     public Book(String name, String author, double rentalPrice) {
-        setName(name);
+        super(0, name, null);
         setAuthor(author);
         setRentalPrice(rentalPrice);
         this.rented = false;
@@ -44,9 +51,7 @@ public class Book extends Entity {
      * @see #Book(String, String, double)
      */
     public Book(int id, String date, String name, String author, double rentalPrice, int lastRentedBy, int lastReservedBy, boolean isRented, boolean isReserved) {
-        setID(id);
-        setDateCreated(date);
-        setName(name);
+        super(0, name, null);
         setAuthor(author);
         setRentalPrice(rentalPrice);
         setLastRentedBy(lastRentedBy);
