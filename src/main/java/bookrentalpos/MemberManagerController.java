@@ -96,13 +96,13 @@ public class MemberManagerController implements Initializable {
     public void popEditMember() throws IOException {
         ObservableList ol = memberTableView.getSelectionModel().getSelectedItems();
         if (ol.size() > 1) {
-            AlertBox.display("Sorry but batch edit is not supported.\nPlease select only 1 row of data.");
+            Dialog.alertBox("Sorry but batch edit is not supported.\nPlease select only 1 row of data.");
             return;
         }
         Member memToDelete = (Member) ol.get(0);
         if (memToDelete == null) {
             // User didnt select the row to delete
-            AlertBox.display("Please select a row of data to edit.");
+            Dialog.alertBox("Please select a row of data to edit.");
             return;
         }
 
@@ -131,7 +131,7 @@ public class MemberManagerController implements Initializable {
         Member memToDelete = (Member) ol.get(0);
         if (memToDelete == null) {
             // User didnt select the row to delete
-            AlertBox.display("Please select a row of data to delete.");
+            Dialog.alertBox("Please select a row of data to delete.");
             return;
         }
 
@@ -157,7 +157,7 @@ public class MemberManagerController implements Initializable {
                     // Somewhere in the database went wrong
                 }
             }
-            AlertBox.display(ol.size() + " member has successfully deleted!");
+            Dialog.alertBox(ol.size() + " member has successfully deleted!");
         }
         reloadTableView();
     }
@@ -179,33 +179,33 @@ public class MemberManagerController implements Initializable {
         // Input Validation Code here
         //     if you are reading this, code the validation for email, phone number and IC number here thanks
         if (memberName.trim().isEmpty() || memberIC.trim().isEmpty()) {
-            AlertBox.display("Empty name or IC is not allowed");
+            Dialog.alertBox("Empty name or IC is not allowed");
             return;
         }
 
         if (!CustomUtil.checkIC(memberIC)) {
-            AlertBox.display("Invalid IC");
+            Dialog.alertBox("Invalid IC");
             return;
         }
 
         if (!memberEmail.isEmpty() && !CustomUtil.checkEmail(memberEmail)) {
-            AlertBox.display("Invalid Email");
+            Dialog.alertBox("Invalid Email");
             return;
         }
 
         if (!memberPhone.isEmpty() && !CustomUtil.checkPhoneNo(memberPhone)) {
-            AlertBox.display("Invalid Phone number.");
+            Dialog.alertBox("Invalid Phone number.");
             return;
         }
 
         // Code to add entry to database
         if (!Main.mm.registerMember(new Member(memberIC, memberName, memberPhone, memberEmail))) {
-            AlertBox.display("Same IC number have been registered before");
+            Dialog.alertBox("Same IC number have been registered before");
             return;
         }
 
         // If validated.
-        AlertBox.display("The member has successfully added!");
+        Dialog.alertBox("The member has successfully added!");
 
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.close();
@@ -223,22 +223,22 @@ public class MemberManagerController implements Initializable {
         // Input Validation Code here
         //     if you are reading this, code the validation for email, phone number and IC number here thanks
         if (memberName.trim().isEmpty() || memberIC.trim().isEmpty()) {
-            AlertBox.display("Empty name or IC is not allowed");
+            Dialog.alertBox("Empty name or IC is not allowed");
             return;
         }
 
         if (!CustomUtil.checkIC(memberIC)) {
-            AlertBox.display("Invalid IC");
+            Dialog.alertBox("Invalid IC");
             return;
         }
 
         if (!memberEmail.isEmpty() && !CustomUtil.checkEmail(memberEmail)) {
-            AlertBox.display("Invalid Email");
+            Dialog.alertBox("Invalid Email");
             return;
         }
 
         if (!memberPhone.isEmpty() && !CustomUtil.checkPhoneNo(memberPhone)) {
-            AlertBox.display("Invalid Phone number.");
+            Dialog.alertBox("Invalid Phone number.");
             return;
         }
 
@@ -249,12 +249,12 @@ public class MemberManagerController implements Initializable {
         m.setEmail(memberEmail);
         m.setPhoneNo(memberPhone);
         if (!Main.mm.updateMember(m)) {
-            AlertBox.display("Same IC number have been registered before");
+            Dialog.alertBox("Same IC number have been registered before");
             return;
         }
 
         //If validated.
-        AlertBox.display("The member has successfully edited!");
+        Dialog.alertBox("The member has successfully edited!");
 
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.close();

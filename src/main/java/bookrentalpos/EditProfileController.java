@@ -25,19 +25,19 @@ public class EditProfileController {
 
         Staff stfToEdit = Main.sm.getLogOnStaff();
         if (!passwordField.getText().equals(confirmPasswordField.getText())) {
-            AlertBox.display("Password do not match");
+            Dialog.alertBox("Password do not match");
             return;
         }
 
         if (newPW.isEmpty()) {
-            AlertBox.display("Password can not be empty.");
+            Dialog.alertBox("Password can not be empty.");
             return;
         }
 
         // if username already exist
         // only check usernames of other staff and not self
         if (Main.sm.getStaffByName(newUsername) != null && Main.sm.getStaffByName(newUsername).getId() != stfToEdit.getId()) {
-            AlertBox.display("Username already exist");
+            Dialog.alertBox("Username already exist");
             return;
         }
         stfToEdit.setPassword(passwordField.getText());
@@ -45,10 +45,10 @@ public class EditProfileController {
 
         // update staff to database
         if (!Main.sm.updateStaff(stfToEdit)) {
-            AlertBox.display("Something went wrong. Please contact the admin.");
+            Dialog.alertBox("Something went wrong. Please contact the admin.");
         }
 
-        AlertBox.display("Your profile have been successfully updated.");
+        Dialog.alertBox("Your profile have been successfully updated.");
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.close();
 

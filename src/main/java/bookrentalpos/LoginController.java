@@ -37,11 +37,11 @@ public class LoginController {
             window.setScene(mainMenuScene);
             window.centerOnScreen();
         } else {
-            AlertBox.display("Wrong username or password");
+            Dialog.alertBox("Wrong username or password");
         }
     }
 
     public void forgetPassword(MouseEvent event) {
-        AlertBox.display("Please contact the admin to retrieve your password");
+        Dialog.alertBox("Please contact the admin to retrieve your password");
     }
 }
