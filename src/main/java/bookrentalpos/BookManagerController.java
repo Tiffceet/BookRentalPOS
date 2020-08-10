@@ -90,7 +90,7 @@ public class BookManagerController {
         String bookPrice = bookPriceField.getText();
         String bookQuantity = bookQuantityField.getText();
 
-        AlertBox.display("The book has successfully added!");
+        Dialog.alertBox("The book has successfully added!");
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.close();
     }
@@ -104,7 +104,7 @@ public class BookManagerController {
         String bookQuantity = bookQuantityField.getText();
 
 
-        AlertBox.display("The book has successfully edited!");
+        Dialog.alertBox("The book has successfully edited!");
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.close();
     }
@@ -112,7 +112,7 @@ public class BookManagerController {
     public void confirmBookDelete(MouseEvent event) throws IOException {
         // Delete from database.
 
-        AlertBox.display("The book has successfully deleted!");
+        Dialog.alertBox("The book has successfully deleted!");
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.close();
     }

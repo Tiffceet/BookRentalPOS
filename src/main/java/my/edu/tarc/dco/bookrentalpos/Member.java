@@ -10,14 +10,21 @@ public class Member extends Entity {
     private String icNo;
 
     /**
+     * Blank
+     */
+    public Member() {
+
+    }
+
+    /**
      * Constructor to create a new member without contacts
      *
      * @param icNo NRIC number of the member
      * @param name Name of the member
      */
     public Member(String icNo, String name) {
+        super(0, name, null);
         this.icNo = icNo;
-        setName(name);
         this.phoneNo = "";
         this.email = "";
     }
@@ -28,8 +35,8 @@ public class Member extends Entity {
      * @see Member#Member(java.lang.String, java.lang.String)
      */
     public Member(String icNo, String name, String phoneNo, String email) {
+        super(0, name, null);
         this.icNo = icNo;
-        setName(name);
         this.phoneNo = phoneNo;
         this.email = email;
     }
@@ -44,9 +51,7 @@ public class Member extends Entity {
      * java.lang.String)
      */
     public Member(int id, String date, String name, String phoneNo, String email, String icNo) {
-        setID(id);
-        setDateCreated(date);
-        setName(name);
+        super(id, name, date);
         this.phoneNo = phoneNo;
         this.email = email;
         this.icNo = icNo;

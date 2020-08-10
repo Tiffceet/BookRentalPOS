@@ -15,21 +15,28 @@ public class Transaction extends Entity {
     private int bookInvovled;
 
     /**
+     * Blank
+     */
+    public Transaction() {
+
+    }
+
+    /**
      * Constructor used to create a new Transaction where ID is not required
      *
-     * @param type TransactionType Enum - RENT, RETURN and RESERVE
-     * @param staff staffID
-     * @param memberInvovled memberID
-     * @param bookInvovled bookID
+     * @param type               TransactionType Enum - RENT, RETURN and RESERVE
+     * @param staff              staffID
+     * @param memberInvovled     memberID
+     * @param bookInvovled       bookID
      * @param rentDurationInDays integer, you may set this to 0 if this field is
-     * not needed
+     *                           not needed
      */
     public Transaction(TransactionType type, int staff, int memberInvovled, int bookInvovled, int rentDurationInDays) {
-	this.type = type;
-	this.rentDurationInDays = rentDurationInDays;
-	this.staffHandled = staff;
-	this.memberInvovled = memberInvovled;
-	this.bookInvovled = bookInvovled;
+        this.type = type;
+        this.rentDurationInDays = rentDurationInDays;
+        this.staffHandled = staff;
+        this.memberInvovled = memberInvovled;
+        this.bookInvovled = bookInvovled;
     }
 
     /**
@@ -39,13 +46,12 @@ public class Transaction extends Entity {
      * @see #Transaction(TransactionType, int, int, int, int)
      */
     public Transaction(int id, String date, TransactionType type, int staff, int memberInvovled, int bookInvovled, int rentDurationInDays) {
-	setID(id);
-	setDateCreated(date);
-	this.type = type;
-	this.rentDurationInDays = rentDurationInDays;
-	this.staffHandled = staff;
-	this.memberInvovled = memberInvovled;
-	this.bookInvovled = bookInvovled;
+        super(id, null, date);
+        this.type = type;
+        this.rentDurationInDays = rentDurationInDays;
+        this.staffHandled = staff;
+        this.memberInvovled = memberInvovled;
+        this.bookInvovled = bookInvovled;
     }
 
     /**
@@ -53,84 +59,75 @@ public class Transaction extends Entity {
      * have rentDuration
      */
     public int getRentDurationInDays() {
-	return rentDurationInDays;
+        return rentDurationInDays;
     }
 
     /**
-     *
      * @return return TransactionType enum - RENT, RESERVE and RETURN
      */
     public TransactionType getType() {
-	return type;
+        return type;
     }
 
     /**
-     *
      * @param rentDurationInDays Default RentDuration is 0, use this to set rent
-     * duration in days(int)
+     *                           duration in days(int)
      */
     public void setRentDurationInDays(int rentDurationInDays) {
-	this.rentDurationInDays = rentDurationInDays;
+        this.rentDurationInDays = rentDurationInDays;
     }
 
     /**
-     *
      * @param type set Transaction type - RENT, RESERVE, RETURN
      */
     public void setType(TransactionType type) {
-	this.type = type;
+        this.type = type;
     }
 
     /**
-     *
      * @return StaffID will be returned
      */
     public int getStaffHandled() {
-	return staffHandled;
+        return staffHandled;
     }
 
     /**
-     *
      * @param staffHandled staffID of this transaction, note that this will not
-     * validate with database whether if staffID is valid
+     *                     validate with database whether if staffID is valid
      */
     public void setStaffHandled(int staffHandled) {
-	this.staffHandled = staffHandled;
+        this.staffHandled = staffHandled;
     }
 
     /**
-     *
      * @return return MemberID, can be 0 if the member was removed previously
      */
     public int getMemberInvovled() {
-	return memberInvovled;
+        return memberInvovled;
     }
 
     /**
-     *
      * @param memberInvovled MemberID of this transaction, note that this will
-     * not validate with database whether if MemberID is valid
+     *                       not validate with database whether if MemberID is valid
      */
     public void setMemberInvovled(int memberInvovled) {
-	this.memberInvovled = memberInvovled;
+        this.memberInvovled = memberInvovled;
     }
 
     /**
-     *
      * @return return BookID of this transaction, can be 0 if the book was
      * previously removed
      */
     public int getBookInvovled() {
-	return bookInvovled;
+        return bookInvovled;
     }
 
     /**
-     *
      * @param bookInvovled bookID of this transaction, note that this will not
-     * validate with database whether if BookID is valid
+     *                     validate with database whether if BookID is valid
      */
     public void setBookInvovled(int bookInvovled) {
-	this.bookInvovled = bookInvovled;
+        this.bookInvovled = bookInvovled;
     }
 
 }
