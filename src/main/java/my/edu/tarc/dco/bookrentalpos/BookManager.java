@@ -142,8 +142,8 @@ public class BookManager {
      */
     public boolean removeBook(int bookID) {
         db.execQuery("UPDATE transactions\n"
-                + "SET bookInvovled=NULL\n"
-                + "WHERE bookInvovled=" + bookID);
+                + "SET bookInvolved=NULL\n"
+                + "WHERE bookInvolved=" + bookID);
         String sql = String.format("DELETE FROM book WHERE id=%d", bookID);
         Book[] tmpList = new Book[ARRAY_SIZE];
         if (db.updateQuery(sql) == 1) {

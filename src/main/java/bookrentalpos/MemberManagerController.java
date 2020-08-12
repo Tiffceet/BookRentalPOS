@@ -26,7 +26,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MemberManagerController implements Initializable {
+public class MemberManagerController implements Initializable, TableInterface {
     public Button backButton;
     public static Stage getWindow;
     public JFXTextField memberNameField;
@@ -63,6 +63,34 @@ public class MemberManagerController implements Initializable {
         }
     }
 
+    @Override
+    public void tableOnClick(Event event) {
+        if (((MouseEvent) event).getClickCount() >= 2) {
+            // only triger this event when there are row selected
+            // prevents the error box saying "Please select a row of data to edit" when user click on blank area of the table view
+            if (memberTableView.getSelectionModel().getSelectedItems().size() >= 1)
+                popEditMember();
+        }
+    }
+
+    @Override
+    public void tableOnKeyPressed(Event event) {
+        KeyEvent ke = (KeyEvent) event;
+        // trigger edit event and delete event
+        if (ke.getCode() == KeyCode.F2) {
+            // only triger this event when there are row selected
+            // prevents the error box saying "Please select a row of data to edit" when user click on blank area of the table view
+            if (memberTableView.getSelectionModel().getSelectedItems().size() >= 1)
+                popEditMember();
+        } else if (ke.getCode() == KeyCode.DELETE) {
+            // only triger this event when there are row selected
+            // prevents the error box saying "Please select a row of data to edit" when user click on blank area of the table view
+            if (memberTableView.getSelectionModel().getSelectedItems().size() >= 1)
+                popDeleteMember(event);
+        }
+    }
+
+    @Override
     public void reloadTableView() {
         // clear the current list items first
         if (memberTableView == null)
@@ -97,7 +125,7 @@ public class MemberManagerController implements Initializable {
         reloadTableView(); // Glad showAndWait() is not asynchronous xd
     }
 
-    public void popEditMember() throws IOException {
+    public void popEditMember() {
         ObservableList ol = memberTableView.getSelectionModel().getSelectedItems();
         if (ol.size() > 1) {
             Dialog.alertBox("Sorry but batch edit is not supported.\nPlease select only 1 row of data.");
@@ -111,7 +139,14 @@ public class MemberManagerController implements Initializable {
         }
 
         FXMLLoader fl = new FXMLLoader(getClass().getResource("/FXML/MemberManager/memberManagerEdit.fxml"));
-        Parent editMemberParent = (Parent) fl.load();
+        Parent editMemberParent;
+        try {
+            editMemberParent = (Parent) fl.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Dialog.alertBox("Something went wrong and edit pop up was unable to show");
+            return;
+        }
         MemberManagerController mmc = fl.getController();
         mmc.memberID.setText(memToDelete.getId() + "");
         mmc.memberNameField.setText(memToDelete.getName());
@@ -129,7 +164,7 @@ public class MemberManagerController implements Initializable {
         reloadTableView();
     }
 
-    public void popDeleteMember(Event event) throws IOException {
+    public void popDeleteMember(Event event) {
 
         ObservableList ol = memberTableView.getSelectionModel().getSelectedItems();
         Member memToDelete = (Member) ol.get(0);
@@ -142,7 +177,14 @@ public class MemberManagerController implements Initializable {
         // I changed the code here so it uses YesNoDialogController to track the response
         // Parent deleteMemberParent = FXMLLoader.load(getClass().getResource("/FXML/MemberManager/memberManagerDelete.fxml"));
         FXMLLoader fl = new FXMLLoader(getClass().getResource("/FXML/MemberManager/memberManagerDelete.fxml"));
-        Parent deleteMemberParent = (Parent) fl.load();
+        Parent deleteMemberParent;
+        try {
+            deleteMemberParent = (Parent) fl.load();
+        } catch(IOException e){
+            e.printStackTrace();
+            Dialog.alertBox("Something went wrong and delete pop up was unable to show");
+            return;
+        }
         YesNoDialogController ync = fl.getController(); // get the controller of this fxml
 
         Stage deleteMemberWindow = new Stage();
@@ -307,31 +349,6 @@ public class MemberManagerController implements Initializable {
         // if escape key is pressed, close the window
         if (event.getCode() == KeyCode.ESCAPE) {
             cancelButton(event);
-        }
-    }
-
-    public void tableViewOnClickEvent(Event event) throws IOException {
-        if (((MouseEvent) event).getClickCount() >= 2) {
-            // only triger this event when there are row selected
-            // prevents the error box saying "Please select a row of data to edit" when user click on blank area of the table view
-            if (memberTableView.getSelectionModel().getSelectedItems().size() >= 1)
-                popEditMember();
-        }
-    }
-
-    public void tableViewOnKeyPressed(Event event) throws IOException {
-        KeyEvent ke = (KeyEvent) event;
-        // trigger edit event and delete event
-        if (ke.getCode() == KeyCode.F2) {
-            // only triger this event when there are row selected
-            // prevents the error box saying "Please select a row of data to edit" when user click on blank area of the table view
-            if (memberTableView.getSelectionModel().getSelectedItems().size() >= 1)
-                popEditMember();
-        } else if (ke.getCode() == KeyCode.DELETE) {
-            // only triger this event when there are row selected
-            // prevents the error box saying "Please select a row of data to edit" when user click on blank area of the table view
-            if (memberTableView.getSelectionModel().getSelectedItems().size() >= 1)
-                popDeleteMember(event);
         }
     }
 }

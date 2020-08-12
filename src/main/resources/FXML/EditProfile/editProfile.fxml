@@ -36,7 +36,7 @@
             <Label fx:id="staffIDLabel" text="null" GridPane.columnIndex="1" />
             <Label text="Staff ID:" />
             <Label prefHeight="Infinity" prefWidth="Infinity" text="Name:" GridPane.rowIndex="1" />
-            <Label prefHeight="Infinity" prefWidth="Infinity" text="Password:" GridPane.rowIndex="2" />
+            <Label prefHeight="Infinity" prefWidth="Infinity" text="New Password:" GridPane.rowIndex="2" />
             <Label prefHeight="Infinity" prefWidth="Infinity" text="Confirmation Password:" GridPane.rowIndex="3" />
             <TextField fx:id="nameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
