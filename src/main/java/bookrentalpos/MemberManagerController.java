@@ -180,7 +180,7 @@ public class MemberManagerController implements Initializable, TableInterface {
         Parent deleteMemberParent;
         try {
             deleteMemberParent = (Parent) fl.load();
-        } catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             Dialog.alertBox("Something went wrong and delete pop up was unable to show");
             return;
@@ -245,13 +245,14 @@ public class MemberManagerController implements Initializable, TableInterface {
         }
 
         // Code to add entry to database
-        if (!Main.mm.registerMember(new Member(memberIC, memberName, memberPhone, memberEmail))) {
+        Member newMember = new Member(memberIC, memberName, memberPhone, memberEmail);
+        if (!Main.mm.registerMember(newMember)) {
             Dialog.alertBox("Same IC number have been registered before");
             return;
         }
 
         // If validated.
-        Dialog.alertBox("The member has successfully added!");
+        Dialog.alertBox("The member has successfully added!\nThe new member ID assigned is " + newMember.getId());
 
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.close();

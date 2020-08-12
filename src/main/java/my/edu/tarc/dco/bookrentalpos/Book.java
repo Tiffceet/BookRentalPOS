@@ -60,6 +60,18 @@ public class Book extends Entity {
         this.reserved = false;
     }
 
+    @Override
+    public String toString() {
+        return String.format(
+                "Title: %s\n" +
+                        "Author: %s\n" +
+                        "RentalPrice: %.2f\n" + "DateAdded: %s",
+                this.getName(),
+                this.author,
+                this.rentalPrice,
+                this.getDateCreated());
+    }
+
     /**
      * @return MemberID of whoever last rented this book. Can be 0 if the member
      * was previously removed

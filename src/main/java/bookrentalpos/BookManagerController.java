@@ -15,10 +15,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import my.edu.tarc.dco.bookrentalpos.Book;
-import my.edu.tarc.dco.bookrentalpos.Member;
 
 import java.io.IOException;
 import java.net.URL;
+import java.security.Key;
 import java.util.ResourceBundle;
 
 public class BookManagerController implements TableInterface, Initializable {
@@ -26,9 +26,10 @@ public class BookManagerController implements TableInterface, Initializable {
     public Button backButton;
     public Button addBookButton;
     public Button cancelButton;
-    public TextField bookNameField;
-    public TextField bookPriceField;
-    public TextField bookQuantityField;
+    public TextField bookIDField;
+    public TextField bookTitleField;
+    public TextField bookAuthorField;
+    public TextField rentalPriceField;
     public Button confirmAddButton;
     public Button closeButton;
     public Button editBookButton;
@@ -57,7 +58,14 @@ public class BookManagerController implements TableInterface, Initializable {
 
     @Override
     public void tableOnClick(Event event) {
-
+        if (((MouseEvent) event).getClickCount() == 2) {
+            try {
+                popEditBook();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Dialog.alertBox("Something went wrong internally");
+            }
+        }
     }
 
     @Override
@@ -68,6 +76,13 @@ public class BookManagerController implements TableInterface, Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
                 Dialog.alertBox("Somewhere went wrong internally. Please contact the devs");
+            }
+        } else if (((KeyEvent) event).getCode() == KeyCode.F2) {
+            try {
+                popEditBook();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Dialog.alertBox("Something went wrong internally");
             }
         }
     }
@@ -84,7 +99,6 @@ public class BookManagerController implements TableInterface, Initializable {
         for (int a = 0; a < Main.bm.getBookCount(); a++) {
             bookTableView.getItems().add(books[a]);
         }
-        System.out.println(Main.bm.getBookCount());
     }
 
     public void backToMain(MouseEvent event) throws IOException {
@@ -105,10 +119,38 @@ public class BookManagerController implements TableInterface, Initializable {
         addBookWindow.getIcons().add(new Image(Main.class.getResourceAsStream("/Image/icon.png")));
         addBookWindow.setScene(new Scene(addBookParent, 600, 350));
         addBookWindow.showAndWait();
+        reloadTableView();
     }
 
     public void popEditBook() throws IOException {
-        Parent editBookParent = FXMLLoader.load(getClass().getResource("/FXML/BookManager/bookManagerEdit.fxml"));
+        ObservableList ol = bookTableView.getSelectionModel().getSelectedItems();
+        if (ol.size() == 0) {
+            Dialog.alertBox("Please select a row of data to edit");
+            return;
+        }
+
+        if (ol.size() > 1) {
+            Dialog.alertBox("Sorry but batch edit is not supported.");
+            return;
+        }
+
+        Book bookToEdit = (Book) ol.get(0);
+
+        FXMLLoader fl = new FXMLLoader(getClass().getResource("/FXML/BookManager/bookManagerEdit.fxml"));
+        Parent editBookParent = (Parent) fl.load();
+        BookManagerController bmc = fl.getController();
+
+        // Disable ID as it shouldnt be edited
+        bmc.bookIDField.setStyle("-fx-text-inner-color: grey;");
+        bmc.bookIDField.setEditable(false);
+        bmc.bookIDField.setFocusTraversable(false);
+
+        // load the data to be edited
+        bmc.bookTitleField.setText(bookToEdit.getName());
+        bmc.bookAuthorField.setText(bookToEdit.getAuthor());
+        bmc.bookIDField.setText(bookToEdit.getId() + "");
+        bmc.rentalPriceField.setText(bookToEdit.getRentalPrice() + "");
+
         Stage editBookWindow = new Stage();
 
         editBookWindow.initModality(Modality.APPLICATION_MODAL);
@@ -116,6 +158,8 @@ public class BookManagerController implements TableInterface, Initializable {
         editBookWindow.getIcons().add(new Image(Main.class.getResourceAsStream("/Image/icon.png")));
         editBookWindow.setScene(new Scene(editBookParent, 600, 350));
         editBookWindow.showAndWait();
+        reloadTableView();
+
     }
 
     public void popDeleteBook(Event event) throws IOException {
@@ -148,34 +192,60 @@ public class BookManagerController implements TableInterface, Initializable {
         reloadTableView();
     }
 
-    public void cancelButton(MouseEvent event) {
+    public void cancelButton(Event event) {
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.close();
     }
 
     public void confirmAddButton(MouseEvent event) {
-        // Add to database.
-        // Need to do validation.
+
         getWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        String bookName = bookNameField.getText();
-        String bookPrice = bookPriceField.getText();
-        String bookQuantity = bookQuantityField.getText();
+
+        String bookName = bookTitleField.getText();
+        String bookAuthor = bookAuthorField.getText();
+        double newRentPrice;
+        try {
+            newRentPrice = Double.parseDouble(rentalPriceField.getText());
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            Dialog.alertBox("Rental price need to be a number");
+            return;
+        }
+
+        if (!Main.bm.addBook(new Book(bookName, bookAuthor, newRentPrice))) {
+            Dialog.alertBox("Soemthing went wrong and your book was not added");
+            return;
+        }
 
         Dialog.alertBox("The book has successfully added!");
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.close();
     }
 
-    public void confirmEditButton(MouseEvent event) throws IOException {
-        // Add to database.
-        // Need to do validation.
+    public void confirmEditButton(Event event) throws IOException {
         getWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        String bookName = bookNameField.getText();
-        String bookPrice = bookPriceField.getText();
-        String bookQuantity = bookQuantityField.getText();
+        int bookID = Integer.parseInt(bookIDField.getText());
+        String bookName = bookTitleField.getText();
+        String bookAuthor = bookAuthorField.getText();
+        double newRentPrice;
+        try {
+            newRentPrice = Double.parseDouble(rentalPriceField.getText());
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            Dialog.alertBox("Rental price need to be a number");
+            return;
+        }
+        Book bookToEdit = Main.bm.getBookById(bookID);
+        bookToEdit.setName(bookName);
+        bookToEdit.setAuthor(bookAuthor);
+        bookToEdit.setRentalPrice(newRentPrice);
 
+        if (!Main.bm.updateBook(bookToEdit)) {
+            Dialog.alertBox("Something went wrong and the book was not deleted");
+            return;
+        }
 
-        Dialog.alertBox("The book has successfully edited!");
+        Dialog.alertBox("The book has been successfully edited!");
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.close();
     }
@@ -220,6 +290,12 @@ public class BookManagerController implements TableInterface, Initializable {
         }
         if (searchByAuthorField != null) {
             searchByAuthorField.setText("");
+        }
+    }
+
+    public void textFieldOnKeyPressed(Event event) {
+        if (((KeyEvent) event).getCode() == KeyCode.ESCAPE) {
+            cancelButton(event);
         }
     }
 }

@@ -57,8 +57,17 @@ public class Member extends Entity {
         this.icNo = icNo;
     }
 
+    @Override
+    public String toString() {
+        return String.format(
+                 "Name: %s\nNRIC: %s\nPhone No.: %s\nEmail: %s",
+                this.getName(),
+                this.getIcNo(),
+                this.getPhoneNo(),
+                this.getEmail());
+    }
+
     /**
-     *
      * @param ic set NRIC in string
      */
     public void setIcNo(String ic) {

@@ -1,169 +1,171 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import javafx.scene.text.*?>
-<?import com.jfoenix.controls.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" stylesheets="@../ManagerStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-  <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-  </columnConstraints>
-  <rowConstraints>
-    <RowConstraints maxHeight="377.0" minHeight="10.0" prefHeight="180.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="598.0" minHeight="10.0" prefHeight="588.0" vgrow="SOMETIMES" />
-  </rowConstraints>
-   <children>
-      <GridPane GridPane.rowIndex="1">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">
-              <columnConstraints>
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" stylesheets="@../ManagerStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrentalpos.MainMenuController">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints maxHeight="377.0" minHeight="10.0" prefHeight="180.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="598.0" minHeight="10.0" prefHeight="588.0" vgrow="SOMETIMES" />
+    </rowConstraints>
+    <children>
+        <GridPane GridPane.rowIndex="1">
+            <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints maxHeight="88.0" minHeight="0.0" prefHeight="60.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="196.0" minHeight="10.0" prefHeight="136.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" text="Back" GridPane.rowIndex="1">
-                     <GridPane.margin>
-                        <Insets bottom="20.0" left="255.0" />
-                     </GridPane.margin>
-                  </Button>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <image>
-                        <Image url="@../Image/StaffAdminInterface/exit.png" />
-                     </image>
-                     <GridPane.margin>
-                        <Insets bottom="20.0" />
-                     </GridPane.margin>
-                  </ImageView>
-               </children>
-            </GridPane>
-            <GridPane>
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="489.0" minWidth="10.0" prefWidth="465.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="336.0" minWidth="10.0" prefWidth="218.0" />
-              </columnConstraints>
-              <rowConstraints>
+            </columnConstraints>
+            <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="280.0" text="Manage Transaction">
-                     <GridPane.margin>
-                        <Insets left="140.0" />
-                     </GridPane.margin>
-                  </Button>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
-                     <image>
-                        <Image url="@../Image/StaffAdminInterface/bill.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </GridPane>
-            <GridPane GridPane.rowIndex="1">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="474.0" minWidth="10.0" prefWidth="422.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="335.0" minWidth="10.0" prefWidth="261.0" />
-              </columnConstraints>
-              <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <Button mnemonicParsing="false" prefHeight="90.0" prefWidth="280.0" text="Management Book">
-                     <GridPane.margin>
-                        <Insets left="140.0" />
-                     </GridPane.margin>
-                  </Button>
-                  <ImageView fitHeight="223.0" fitWidth="237.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
-                     <image>
-                        <Image url="@../Image/StaffAdminInterface/book.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </GridPane>
-            <GridPane GridPane.rowIndex="2">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="520.0" minWidth="10.0" prefWidth="461.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="333.0" minWidth="10.0" prefWidth="222.0" />
-              </columnConstraints>
-              <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <Button mnemonicParsing="false" prefHeight="90.0" prefWidth="280.0" text="Manage Staff">
-                     <GridPane.margin>
-                        <Insets left="140.0" />
-                     </GridPane.margin>
-                  </Button>
-                  <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
-                     <image>
-                        <Image url="@../Image/StaffAdminInterface/staff.jpg" />
-                     </image>
-                  </ImageView>
-               </children>
-            </GridPane>
-            <GridPane GridPane.columnIndex="1">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="474.0" minWidth="10.0" prefWidth="409.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="283.0" minWidth="10.0" prefWidth="274.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
-                     <image>
-                        <Image url="@../Image/StaffAdminInterface/Profile.png" />
-                     </image>
-                  </ImageView>
-                  <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="280.0" text="Manage Profile">
-                     <GridPane.margin>
-                        <Insets left="100.0" />
-                     </GridPane.margin>
-                  </Button>
-               </children>
-            </GridPane>
-            <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="497.0" minWidth="10.0" prefWidth="404.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="329.0" minWidth="10.0" prefWidth="279.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="280.0" text="Manage Member">
-                     <GridPane.margin>
-                        <Insets left="100.0" />
-                     </GridPane.margin>
-                  </Button>
-                  <ImageView fitHeight="164.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
-                     <image>
-                        <Image url="@../Image/StaffAdminInterface/member.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </GridPane>
-         </children>
-      </GridPane>
-      <HBox prefHeight="113.0" prefWidth="1366.0" styleClass="upper" stylesheets="@../ManagerStyle.css">
-         <children>
-            <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="upperTitle" stylesheets="/ManagerStyle.css" text="Main Menu" HBox.hgrow="ALWAYS" />
-         </children>
-      </HBox>
-   </children>
+            </rowConstraints>
+            <children>
+                <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="88.0" minHeight="0.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="196.0" minHeight="10.0" prefHeight="136.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" text="Back" GridPane.rowIndex="1">
+                            <GridPane.margin>
+                                <Insets bottom="20.0" left="255.0" />
+                            </GridPane.margin>
+                        </Button>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                            <image>
+                                <Image url="@../Image/StaffAdminInterface/exit.png" />
+                            </image>
+                            <GridPane.margin>
+                                <Insets bottom="20.0" />
+                            </GridPane.margin>
+                        </ImageView>
+                    </children>
+                </GridPane>
+                <GridPane>
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="489.0" minWidth="10.0" prefWidth="465.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="336.0" minWidth="10.0" prefWidth="218.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <Button fx:id="transactionButton" mnemonicParsing="false" onMouseClicked="#toManageTransaction" prefHeight="80.0" prefWidth="280.0" text="Manage Transaction">
+                            <GridPane.margin>
+                                <Insets left="140.0" />
+                            </GridPane.margin>
+                        </Button>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+                            <image>
+                                <Image url="@../Image/StaffAdminInterface/bill.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </GridPane>
+                <GridPane GridPane.rowIndex="1">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="474.0" minWidth="10.0" prefWidth="422.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="335.0" minWidth="10.0" prefWidth="261.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <Button fx:id="bookButton" mnemonicParsing="false" onMouseClicked="#toManageBook" prefHeight="90.0" prefWidth="280.0" text="Management Book">
+                            <GridPane.margin>
+                                <Insets left="140.0" />
+                            </GridPane.margin>
+                        </Button>
+                        <ImageView fitHeight="223.0" fitWidth="237.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+                            <image>
+                                <Image url="@../Image/StaffAdminInterface/book.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </GridPane>
+                <GridPane GridPane.rowIndex="2">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="520.0" minWidth="10.0" prefWidth="461.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="333.0" minWidth="10.0" prefWidth="222.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <Button mnemonicParsing="false" prefHeight="90.0" prefWidth="280.0" text="Manage Staff">
+                            <GridPane.margin>
+                                <Insets left="140.0" />
+                            </GridPane.margin>
+                        </Button>
+                        <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+                            <image>
+                                <Image url="@../Image/StaffAdminInterface/staff.jpg" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </GridPane>
+                <GridPane GridPane.columnIndex="1">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="474.0" minWidth="10.0" prefWidth="409.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="283.0" minWidth="10.0" prefWidth="274.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+                            <image>
+                                <Image url="@../Image/StaffAdminInterface/Profile.png" />
+                            </image>
+                        </ImageView>
+                        <Button fx:id="profileButton" mnemonicParsing="false" onMouseClicked="#popEditProfile" prefHeight="80.0" prefWidth="280.0" text="Manage Profile">
+                            <GridPane.margin>
+                                <Insets left="100.0" />
+                            </GridPane.margin>
+                        </Button>
+                    </children>
+                </GridPane>
+                <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="497.0" minWidth="10.0" prefWidth="404.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="329.0" minWidth="10.0" prefWidth="279.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <Button fx:id="memberButton" mnemonicParsing="false" onMouseClicked="#toManageMember" prefHeight="80.0" prefWidth="280.0" text="Manage Member">
+                            <GridPane.margin>
+                                <Insets left="100.0" />
+                            </GridPane.margin>
+                        </Button>
+                        <ImageView fitHeight="164.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+                            <image>
+                                <Image url="@../Image/StaffAdminInterface/member.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </GridPane>
+            </children>
+        </GridPane>
+        <HBox prefHeight="113.0" prefWidth="1366.0" styleClass="upper" stylesheets="@../ManagerStyle.css">
+            <children>
+                <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="upperTitle" stylesheets="/ManagerStyle.css" text="Main Menu" HBox.hgrow="ALWAYS" />
+            </children>
+        </HBox>
+    </children>
 </GridPane>
