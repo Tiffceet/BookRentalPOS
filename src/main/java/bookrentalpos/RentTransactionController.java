@@ -12,10 +12,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class RentTransactionController {
-    public Button addRentButton;
-    public Button editRentButton;
-    public Button deleteRentButton;
     public Label dateTime;
+    public Button backButton;
 
     public void initialize() {
         Clock.display(dateTime);

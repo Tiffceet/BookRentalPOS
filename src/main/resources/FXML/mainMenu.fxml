@@ -106,7 +106,7 @@
                   </ImageView>
                </children>
             </GridPane>
-            <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" text="Back" GridPane.columnIndex="1" GridPane.rowIndex="2" fx:id="logOutButton" onMouseClicked="#popLogOut">
+            <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" text="Log Out" GridPane.columnIndex="1" GridPane.rowIndex="2" fx:id="logOutButton" onMouseClicked="#popLogOut">
                <GridPane.margin>
                   <Insets left="330.0" top="40.0" />
                </GridPane.margin>

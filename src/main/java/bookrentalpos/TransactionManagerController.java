@@ -5,7 +5,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -43,9 +45,13 @@ public class TransactionManagerController {
 
     public void toReturnTransaction(MouseEvent event) throws IOException {
         Parent returnTranParent = FXMLLoader.load(getClass().getResource("/FXML/TransactionManager/returnTransaction.fxml"));
-        Scene returnTranScene = new Scene(returnTranParent);
+        Stage returnTranWindow = new Stage();
 
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(returnTranScene);
+        returnTranWindow.initModality(Modality.APPLICATION_MODAL);
+        returnTranWindow.setTitle("Return Transaction Manager - Huahee Library");
+        returnTranWindow.getIcons().add(new Image(Main.class.getResourceAsStream("/Image/icon.png")));
+        returnTranWindow.setScene(new Scene(returnTranParent, 600, 300));
+        returnTranWindow.setResizable(false);
+        returnTranWindow.showAndWait();
     }
 }
