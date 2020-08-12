@@ -51,7 +51,7 @@ public class Book extends Entity {
      * @see #Book(String, String, double)
      */
     public Book(int id, String date, String name, String author, double rentalPrice, int lastRentedBy, int lastReservedBy, boolean isRented, boolean isReserved) {
-        super(0, name, null);
+        super(id, name, date);
         setAuthor(author);
         setRentalPrice(rentalPrice);
         setLastRentedBy(lastRentedBy);

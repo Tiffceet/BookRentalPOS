@@ -32,6 +32,13 @@ public class Main extends Application {
         sm = new StaffManager(db);
         mm = new MemberManager(db);
         tm = new TransactionManager(db, bm);
+//        bm.addBook(new Book("Book A", "Looz", 92.3));
+//        bm.addBook(new Book("Book B", "Looz", 62.3));
+//        bm.addBook(new Book("Book C", "Looz", 12.3));
+//        mm.registerMember(new Member("010802070131", "Loz"));
+//        mm.registerMember(new Member("010802070132", "Loz2"));
+//        mm.registerMember(new Member("010802070133", "Loz3"));
+//        System.exit(0);
         launch(args);
     }
 }
