@@ -33,7 +33,7 @@
                 <Label fx:id="dateTime" prefHeight="29.0" prefWidth="250.0" styleClass="upperTitle" text="00/00/0000 00:00:00" />
                 <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="22.0" styleClass="upperTitle" text="Member Manager" HBox.hgrow="ALWAYS">
                 </Label>
-                <Label styleClass="upperTitle" text="HuaHee Library">
+                <Label styleClass="upperTitle" text="HuaheeCheh">
                 </Label>
             </children>
         </HBox>
