@@ -18,7 +18,6 @@ import my.edu.tarc.dco.bookrentalpos.Book;
 
 import java.io.IOException;
 import java.net.URL;
-import java.security.Key;
 import java.util.ResourceBundle;
 
 public class BookManagerController implements TableInterface, Initializable {
@@ -29,7 +28,7 @@ public class BookManagerController implements TableInterface, Initializable {
     public TextField bookIDField;
     public TextField bookTitleField;
     public TextField bookAuthorField;
-    public TextField rentalPriceField;
+    public TextField retailPriceField;
     public Button confirmAddButton;
     public Button closeButton;
     public Button editBookButton;
@@ -149,7 +148,7 @@ public class BookManagerController implements TableInterface, Initializable {
         bmc.bookTitleField.setText(bookToEdit.getName());
         bmc.bookAuthorField.setText(bookToEdit.getAuthor());
         bmc.bookIDField.setText(bookToEdit.getId() + "");
-        bmc.rentalPriceField.setText(bookToEdit.getRentalPrice() + "");
+        bmc.retailPriceField.setText(bookToEdit.getRetailPrice() + "");
 
         Stage editBookWindow = new Stage();
 
@@ -205,7 +204,7 @@ public class BookManagerController implements TableInterface, Initializable {
         String bookAuthor = bookAuthorField.getText();
         double newRentPrice;
         try {
-            newRentPrice = Double.parseDouble(rentalPriceField.getText());
+            newRentPrice = Double.parseDouble(retailPriceField.getText());
         } catch (NumberFormatException e) {
             e.printStackTrace();
             Dialog.alertBox("Rental price need to be a number");
@@ -229,7 +228,7 @@ public class BookManagerController implements TableInterface, Initializable {
         String bookAuthor = bookAuthorField.getText();
         double newRentPrice;
         try {
-            newRentPrice = Double.parseDouble(rentalPriceField.getText());
+            newRentPrice = Double.parseDouble(retailPriceField.getText());
         } catch (NumberFormatException e) {
             e.printStackTrace();
             Dialog.alertBox("Rental price need to be a number");
@@ -238,7 +237,7 @@ public class BookManagerController implements TableInterface, Initializable {
         Book bookToEdit = Main.bm.getBookById(bookID);
         bookToEdit.setName(bookName);
         bookToEdit.setAuthor(bookAuthor);
-        bookToEdit.setRentalPrice(newRentPrice);
+        bookToEdit.setRetailPrice(newRentPrice);
 
         if (!Main.bm.updateBook(bookToEdit)) {
             Dialog.alertBox("Something went wrong and the book was not deleted");

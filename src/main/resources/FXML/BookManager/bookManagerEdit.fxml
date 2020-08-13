@@ -38,7 +38,7 @@
             <TextField fx:id="bookTitleField" onKeyPressed="#textFieldOnKeyPressed" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="bookAuthorField" onKeyPressed="#textFieldOnKeyPressed" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label styleClass="transactionFont" text="Rental Price:" GridPane.rowIndex="3" />
-            <TextField fx:id="rentalPriceField" onKeyPressed="#textFieldOnKeyPressed" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="retailPriceField" onKeyPressed="#textFieldOnKeyPressed" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
          <GridPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

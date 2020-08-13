@@ -74,9 +74,9 @@
                                 <PropertyValueFactory property="author" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="166.0" text="Rental Price (RM)">
+                        <TableColumn prefWidth="166.0" text="Retail Price (RM)">
                             <cellValueFactory>
-                                <PropertyValueFactory property="rentalPrice" />
+                                <PropertyValueFactory property="retailPrice" />
                             </cellValueFactory>
                         </TableColumn>
                     </columns>

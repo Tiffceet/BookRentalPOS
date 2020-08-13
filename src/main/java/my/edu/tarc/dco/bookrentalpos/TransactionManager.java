@@ -2,6 +2,7 @@ package my.edu.tarc.dco.bookrentalpos;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 /**
  * Used to load all transactions from the database
@@ -16,6 +17,21 @@ public class TransactionManager {
     private DBManager db;
     private BookManager bm;
     private int transactionCount;
+
+    /**
+     * Contains the rates for the deposit to pay for customer
+     * HashMap keys:    rentalWeeks
+     * HashMap values:  rates in %
+     * If more than 4 weeks, 10% applies
+     */
+    public final HashMap<Integer, Integer> DEPOSIT_RATES = new HashMap<Integer, Integer>(){
+        {
+            put(1, 3);
+            put(2, 5);
+            put(3, 7);
+            put(4, 10);
+        }
+    };
 
     public TransactionManager(DBManager db, BookManager bm) {
         this.db = db;
