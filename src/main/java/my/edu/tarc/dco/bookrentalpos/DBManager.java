@@ -66,20 +66,21 @@ public class DBManager {
                 + "	name TEXT NOT NULL UNIQUE,\n"
                 + "	password TEXT NOT NULL\n"
                 + ");";
-        String tab2 = "CREATE TABLE IF NOT EXISTS member (\n"
-                + "	id INTEGER PRIMARY KEY AUTOINCREMENT,\n"
-                + "	date datetime default current_timestamp,\n"
-                + "	name TEXT NOT NULL,\n"
-                + "	phoneNo TEXT,\n"
-                + "	email TEXT,\n"
-                + "	IC TEXT NOT NULL UNIQUE\n"
-                + ");";
+        String tab2 = "CREATE TABLE IF NOT EXISTS member (\n" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+                "date datetime default current_timestamp,\n" +
+                "name TEXT NOT NULL,\n" +
+                "phoneNo TEXT,\n" +
+                "email TEXT,\n" +
+                "IC TEXT NOT NULL UNIQUE,\n" +
+                "points INTEGER\n" +
+                ");";
         String tab3 = "CREATE TABLE IF NOT EXISTS book (\n" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                 "date datetime default current_timestamp,\n" +
                 "title TEXT NOT NULL,\n" +
                 "author TEXT,\n" +
-                "rentalPrice DOUBLE NOT NULL,\n" +
+                "retailPrice DOUBLE NOT NULL,\n" +
                 "lastRentedBy INTEGER,\n" +
                 "lastReservedBy INTEGER,\n" +
                 "isRented INTEGER,\n" +
@@ -88,18 +89,19 @@ public class DBManager {
                 "FOREIGN KEY (lastReservedBy) REFERENCES member(id)\n" +
                 ");";
 
-        String tab4 = "CREATE TABLE IF NOT EXISTS transactions (\n"
-                + "	id INTEGER PRIMARY KEY AUTOINCREMENT,\n"
-                + "	date datetime default current_timestamp,\n"
-                + "	rentDurationInDays INTEGER,\n"
-                + "	type TEXT,\n"
-                + "	staffHandled INTEGER,\n"
-                + "	memberInvolved INTEGER,\n"
-                + "	bookInvolved INTEGER,\n"
-                + "	FOREIGN KEY (staffHandled) REFERENCES staff(id),\n"
-                + "	FOREIGN KEY (memberInvolved) REFERENCES member(id),\n"
-                + "	FOREIGN KEY (bookInvolved) REFERENCES book(id)\n"
-                + ");";
+        String tab4 = "CREATE TABLE IF NOT EXISTS transactions (\n" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+                "date datetime default current_timestamp,\n" +
+                "rentDurationInDays INTEGER,\n" +
+                "type TEXT,\n" +
+                "staffHandled INTEGER,\n" +
+                "memberInvolved INTEGER,\n" +
+                "bookInvolved INTEGER,\n" +
+                "cashFlow DOUBLE,\n" +
+                "FOREIGN KEY (staffHandled) REFERENCES staff(id),\n" +
+                "FOREIGN KEY (memberInvolved) REFERENCES member(id),\n" +
+                "FOREIGN KEY (bookInvolved) REFERENCES book(id)\n" +
+                ");";
 
         try {
             Statement stmt = conn.createStatement();
@@ -185,19 +187,20 @@ public class DBManager {
 //	name TEXT NOT NULL,
 //	phoneNo TEXT,
 //	email TEXT,
-//	IC TEXT NOT NULL UNIQUE
+//	IC TEXT NOT NULL UNIQUE，
+//    points INTEGER
 //);
 //
 //CREATE TABLE IF NOT EXISTS book (
 //	id INTEGER PRIMARY KEY AUTOINCREMENT,
 //	date datetime default current_timestamp,
 //	title TEXT NOT NULL,
-//  author TEXT,
-//	rentalPrice DOUBLE NOT NULL,
+//    author TEXT,
+//	retailPrice DOUBLE NOT NULL,
 //	lastRentedBy INTEGER,
 //	lastReservedBy INTEGER,
-//      isRented INTEGER,
-//      isReserved INTEGER,
+//    isRented INTEGER,
+//    isReserved INTEGER,
 //	FOREIGN KEY (lastRentedBy) REFERENCES member(id),
 //	FOREIGN KEY (lastReservedBy) REFERENCES member(id)
 //);
@@ -210,6 +213,7 @@ public class DBManager {
 //	staffHandled INTEGER,
 //	memberInvolved INTEGER,
 //	bookInvolved INTEGER,
+//  cashFlow DOUBLE,
 //	FOREIGN KEY (staffHandled) REFERENCES staff(id),
 //	FOREIGN KEY (memberInvolved) REFERENCES member(id),
 //	FOREIGN KEY (bookInvolved) REFERENCES book(id)

@@ -13,6 +13,7 @@ public class Transaction extends Entity {
     private int staffHandled;
     private int memberInvovled;
     private int bookInvovled;
+    private double cashFlow;
 
     /**
      * Blank
@@ -22,36 +23,67 @@ public class Transaction extends Entity {
     }
 
     /**
-     * Constructor used to create a new Transaction where ID is not required
+     * Constructor to create a new ReserveTransaction
      *
-     * @param type               TransactionType Enum - RENT, RETURN and RESERVE
-     * @param staff              staffID
-     * @param memberInvovled     memberID
-     * @param bookInvovled       bookID
+     * @param staff          staffID
+     * @param memberInvovled memberID
+     * @param bookInvovled   bookID
+     */
+    public Transaction(int staff, int memberInvovled, int bookInvovled) {
+        this.type = TransactionType.RESERVE;
+        this.staffHandled = staff;
+        this.memberInvovled = memberInvovled;
+        this.bookInvovled = bookInvovled;
+        this.cashFlow = 0;
+    }
+
+    /**
+     * Constructor used for Returntransaction
+     *
+     * @param cashFlow - if penalty is applied, cash flow will be > 0
+     * @see #Transaction(int, int, int)
+     */
+    public Transaction(int staff, int memberInvovled, int bookInvovled, double cashFlow) {
+        this.type = TransactionType.RETURN;
+        this.staffHandled = staff;
+        this.memberInvovled = memberInvovled;
+        this.bookInvovled = bookInvovled;
+        this.cashFlow = cashFlow;
+    }
+
+    /**
+     * Constructor used to create a new RentTransaction
+     *
      * @param rentDurationInDays integer, you may set this to 0 if this field is
      *                           not needed
+     * @param cashFlow           Double, you may set it to 0 if this field is not needed
+     * @see #Transaction(int, int, int, int, double)
+     * @see #Transaction(int, int, int, double)
      */
-    public Transaction(TransactionType type, int staff, int memberInvovled, int bookInvovled, int rentDurationInDays) {
-        this.type = type;
+    public Transaction(int staff, int memberInvovled, int bookInvovled, int rentDurationInDays, double cashFlow) {
+        this.type = TransactionType.RENT;
         this.rentDurationInDays = rentDurationInDays;
         this.staffHandled = staff;
         this.memberInvovled = memberInvovled;
         this.bookInvovled = bookInvovled;
+        this.cashFlow = cashFlow;
     }
 
     /**
-     * Constructor used for importing data from database\n DO NOT use this to
-     * create new Transaction
+     * Constructor used for importing data from database<br>
+     * DO NOT use this to create new Transaction
      *
-     * @see #Transaction(TransactionType, int, int, int, int)
+     * @see #Transaction(int, int, int, int, double)
+     * @see #Transaction(int, int, int, double)
      */
-    public Transaction(int id, String date, TransactionType type, int staff, int memberInvovled, int bookInvovled, int rentDurationInDays) {
+    public Transaction(int id, String date, TransactionType type, int staff, int memberInvovled, int bookInvovled, int rentDurationInDays, double cashFlow) {
         super(id, null, date);
         this.type = type;
         this.rentDurationInDays = rentDurationInDays;
         this.staffHandled = staff;
         this.memberInvovled = memberInvovled;
         this.bookInvovled = bookInvovled;
+        this.cashFlow = cashFlow;
     }
 
     /**
@@ -130,4 +162,21 @@ public class Transaction extends Entity {
         this.bookInvovled = bookInvovled;
     }
 
+    /**
+     *
+     * @return cash flow of this transaction. Refer to constructor for how its being used
+     * @see #Transaction(int, int, int, double)
+     * @see #Transaction(int, int, int, int, double)
+     */
+    public double getCashFlow() {
+        return cashFlow;
+    }
+
+    /**
+     *
+     * @param cashFlow cashFlow of the Return / Rent Transaction
+     */
+    public void setCashFlow(double cashFlow) {
+        this.cashFlow = cashFlow;
+    }
 }

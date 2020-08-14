@@ -52,3 +52,12 @@ Button:hover {
 .table-view .column-header .label {
     -fx-font-weight: 400;
 }
+
+.transactionBorder {
+   -fx-border-color:  #C0C0C0;
+   -fx-border-radius: 10;
+}
+
+.transactionFont {
+    -fx-font: 18px "Berlin Sans FB";
+}

@@ -10,7 +10,7 @@ public class Book extends Entity {
 
     private boolean rented;
     private boolean reserved;
-    private double rentalPrice;
+    private double retailPrice;
     private int lastRentedBy;
     private int lastReservedBy;
     private String author;
@@ -27,12 +27,12 @@ public class Book extends Entity {
      *
      * @param name        Book Title
      * @param author      Book Author
-     * @param rentalPrice Book's rental price per day
+     * @param retailPrice Book's rental price per day
      */
-    public Book(String name, String author, double rentalPrice) {
+    public Book(String name, String author, double retailPrice) {
         super(0, name, null);
         setAuthor(author);
-        setRentalPrice(rentalPrice);
+        setRetailPrice(retailPrice);
         this.rented = false;
         this.reserved = false;
     }
@@ -50,14 +50,26 @@ public class Book extends Entity {
      *                       boolean in the system
      * @see #Book(String, String, double)
      */
-    public Book(int id, String date, String name, String author, double rentalPrice, int lastRentedBy, int lastReservedBy, boolean isRented, boolean isReserved) {
-        super(0, name, null);
+    public Book(int id, String date, String name, String author, double retailPrice, int lastRentedBy, int lastReservedBy, boolean isRented, boolean isReserved) {
+        super(id, name, date);
         setAuthor(author);
-        setRentalPrice(rentalPrice);
+        setRetailPrice(retailPrice);
         setLastRentedBy(lastRentedBy);
         setLastReservedBy(lastReservedBy);
         this.rented = false;
         this.reserved = false;
+    }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "Title: %s\n" +
+                        "Author: %s\n" +
+                        "RetailPrice: RM %.2f\n" + "DateAdded: %s",
+                this.getName(),
+                this.author,
+                this.retailPrice,
+                this.getDateCreated());
     }
 
     /**
@@ -137,17 +149,17 @@ public class Book extends Entity {
     }
 
     /**
-     * @param rentalPrice Rental price of the book (per day)
+     * @param retailPrice Rental price of the book (per day)
      */
-    public void setRentalPrice(double rentalPrice) {
-        this.rentalPrice = rentalPrice;
+    public void setRetailPrice(double retailPrice) {
+        this.retailPrice = retailPrice;
     }
 
     /**
      * @return rental Price of the book (per day)
      */
-    public double getRentalPrice() {
-        return rentalPrice;
+    public double getRetailPrice() {
+        return retailPrice;
     }
 
 }

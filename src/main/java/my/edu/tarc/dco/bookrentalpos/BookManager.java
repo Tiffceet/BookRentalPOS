@@ -29,7 +29,7 @@ public class BookManager {
                         rs.getString("date"),
                         rs.getString("title"),
                         rs.getString("author"),
-                        rs.getDouble("rentalPrice"),
+                        rs.getDouble("retailPrice"),
                         rs.getInt("lastRentedBy"),
                         rs.getInt("lastReservedBy"),
                         rs.getInt("isRented") == 0 ? false : true,
@@ -77,9 +77,9 @@ public class BookManager {
      * @see Book#Book(String, String, double)
      */
     public boolean addBook(Book book) {
-        String sql = String.format("INSERT INTO book(title, rentalPrice, author, lastRentedBy, lastReservedBy, isRented, isReserved) VALUES('%s', '%f', '%s', %s, %s, %d, %d)",
+        String sql = String.format("INSERT INTO book(title, retailPrice, author, lastRentedBy, lastReservedBy, isRented, isReserved) VALUES('%s', '%f', '%s', %s, %s, %d, %d)",
                 book.getName(),
-                book.getRentalPrice(),
+                book.getRetailPrice(),
                 book.getAuthor(),
                 book.getLastRentedBy() == 0 ? "null" : book.getLastRentedBy() + "",
                 book.getLastReservedBy() == 0 ? "null" : book.getLastReservedBy() + "",
@@ -117,11 +117,11 @@ public class BookManager {
             return false;
         }
         String sql = String.format("UPDATE book\n"
-                        + "SET title='%s', author='%s', rentalPrice=%f, lastRentedBy=%s, lastReservedBy=%s, isRented=%d, isReserved=%d\n"
+                        + "SET title='%s', author='%s', retailPrice=%f, lastRentedBy=%s, lastReservedBy=%s, isRented=%d, isReserved=%d\n"
                         + "WHERE id=%d;",
                 bk.getName(),
                 bk.getAuthor(),
-                bk.getRentalPrice(),
+                bk.getRetailPrice(),
                 bk.getLastRentedBy() == 0 ? "null" : bk.getLastRentedBy() + "",
                 bk.getLastReservedBy() == 0 ? "null" : bk.getLastReservedBy() + "",
                 bk.isRented() ? 1 : 0,
@@ -142,8 +142,8 @@ public class BookManager {
      */
     public boolean removeBook(int bookID) {
         db.execQuery("UPDATE transactions\n"
-                + "SET bookInvovled=NULL\n"
-                + "WHERE bookInvovled=" + bookID);
+                + "SET bookInvolved=NULL\n"
+                + "WHERE bookInvolved=" + bookID);
         String sql = String.format("DELETE FROM book WHERE id=%d", bookID);
         Book[] tmpList = new Book[ARRAY_SIZE];
         if (db.updateQuery(sql) == 1) {

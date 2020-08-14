@@ -28,7 +28,7 @@ public class Dialog {
         label.setMaxWidth(Double.MAX_VALUE);
         label.setFont(Font.font("Bodoni MT", 20));
         label.setWrapText(true);
-        VBox.setMargin(label, new Insets(5, 5, 0, 5));
+        VBox.setMargin(label, new Insets(10, 5, 0, 5));
 
         Button closeButton = new Button("Ok");
         closeButton.setPrefWidth(60.0);
@@ -37,7 +37,7 @@ public class Dialog {
         VBox.setMargin(closeButton, new Insets(15, 0, 0, 170));
 
         VBox layout = new VBox(0);
-        int windowHeight = 100 + (message.length() / 40) * 30;
+        int windowHeight = 100 + (message.length() / 41) * 30;
         layout.setPrefSize(400, windowHeight);
         layout.getStyleClass().add("upper");
         layout.getChildren().addAll(label, closeButton);

@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" stylesheets="@../ManagerStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrentalpos.MainMenuController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" stylesheets="@../ManagerStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrentalpos.MainMenuController" >
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints maxHeight="378.0" minHeight="10.0" prefHeight="170.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="645.0" minHeight="10.0" prefHeight="510.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="645.0" minHeight="10.0" prefHeight="142.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="645.0" minHeight="10.0" prefHeight="598.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
       <GridPane GridPane.rowIndex="1">
@@ -37,7 +34,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="transactionButton" mnemonicParsing="false" onMouseClicked="#toManageTransaction" prefHeight="80.0" prefWidth="280.0" text="Manage Transaction">
+                  <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="280.0" text="Manage Transaction" fx:id="transactionButton" onMouseClicked="#toManageTransaction">
                      <GridPane.margin>
                         <Insets left="140.0" />
                      </GridPane.margin>
@@ -58,7 +55,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="bookButton" mnemonicParsing="false" onMouseClicked="#toManageBook" prefHeight="80.0" prefWidth="280.0" text="Management Book">
+                  <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="280.0" text="Management Book" fx:id="bookButton" onMouseClicked="#toManageBook">
                      <GridPane.margin>
                         <Insets left="140.0" />
                      </GridPane.margin></Button>
@@ -78,7 +75,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="memberButton" mnemonicParsing="false" onMouseClicked="#toManageMember" prefHeight="80.0" prefWidth="280.0" text="Manage Member">
+                  <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="280.0" text="Manage Member" fx:id="memberButton" onMouseClicked="#toManageMember">
                      <GridPane.margin>
                         <Insets left="140.0" />
                      </GridPane.margin></Button>
@@ -98,7 +95,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="profileButton" mnemonicParsing="false" onMouseClicked="#popEditProfile" prefHeight="80.0" prefWidth="280.0" text="Manage Profile">
+                  <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="280.0" text="Manage Profile" fx:id="profileButton" onMouseClicked="#popEditProfile">
                      <GridPane.margin>
                         <Insets left="100.0" />
                      </GridPane.margin></Button>
@@ -109,7 +106,7 @@
                   </ImageView>
                </children>
             </GridPane>
-            <Button fx:id="logOutButton" mnemonicParsing="false" onMouseClicked="#popLogOut" prefHeight="40.0" prefWidth="80.0" text="Back" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" text="Log Out" GridPane.columnIndex="1" GridPane.rowIndex="2" fx:id="logOutButton" onMouseClicked="#popLogOut">
                <GridPane.margin>
                   <Insets left="330.0" top="40.0" />
                </GridPane.margin>
@@ -126,16 +123,7 @@
       </GridPane>
       <HBox prefHeight="100.0" prefWidth="200.0" styleClass="upper" stylesheets="/ManagerStyle.css">
          <children>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
-               <children>
-                  <Label layoutX="14.0" layoutY="14.0" styleClass="upperTitle" text="Time" />
-                  <Label layoutX="14.0" layoutY="49.0" text="Welcome Back,(UserName)">
-                     <font>
-                        <Font name="Arial" size="18.0" />
-                     </font>
-                  </Label>
-               </children>
-            </AnchorPane>
+            <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="upperTitle" stylesheets="/ManagerStyle.css" text="Main Menu" HBox.hgrow="ALWAYS" />
          </children>
       </HBox>
    </children>

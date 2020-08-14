@@ -14,91 +14,116 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" stylesheets="@../../ManagerStyle.css" vgap="10.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrentalpos.MemberManagerController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0"
+          prefWidth="1366.0" stylesheets="@../../ManagerStyle.css" vgap="10.0" xmlns="http://javafx.com/javafx/8.0.171"
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrentalpos.MemberManagerController">
     <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints maxHeight="45.0" minHeight="45.0" prefHeight="33.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="45.0" minHeight="45.0" prefHeight="33.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES"/>
     </rowConstraints>
     <children>
         <HBox prefHeight="50.0" prefWidth="200.0" spacing="10.0" style="-fx-padding: 5 10 0 10;" styleClass="upper">
             <GridPane.margin>
-                <Insets />
+                <Insets/>
             </GridPane.margin>
             <children>
-                <Label fx:id="dateTime" prefHeight="29.0" prefWidth="250.0" styleClass="upperTitle" text="00/00/0000 00:00:00" />
-                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="22.0" styleClass="upperTitle" text="Member Manager" HBox.hgrow="ALWAYS">
+                <Label fx:id="dateTime" prefHeight="29.0" prefWidth="250.0" styleClass="upperTitle"
+                       text="00/00/0000 00:00:00"/>
+                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="22.0" styleClass="upperTitle"
+                       text="Member Manager" HBox.hgrow="ALWAYS">
                 </Label>
-                <Label styleClass="upperTitle" text="HuaHee Library">
+                <Label styleClass="upperTitle" text="HuaheeCheh">
                 </Label>
             </children>
         </HBox>
         <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" style="-fx-padding: 0 10 0 10;" GridPane.rowIndex="1">
             <children>
-                <Label maxHeight="30.0" minHeight="30.0" prefHeight="30.0" text="Search Filter:" />
-                <TextField fx:id="searchByNameField" maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" prefHeight="30.0" promptText="Search by Name..." HBox.hgrow="ALWAYS" />
-                <TextField fx:id="searchByICField" layoutX="971.0" layoutY="10.0" maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" prefHeight="30.0" prefWidth="235.0" promptText="Search by IC..." />
-                <TextField fx:id="searchByIDField" maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" prefHeight="30.0" prefWidth="235.0" promptText="Search by ID..." />
-                <Button maxHeight="30.0" maxWidth="70.0" minHeight="30.0" minWidth="70.0" mnemonicParsing="false" onMouseClicked="#searchButtonClicked" prefHeight="30.0" prefWidth="70.0" text="Search">
+                <Label maxHeight="30.0" minHeight="30.0" prefHeight="30.0" text="Search Filter:"/>
+                <TextField fx:id="searchByNameField" maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0"
+                           prefHeight="30.0" promptText="Search by Name..." HBox.hgrow="ALWAYS"/>
+                <TextField fx:id="searchByICField" layoutX="971.0" layoutY="10.0" maxHeight="30.0"
+                           maxWidth="1.7976931348623157E308" minHeight="30.0" prefHeight="30.0" prefWidth="235.0"
+                           promptText="Search by IC..."/>
+                <TextField fx:id="searchByIDField" maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0"
+                           prefHeight="30.0" prefWidth="235.0" promptText="Search by ID..."/>
+                <Button maxHeight="30.0" maxWidth="70.0" minHeight="30.0" minWidth="70.0" mnemonicParsing="false"
+                        onMouseClicked="#searchButtonClicked" prefHeight="30.0" prefWidth="70.0" text="Search">
                     <HBox.margin>
-                        <Insets />
+                        <Insets/>
                     </HBox.margin>
                 </Button>
-                <Button maxHeight="30.0" maxWidth="70.0" minHeight="30.0" minWidth="70.0" mnemonicParsing="false" onMouseClicked="#clearButtonClicked" prefHeight="30.0" prefWidth="70.0" text="Clear" />
+                <Button maxHeight="30.0" maxWidth="70.0" minHeight="30.0" minWidth="70.0" mnemonicParsing="false"
+                        onMouseClicked="#clearButtonClicked" prefHeight="30.0" prefWidth="70.0" text="Clear"/>
             </children>
         </HBox>
         <HBox prefHeight="100.0" prefWidth="200.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
             <children>
-                <TableView fx:id="memberTableView" onKeyPressed="#tableViewOnKeyPressed" onMouseClicked="#tableViewOnClickEvent" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                <TableView fx:id="memberTableView" onKeyPressed="#tableOnKeyPressed" onMouseClicked="#tableOnClick"
+                           prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                     <columns>
                         <TableColumn prefWidth="75.0" text="ID">
                             <cellValueFactory>
-                                <PropertyValueFactory property="id" />
+                                <PropertyValueFactory property="id"/>
                             </cellValueFactory>
                         </TableColumn>
                         <TableColumn prefWidth="172.00003051757812" text="Date Joined">
                             <cellValueFactory>
-                                <PropertyValueFactory property="dateCreated" />
+                                <PropertyValueFactory property="dateCreated"/>
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="450.0" text="Name">
+                        <TableColumn prefWidth="365.0000305175781" text="Name">
                             <cellValueFactory>
-                                <PropertyValueFactory property="name" />
+                                <PropertyValueFactory property="name"/>
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn minWidth="0.0" prefWidth="163.0" text="Phone No.">
+                        <TableColumn minWidth="0.0" prefWidth="161.0" text="Phone No.">
                             <cellValueFactory>
-                                <PropertyValueFactory property="phoneNo" />
+                                <PropertyValueFactory property="phoneNo"/>
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="211.0" text="Email">
+                        <TableColumn prefWidth="204.0" text="Email">
                             <cellValueFactory>
-                                <PropertyValueFactory property="email" />
+                                <PropertyValueFactory property="email"/>
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="259.0" text="IC">
+                        <TableColumn prefWidth="317.0" text="IC">
                             <cellValueFactory>
-                                <PropertyValueFactory property="icNo" />
+                                <PropertyValueFactory property="icNo"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="69.0" text="Points">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="memberPoints"/>
                             </cellValueFactory>
                         </TableColumn>
                     </columns>
                     <items>
-                        <FXCollections fx:factory="observableArrayList" />
+                        <FXCollections fx:factory="observableArrayList"/>
                     </items>
                 </TableView>
             </children>
         </HBox>
-        <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" style="-fx-padding: 0 10 0 10;" styleClass="lower" GridPane.rowIndex="3">
+        <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" style="-fx-padding: 0 10 0 10;" styleClass="lower"
+              GridPane.rowIndex="3">
             <children>
-                <Button fx:id="backButton" maxHeight="30.0" maxWidth="70.0" minHeight="30.0" minWidth="70.0" mnemonicParsing="false" onMouseClicked="#backToMain" prefHeight="30.0" prefWidth="70.0" text="Back" />
-                <Pane HBox.hgrow="ALWAYS" />
-                <Button fx:id="addMemberButton" maxHeight="30.0" maxWidth="70.0" minHeight="30.0" minWidth="70.0" mnemonicParsing="false" onMouseClicked="#popAddMember" prefHeight="30.0" prefWidth="70.0" text="Add" />
-                <Button fx:id="editMemberButton" maxHeight="30.0" maxWidth="70.0" minHeight="30.0" minWidth="70.0" mnemonicParsing="false" onMouseClicked="#popEditMember" prefHeight="30.0" prefWidth="70.0" text="Edit" />
-                <Button fx:id="deleteMemberButton" maxHeight="30.0" maxWidth="80.0" minHeight="30.0" minWidth="80.0" mnemonicParsing="false" onMouseClicked="#popDeleteMember" prefHeight="30.0" prefWidth="80.0" text="Remove" />
+                <Button fx:id="backButton" maxHeight="30.0" maxWidth="70.0" minHeight="30.0" minWidth="70.0"
+                        mnemonicParsing="false" onMouseClicked="#backToMain" prefHeight="30.0" prefWidth="70.0"
+                        text="Back"/>
+                <Pane HBox.hgrow="ALWAYS"/>
+                <Button fx:id="addMemberButton" maxHeight="30.0" maxWidth="70.0" minHeight="30.0" minWidth="70.0"
+                        mnemonicParsing="false" onMouseClicked="#popAddMember" prefHeight="30.0" prefWidth="70.0"
+                        text="Add"/>
+                <Button fx:id="editMemberButton" maxHeight="30.0" maxWidth="70.0" minHeight="30.0" minWidth="70.0"
+                        mnemonicParsing="false" onMouseClicked="#popEditMember" prefHeight="30.0" prefWidth="70.0"
+                        text="Edit"/>
+                <Button fx:id="deleteMemberButton" maxHeight="30.0" maxWidth="80.0" minHeight="30.0" minWidth="80.0"
+                        mnemonicParsing="false" onMouseClicked="#popDeleteMember" prefHeight="30.0" prefWidth="80.0"
+                        text="Remove"/>
             </children>
             <GridPane.margin>
             </GridPane.margin>
@@ -109,6 +134,6 @@
     <padding>
     </padding>
     <opaqueInsets>
-        <Insets />
+        <Insets/>
     </opaqueInsets>
 </GridPane>

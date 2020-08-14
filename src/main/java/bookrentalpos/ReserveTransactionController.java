@@ -12,10 +12,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class ReserveTransactionController {
-    public Button addReserveButton;
-    public Button editReserveButton;
-    public Button deleteReserveButton;
     public Label dateTime;
+    public Button backButton;
 
     public void initialize() {
         Clock.display(dateTime);
