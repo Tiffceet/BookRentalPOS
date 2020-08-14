@@ -2,6 +2,9 @@ package my.edu.tarc.dco.bookrentalpos;
 
 import java.security.MessageDigest;
 import javax.xml.bind.DatatypeConverter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,6 +36,7 @@ public class CustomUtil {
     /**
      * Checks if NRIC fits the Malaysia's IC Standard<br>
      * Note that icNo given must not contain '-'
+     *
      * @param icNo NRIC in String
      * @return True if the NRIC is valid, false if otherwise
      */
@@ -53,6 +57,7 @@ public class CustomUtil {
     /**
      * Checks if phone number is valid. <br>
      * will check if the number starts with 0
+     *
      * @param phoneNo - phone number in String
      * @return return true if phone is valid, false if otherwise
      */
@@ -72,6 +77,7 @@ public class CustomUtil {
 
     /**
      * Check if email is valid
+     *
      * @param email email adress in String
      * @return true if email is valid, false if otherwise
      */
@@ -85,6 +91,20 @@ public class CustomUtil {
             return true;
         } else {
             return false;
+        }
+    }
+
+    /**
+     * Convert date time generated in sqlite database to java date object
+     * @param date - date in String from database
+     * @return date object if parsed successfully, null if ParseException was thrown
+     */
+    public static Date stringToDate(String date) {
+        try {
+            return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

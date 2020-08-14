@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.*?>
-<?import javafx.scene.text.*?>
-<?import com.jfoenix.controls.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" stylesheets="@../../ManagerStyle.css" vgap="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrentalpos.ReserveTransactionController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" stylesheets="@../../ManagerStyle.css" vgap="10.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrentalpos.ReserveTransactionController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -38,8 +42,8 @@
               </rowConstraints>
                <children>
                   <Label styleClass="transactionFont" text="Book ID:" />
-                  <TextField GridPane.columnIndex="1" />
-                  <TextArea prefHeight="200.0" prefWidth="200.0" promptText="Book Detail" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+                  <TextField fx:id="bookIDField" onKeyPressed="#bookIDFieldOnPressed" onKeyReleased="#bookIDFieldOnReleased" GridPane.columnIndex="1" />
+                  <TextArea fx:id="bookDetailTextArea" editable="false" prefHeight="200.0" prefWidth="200.0" promptText="Book Detail" GridPane.columnSpan="2" GridPane.rowIndex="1" />
                </children>
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -57,12 +61,12 @@
                   <GridPane styleClass="transactionBorder" vgap="5.0" GridPane.columnIndex="1">
                      <children>
                         <Label styleClass="transactionFont" text="Member ID:" />
-                        <TextField GridPane.columnIndex="1" />
-                        <TextArea prefHeight="200.0" prefWidth="200.0" promptText="Member Detail" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+                        <TextField fx:id="memberIDField" onKeyPressed="#memberIDFieldOnPressed" onKeyReleased="#memberIDFieldOnReleased" GridPane.columnIndex="1" />
+                        <TextArea fx:id="memberDetailTextArea" editable="false" prefHeight="200.0" prefWidth="200.0" promptText="Member Detail" GridPane.columnSpan="2" GridPane.rowIndex="1" />
                         <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnSpan="2" GridPane.rowIndex="2">
                            <children>
-                              <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="150.0" text="Check Reservation" />
-                              <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="150.0" text="Add Reservation" />
+                              <Button mnemonicParsing="false" onMousePressed="#checkReservationOnPressed" prefHeight="35.0" prefWidth="150.0" text="Check Reservation" />
+                              <Button mnemonicParsing="false" onMousePressed="#addReservationOnPressed" prefHeight="35.0" prefWidth="150.0" text="Add Reservation" />
                            </children>
                            <GridPane.margin>
                               <Insets left="5.0" right="5.0" />
@@ -82,7 +86,7 @@
                         <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                   </GridPane>
-                  <TableView prefHeight="200.0" prefWidth="200.0">
+                  <TableView fx:id="reserveTransactionTable" prefHeight="200.0" prefWidth="200.0">
                     <columns>
                       <TableColumn prefWidth="75.0" text="C1" />
                       <TableColumn prefWidth="75.0" text="C2" />
