@@ -7,5 +7,6 @@ package my.edu.tarc.dco.bookrentalpos;
 public enum TransactionType {
     RENT,
     RESERVE,
-    RETURN
+    RETURN,
+    DISCOUNT
 }

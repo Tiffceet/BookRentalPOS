@@ -40,7 +40,7 @@ public class Transaction extends Entity {
     /**
      * Constructor used for Returntransaction
      *
-     * @param cashFlow - if penalty is applied, cash flow will be > 0
+     * @param cashFlow deposit returned to customer - penalty(if any)
      * @see #Transaction(int, int, int)
      */
     public Transaction(int staff, int memberInvovled, int bookInvovled, double cashFlow) {
@@ -66,6 +66,15 @@ public class Transaction extends Entity {
         this.staffHandled = staff;
         this.memberInvovled = memberInvovled;
         this.bookInvovled = bookInvovled;
+        this.cashFlow = cashFlow;
+    }
+
+    /**
+     * Constructor used to create a Transaction for discount deduction
+     * @param cashFlow amount of discount amount given
+     */
+    public Transaction(double cashFlow) {
+        this.type = TransactionType.DISCOUNT;
         this.cashFlow = cashFlow;
     }
 

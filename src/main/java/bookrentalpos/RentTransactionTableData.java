@@ -4,21 +4,27 @@ public class RentTransactionTableData {
     private int bookId;
     private String bookTitle;
     private String bookAuthor;
-    private double retailPrice;
+    private String deposit;
+    private String charges;
     private String rentDuration;
     private String totalPrice;
 
     public RentTransactionTableData() {
     }
 
-    public RentTransactionTableData(int bookId, String bookTitle, String bookAuthor, double retailPrice, String rentDuration, String totalPrice) {
+    public RentTransactionTableData(int bookId, String bookTitle, String bookAuthor, String deposit, String charges, String rentDuration, String totalPrice) {
         this.bookId = bookId;
         this.bookTitle = bookTitle;
         this.bookAuthor = bookAuthor;
-        this.retailPrice = retailPrice;
+        this.deposit = deposit;
+        this.charges = charges;
         this.rentDuration = rentDuration;
         this.totalPrice = totalPrice;
     }
+
+    public String getCharges() { return charges; }
+
+    public void setCharges(String charges) { this.charges = charges; }
 
     public int getBookId() {
         return bookId;
@@ -44,12 +50,12 @@ public class RentTransactionTableData {
         this.bookAuthor = bookAuthor;
     }
 
-    public double getRetailPrice() {
-        return retailPrice;
+    public String getDeposit() {
+        return deposit;
     }
 
-    public void setRetailPrice(double retailPrice) {
-        this.retailPrice = retailPrice;
+    public void setDeposit(String deposit) {
+        this.deposit = deposit;
     }
 
     public String getRentDuration() {

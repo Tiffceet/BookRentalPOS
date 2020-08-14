@@ -64,19 +64,29 @@
                                 <PropertyValueFactory property="dateCreated" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="715.0" text="Title">
+                        <TableColumn prefWidth="575.0" text="Title">
                             <cellValueFactory>
                                 <PropertyValueFactory property="name" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="211.0" text="Author">
+                        <TableColumn prefWidth="221.0" text="Author">
                             <cellValueFactory>
                                 <PropertyValueFactory property="author" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn prefWidth="166.0" text="Retail Price (RM)">
+                        <TableColumn prefWidth="159.0" style="-fx-alignment: CENTER-RIGHT;" text="Retail Price (RM)">
                             <cellValueFactory>
                                 <PropertyValueFactory property="retailPrice" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="62.0" style="-fx-alignment: CENTER;" text="Rented ?">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="rented" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="74.0" style="-fx-alignment: CENTER;" text="Reserved ?">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="reserved" />
                             </cellValueFactory>
                         </TableColumn>
                     </columns>

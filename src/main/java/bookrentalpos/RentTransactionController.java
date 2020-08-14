@@ -27,9 +27,16 @@ public class RentTransactionController {
     public TextArea bookDetailField;
     public TextArea memberDetailField;
     public TableView rentTransactionTable;
-    public Label totalPriceLabel;
+    public Label totalDepositLabel;
+    public Label totalChargesLabel;
+    public Label discountLabel;
+    public Label netAmountToPayLabel;
 
-    private double totalPrice = 0;
+    private double totalCharges = 0;
+    private double totalDeposit = 0;
+    private double discount = 0;
+    private double netAmountToPay = 0;
+    private boolean haveDiscount = false;
     private ArrayList<Transaction> sessionTransactions;
 
     public void initialize() {
@@ -45,9 +52,9 @@ public class RentTransactionController {
         window.setScene(mainMenuScene);
     }
 
-    // =====================================
+    // ================================================================================================================
     // Event Functions
-    // =====================================
+    // ================================================================================================================
     public void bookIDOnKeyPressed(Event event) {
         if (((KeyEvent) event).getCode() == KeyCode.ENTER) {
             reloadBookDetailsField();
@@ -112,12 +119,21 @@ public class RentTransactionController {
             return;
         }
 
-        if (book.isReserved()) {
+        if (book.isReserved() && book.getLastReservedBy() != mem.getId()) {
             Dialog.alertBox("This book was reserved by " + Main.bm.getBookById(book.getLastReservedBy()).getName());
             return;
         }
 
-        RentTransactionTableData data = new RentTransactionTableData(bookid, book.getName(), book.getAuthor(), book.getRetailPrice(), rentDuration + " weeks", String.format("%.2f", book.getRetailPrice() * rentDuration));
+        // Add entry to table for view
+        RentTransactionTableData data = new RentTransactionTableData(
+                bookid,
+                book.getName(),
+                book.getAuthor(),
+                book.getRetailPrice() * 2 + "",
+                String.format("%.2f", book.getRetailPrice() * (Main.tm.DEPOSIT_RATES.get(rentDuration > 4 ? 4 : rentDuration) / 100.0)),
+                rentDuration + " weeks",
+                String.format("%.2f", book.getRetailPrice() + book.getRetailPrice() * (100 + Main.tm.DEPOSIT_RATES.get(rentDuration > 4 ? 4 : rentDuration)) / 100.0)
+        );
         ObservableList ol = rentTransactionTable.getItems();
         for (int a = 0; a < ol.size(); a++) {
             if (bookid == ((RentTransactionTableData) ol.get(a)).getBookId()) {
@@ -126,19 +142,85 @@ public class RentTransactionController {
             }
         }
         ol.add(data);
-        totalPrice += book.getRetailPrice() * rentDuration;
+
+        // add to sessionTransaction
+        sessionTransactions.add(
+                new Transaction(
+                        Main.sm.getLogOnStaff().getId(),
+                        mem.getId(),
+                        book.getId(),
+                        rentDuration * 7,
+                        book.getRetailPrice() + book.getRetailPrice() * (100 + Main.tm.DEPOSIT_RATES.get(rentDuration > 4 ? 4 : rentDuration)) / 100.0
+                )
+        );
+
+        totalCharges += book.getRetailPrice() * (Main.tm.DEPOSIT_RATES.get(rentDuration > 4 ? 4 : rentDuration) / 100.0);
+        totalDeposit += book.getRetailPrice() * 2;
         setMemberIDFieldEnabled(false);
         reloadTotalPriceLabel();
     }
 
     public void clearTransactionButtonOnPressed(Event event) {
         setMemberIDFieldEnabled(true);
+        sessionTransactions.clear(); // clear transaction
         rentTransactionTable.getItems().remove(0, rentTransactionTable.getItems().size());
-        totalPrice = 0;
+        totalDeposit = 0;
+        totalCharges = 0;
+        discount = 0;
+        haveDiscount = false;
+        netAmountToPay = 0;
         reloadTotalPriceLabel();
     }
-    // =====================================
-    // =====================================
+
+    public void applyDiscountOnPressed(Event event) {
+        int memID;
+        try {
+            memID = Integer.parseInt(memberIDField.getText());
+        } catch (NumberFormatException e) {
+            return;
+        }
+        Member mem;
+        if ((mem = Main.mm.getMember(memID)) == null) {
+            return;
+        }
+
+        if (rentTransactionTable.getItems().size() <= 0) {
+            Dialog.alertBox("Please has at least one transaction before applying the discount");
+            return;
+        }
+
+        if (mem.getMemberPoints() >= Main.tm.MEMBER_POINTS_NEEDED_TO_CLAIM_DISCOUNT) {
+            Dialog.alertBox("5% discount is applied for the charges.");
+            haveDiscount = true;
+        } else {
+            Dialog.alertBox("This member don't have enough points to claim discount.");
+        }
+        reloadTotalPriceLabel();
+    }
+
+    public void rentButtonOnPressed(Event event) {
+        if (rentTransactionTable.getItems().size() <= 0) {
+            Dialog.alertBox("There are no books to be rented.");
+            return;
+        }
+        for (int a = 0; a < sessionTransactions.size(); a++) {
+            if (Main.tm.addTransaction(sessionTransactions.get(a))) {
+
+            } else {
+                // if something went wrong this will happen
+            }
+        }
+        if(haveDiscount) {
+            Main.tm.addTransaction(new Transaction(-discount));
+        }
+
+        Dialog.alertBox("Transaction completed.");
+
+        clearTransactionButtonOnPressed(null);
+
+    }
+    // ================================================================================================================
+    // ================================================================================================================
 
     public void setMemberIDFieldEnabled(boolean bool) {
         memberIDField.setEditable(bool);
@@ -152,7 +234,12 @@ public class RentTransactionController {
     }
 
     public void reloadTotalPriceLabel() {
-        totalPriceLabel.setText("Total Price: RM " + String.format("%.2f", totalPrice));
+        discount = totalCharges * (haveDiscount ? 0.05 : 0);
+        netAmountToPay = totalCharges + totalDeposit - discount;
+        totalChargesLabel.setText("RM " + String.format("%.2f", totalCharges));
+        totalDepositLabel.setText("RM " + String.format("%.2f", totalDeposit));
+        discountLabel.setText("RM " + String.format("%.2f", discount));
+        netAmountToPayLabel.setText("RM " + String.format("%.2f", netAmountToPay));
     }
 
     public void reloadBookDetailsField() {

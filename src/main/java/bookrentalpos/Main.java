@@ -31,7 +31,7 @@ public class Main extends Application {
         bm = new BookManager(db);
         sm = new StaffManager(db);
         mm = new MemberManager(db);
-        tm = new TransactionManager(db, bm);
+        tm = new TransactionManager(db, bm, mm);
 //        bm.addBook(new Book("Book A", "Looz", 92.3));
 //        bm.addBook(new Book("Book B", "Looz", 62.3));
 //        bm.addBook(new Book("Book C", "Looz", 12.3));

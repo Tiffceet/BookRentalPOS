@@ -18,21 +18,15 @@ public class LoginController {
     public JFXTextField usernameTextField;
     public JFXPasswordField passwordTextField;
     public Button loginButton;
-    public static boolean isAdmin;
 
     public void validateAccount(Event event) throws IOException {
         String username = usernameTextField.getText();
         String password = passwordTextField.getText();
 
-        isAdmin = false;
-
         // Validate database eeee...
         int staffID = Main.sm.login(username, password);
         // if login() returns -1, meaning the username or password is wrong
         if (staffID != -1) {
-            //            if (username.equals("root"))
-            isAdmin = true;
-
             Parent mainMenuParent;
             mainMenuParent = FXMLLoader.load(getClass().getResource("/FXML/mainMenu.fxml"));
             Scene mainMenuScene = new Scene(mainMenuParent, 1366, 768);
