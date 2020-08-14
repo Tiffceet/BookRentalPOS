@@ -50,7 +50,7 @@ public class TransactionManagerController {
         returnTranWindow.initModality(Modality.APPLICATION_MODAL);
         returnTranWindow.setTitle("Return Transaction Manager - Huahee Library");
         returnTranWindow.getIcons().add(new Image(Main.class.getResourceAsStream("/Image/icon.png")));
-        returnTranWindow.setScene(new Scene(returnTranParent, 600, 300));
+        returnTranWindow.setScene(new Scene(returnTranParent, 600, 500));
         returnTranWindow.setResizable(false);
         returnTranWindow.showAndWait();
     }
