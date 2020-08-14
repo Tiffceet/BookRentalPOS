@@ -56,8 +56,8 @@ public class Book extends Entity {
         setRetailPrice(retailPrice);
         setLastRentedBy(lastRentedBy);
         setLastReservedBy(lastReservedBy);
-        this.rented = false;
-        this.reserved = false;
+        this.rented = isRented;
+        this.reserved = isReserved;
     }
 
     @Override

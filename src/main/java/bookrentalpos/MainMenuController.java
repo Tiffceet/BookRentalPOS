@@ -6,9 +6,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import sun.rmi.runtime.Log;
 
 import java.io.IOException;
 
@@ -21,7 +23,15 @@ public class MainMenuController {
     public Button logOutButton;
     public Button confirmLogOutButton;
     public Button cancelLogOutButton;
+    public Button staffButton;
+    public ImageView staffImage;
     public static Stage mainWindow;
+
+    public void initialize() {
+        if (LoginController.isAdmin && staffButton != null) {
+            setStaffVisible();
+        }
+    }
 
     public void toManageTransaction(MouseEvent event) throws IOException {
         Parent manageBookParent = FXMLLoader.load(getClass().getResource("/FXML/TransactionManager/transactionChoose.fxml"));
@@ -43,6 +53,15 @@ public class MainMenuController {
 
     public void toManageMember(MouseEvent event) throws IOException {
         Parent manageBookParent = FXMLLoader.load(getClass().getResource("/FXML/MemberManager/memberManager.fxml"));
+        Scene manageBookScene = new Scene(manageBookParent);
+
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setTitle("Member Manager - Huahee Library");
+        window.setScene(manageBookScene);
+    }
+
+    public void toManageStaff(MouseEvent event) throws IOException {
+        Parent manageBookParent = FXMLLoader.load(getClass().getResource("/FXML/StaffManager/staffManager.fxml"));
         Scene manageBookScene = new Scene(manageBookParent);
 
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -100,5 +119,11 @@ public class MainMenuController {
     public void cancelLogOut(MouseEvent event) {
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.close();
+    }
+
+    public void setStaffVisible() {
+        staffButton.setDisable(false);
+        staffButton.setVisible(true);
+        staffImage.setVisible(true);
     }
 }

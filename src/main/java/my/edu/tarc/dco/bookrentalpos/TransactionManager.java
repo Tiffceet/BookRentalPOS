@@ -1,8 +1,12 @@
 package my.edu.tarc.dco.bookrentalpos;
 
+import bookrentalpos.Dialog;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Used to load all transactions from the database
@@ -24,7 +28,7 @@ public class TransactionManager {
      * HashMap values:  rates in %
      * If more than 4 weeks, 10% applies
      */
-    public final HashMap<Integer, Integer> DEPOSIT_RATES = new HashMap<Integer, Integer>(){
+    public final HashMap<Integer, Integer> DEPOSIT_RATES = new HashMap<Integer, Integer>() {
         {
             put(1, 3);
             put(2, 5);
@@ -53,6 +57,7 @@ public class TransactionManager {
                 );
                 transactionList[transactionCount++] = t;
             }
+            updateBookReservationStatus();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -109,6 +114,58 @@ public class TransactionManager {
             return true;
         } else {
             return false;
+        }
+    }
+
+    /**
+     * This function is suppose to update the reservation status of all the books<br>
+     * Criteria as stated below: <br>
+     * - If the book is not reserved, dont touch it<br>
+     * - If the book is reserved, check if the book is being rented at the moment<br>
+     * - If the book is rented, dont touch it<br>
+     * - If the book is not rented, or in other words it was returned, check if (return date - current date) > 7 days<br>
+     * - If > 7 days, set reserved status as false<br>
+     * - If !(> 7 days), dont touch it
+     */
+    private void updateBookReservationStatus() {
+        Book[] bookList = this.bm.getBooKListCache();
+        for (int a = 0; a < bm.getBookCount(); a++) {
+            if (bookList[a].isReserved()) {
+                if (!bookList[a].isRented()) {
+                    Date currentDate = new Date();
+
+                    String sql = "SELECT * FROM transactions WHERE bookInvolved=" + bookList[a].getId() + " AND type='RETURN' ORDER BY id DESC";
+                    String bookReturnedDate_str = "";
+                    try {
+                        ResultSet rs = db.resultQuery(sql);
+                        if (rs != null) {
+                            if (rs.next()) {
+                                bookReturnedDate_str = rs.getString("date");
+                            } else {
+                                // if there are no rows next, still wondering how to deal with this
+                                Dialog.alertBox("It seems like the reserved book was not rented when its reserved.\nIf you believe this is not your mistake, please contact the devs");
+                            }
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        Dialog.alertBox("Something went wrong internally while trying to update BookReservation Status.");
+                        return;
+                    }
+
+                    Date bookReturnedDate = CustomUtil.stringToDate(bookReturnedDate_str);
+
+                    // Get the difference between current date and the date the book was returned
+                    long diffInMillies = Math.abs(currentDate.getTime() - bookReturnedDate.getTime());
+                    long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+
+                    if (diff > 7) {
+                        Book bookToModify = bm.getBookById(bookList[a].getId());
+                        bookToModify.setReserved(false);
+                        bm.updateBook(bookToModify);
+                    }
+
+                }
+            }
         }
     }
 }

@@ -62,13 +62,13 @@ public class DBManager {
     private void prepareTable() {
         String tab1 = "CREATE TABLE IF NOT EXISTS staff (\n"
                 + "	id INTEGER PRIMARY KEY AUTOINCREMENT,\n"
-                + "	date datetime default current_timestamp,\n"
+                + "	date datetime default (datetime('now','localtime')),\n"
                 + "	name TEXT NOT NULL UNIQUE,\n"
                 + "	password TEXT NOT NULL\n"
                 + ");";
         String tab2 = "CREATE TABLE IF NOT EXISTS member (\n" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
-                "date datetime default current_timestamp,\n" +
+                "date datetime default (datetime('now','localtime')),\n" +
                 "name TEXT NOT NULL,\n" +
                 "phoneNo TEXT,\n" +
                 "email TEXT,\n" +
@@ -77,7 +77,7 @@ public class DBManager {
                 ");";
         String tab3 = "CREATE TABLE IF NOT EXISTS book (\n" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
-                "date datetime default current_timestamp,\n" +
+                "date datetime default (datetime('now','localtime')),\n" +
                 "title TEXT NOT NULL,\n" +
                 "author TEXT,\n" +
                 "retailPrice DOUBLE NOT NULL,\n" +
@@ -91,7 +91,7 @@ public class DBManager {
 
         String tab4 = "CREATE TABLE IF NOT EXISTS transactions (\n" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
-                "date datetime default current_timestamp,\n" +
+                "date datetime default (datetime('now','localtime')),\n" +
                 "rentDurationInDays INTEGER,\n" +
                 "type TEXT,\n" +
                 "staffHandled INTEGER,\n" +
@@ -176,14 +176,14 @@ public class DBManager {
 }
 //CREATE TABLE IF NOT EXISTS staff (
 //	id INTEGER PRIMARY KEY AUTOINCREMENT,
-//	date datetime default current_timestamp,
+//	date datetime default (datetime('now','localtime')),
 //	name TEXT NOT NULL UNIQUE,
 //	password TEXT NOT NULL
 //);
 //
 //CREATE TABLE IF NOT EXISTS member (
 //	id INTEGER PRIMARY KEY AUTOINCREMENT,
-//	date datetime default current_timestamp,
+//	date datetime default (datetime('now','localtime')),
 //	name TEXT NOT NULL,
 //	phoneNo TEXT,
 //	email TEXT,
@@ -193,7 +193,7 @@ public class DBManager {
 //
 //CREATE TABLE IF NOT EXISTS book (
 //	id INTEGER PRIMARY KEY AUTOINCREMENT,
-//	date datetime default current_timestamp,
+//	date datetime default (datetime('now','localtime')),
 //	title TEXT NOT NULL,
 //    author TEXT,
 //	retailPrice DOUBLE NOT NULL,
@@ -207,7 +207,7 @@ public class DBManager {
 //
 //CREATE TABLE IF NOT EXISTS transactions (
 //	id INTEGER PRIMARY KEY AUTOINCREMENT,
-//	date datetime default current_timestamp,
+//	date datetime default (datetime('now','localtime')),
 //	rentDurationInDays INTEGER,
 //	type TEXT,
 //	staffHandled INTEGER,
