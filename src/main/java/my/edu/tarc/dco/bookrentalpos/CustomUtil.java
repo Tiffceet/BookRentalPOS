@@ -5,6 +5,7 @@ import javax.xml.bind.DatatypeConverter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -106,6 +107,21 @@ public class CustomUtil {
             e.printStackTrace();
             return null;
         }
+    }
+
+    /**
+     * Calculate the date difference between 2 java date object
+     * @param date1 java.util.Date object
+     * @param date2 java.util.Date object
+     * @return days difference in long, throw NullPointerException if date1 or date2 is null
+     */
+    public static long daysDifference(Date date1, Date date2) {
+        if(date1 == null || date2 == null) {
+            throw new NullPointerException();
+        }
+        long diffInMillies = Math.abs(date1.getTime() - date2.getTime());
+        long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+        return diff;
     }
 
 }
