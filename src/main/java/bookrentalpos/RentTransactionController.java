@@ -210,13 +210,14 @@ public class RentTransactionController {
                 // if something went wrong this will happen
             }
         }
-        if(haveDiscount) {
+        if (haveDiscount) {
             Main.tm.addTransaction(new Transaction(-discount));
         }
 
         Dialog.alertBox("Transaction completed.");
 
         clearTransactionButtonOnPressed(null);
+        clearInputFields();
 
     }
     // ================================================================================================================
@@ -231,6 +232,13 @@ public class RentTransactionController {
             memberDetailField.setStyle("-fx-text-inner-color: grey;");
             memberIDField.setStyle("-fx-text-inner-color: grey;");
         }
+    }
+
+    public void clearInputFields() {
+        bookDetailField.setText("");
+        bookIDField.setText("");
+        memberIDField.setText("");
+        memberDetailField.setText("");
     }
 
     public void reloadTotalPriceLabel() {

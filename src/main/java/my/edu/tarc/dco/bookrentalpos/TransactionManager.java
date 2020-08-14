@@ -43,6 +43,11 @@ public class TransactionManager {
      */
     public final int MEMBER_POINTS_NEEDED_TO_CLAIM_DISCOUNT = 500;
 
+    /**
+     * Deposit deduction for each day the customer is late in returning the book
+     */
+    public final int PENALTY_RATES = 5;
+
     public TransactionManager(DBManager db, BookManager bm, MemberManager mm) {
         this.db = db;
         this.bm = bm;
@@ -115,8 +120,10 @@ public class TransactionManager {
                         break;
                     case DISCOUNT:
                         Member memberToEdit = mm.getMember(trans.getMemberInvovled());
-                        memberToEdit.setMemberPoints(memberToEdit.getMemberPoints() - 500);
-                        this.mm.updateMember(memberToEdit);
+                        if (memberToEdit != null) {
+                            memberToEdit.setMemberPoints(memberToEdit.getMemberPoints() - 500);
+                            this.mm.updateMember(memberToEdit);
+                        }
                         break;
                 }
 
@@ -178,5 +185,25 @@ public class TransactionManager {
                 }
             }
         }
+    }
+
+    /**
+     * This function returns transaction of the last renting record of a specific book
+     *
+     * @param bookID bookID to be checked
+     * @return Transaction reference object to the last renting record, return null if bookid is not valid or the book is not currently rented
+     */
+    public Transaction getBookLastRentTransaction(int bookID) {
+        Book bk;
+        if ((bk = bm.getBookById(bookID)) == null) {
+            return null;
+        }
+        if (!bk.isRented()) return null;
+        for (int a = this.transactionCount - 1; a != -1; a--) {
+            if (transactionList[a].getType() == TransactionType.RENT && transactionList[a].getBookInvovled() == bookID) {
+                return transactionList[a];
+            }
+        }
+        return null;
     }
 }

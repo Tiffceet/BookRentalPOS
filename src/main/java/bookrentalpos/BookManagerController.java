@@ -59,7 +59,10 @@ public class BookManagerController implements TableInterface, Initializable {
     public void tableOnClick(Event event) {
         if (((MouseEvent) event).getClickCount() == 2) {
             try {
-                popEditBook();
+                // only triger this event when there are row selected
+                // prevents the error box saying "Please select a row of data to edit" when user click on blank area of the table view
+                if(bookTableView.getSelectionModel().getSelectedItems().size() >= 1)
+                    popEditBook();
             } catch (IOException e) {
                 e.printStackTrace();
                 Dialog.alertBox("Something went wrong internally");
