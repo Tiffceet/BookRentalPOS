@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -17,9 +22,28 @@
    <children>
       <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.rowIndex="1">
          <children>
-            <Pane HBox.hgrow="ALWAYS" />
-             <Button mnemonicParsing="false" prefWidth="90.0" text="Cancel" fx:id="cancelLogOutButton" onMouseClicked="#cancelLogOut" />
-            <Button mnemonicParsing="false" prefWidth="90.0" text="Confirm" fx:id="confirmLogOutButton" onMouseClicked="#confirmLogOut" />
+            <ImageView fitHeight="117.0" fitWidth="290.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../Desktop/GUI/FXML%20v2/Image/logout/03.jpg" />
+               </image>
+               <HBox.margin>
+                  <Insets bottom="50.0" left="20.0" />
+               </HBox.margin>
+            </ImageView>
+             <Button fx:id="cancelLogOutButton" mnemonicParsing="false" onMouseClicked="#cancelLogOut" prefWidth="90.0" text="Cancel">
+               <font>
+                  <Font name="Arial Black" size="12.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="35.0" top="50.0" />
+               </HBox.margin></Button>
+            <Button fx:id="confirmLogOutButton" mnemonicParsing="false" onMouseClicked="#confirmLogOut" prefWidth="90.0" text="Confirm">
+               <font>
+                  <Font name="Arial Black" size="12.0" />
+               </font>
+               <HBox.margin>
+                  <Insets top="50.0" />
+               </HBox.margin></Button>
          </children>
          <padding>
             <Insets left="10.0" right="10.0" top="35.0" />
