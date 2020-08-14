@@ -40,7 +40,7 @@
                   <Insets />
                </HBox.margin>
             </Label>
-            <TextField fx:id="bookIDTextField" onKeyReleased="#bookIDOnKeyReleased" HBox.hgrow="ALWAYS">
+            <TextField fx:id="bookIDTextField" onKeyPressed="#bookIDOnKeyPressed" onKeyReleased="#bookIDOnKeyReleased" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets right="3.0" top="10.0" />
                </HBox.margin>

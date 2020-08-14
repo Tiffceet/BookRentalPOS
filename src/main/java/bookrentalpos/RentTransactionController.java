@@ -16,9 +16,10 @@ import my.edu.tarc.dco.bookrentalpos.Member;
 import my.edu.tarc.dco.bookrentalpos.Transaction;
 
 import java.io.IOException;
+import java.security.Key;
 import java.util.ArrayList;
 
-public class RentTransactionController {
+public class RentTransactionController implements TableInterface {
     public Label dateTime;
     public Button backButton;
     public TextField bookIDField;
@@ -55,6 +56,41 @@ public class RentTransactionController {
     // ================================================================================================================
     // Event Functions
     // ================================================================================================================
+
+
+    @Override
+    public void reloadTableView() {
+
+    }
+
+    @Override
+    public void tableOnClick(Event event) {
+
+    }
+
+    @Override
+    public void tableOnKeyPressed(Event event) {
+        if (((KeyEvent) event).getCode() == KeyCode.DELETE) {
+            ObservableList ol = rentTransactionTable.getSelectionModel().getSelectedItems();
+            if (ol.size() != 1) {
+                return;
+            }
+            if (Dialog.confirmBox("Are you sure you want to remove this entry ? ")) {
+                RentTransactionTableData rttd = (RentTransactionTableData) ol.get(0);
+                totalCharges -= Double.parseDouble(rttd.getCharges());
+                totalDeposit -= Double.parseDouble(rttd.getDeposit());
+                reloadTotalPriceLabel();
+                rentTransactionTable.getItems().removeIf((data) -> {
+                    return ((RentTransactionTableData) data).getBookId() == rttd.getBookId();
+                });
+
+                sessionTransactions.removeIf((data) -> {
+                    return ((Transaction) data).getBookInvovled() == rttd.getBookId();
+                });
+            }
+        }
+    }
+
     public void bookIDOnKeyPressed(Event event) {
         if (((KeyEvent) event).getCode() == KeyCode.ENTER) {
             reloadBookDetailsField();
@@ -211,7 +247,7 @@ public class RentTransactionController {
             }
         }
         if (haveDiscount) {
-            Main.tm.addTransaction(new Transaction(-discount));
+            Main.tm.addTransaction(new Transaction(sessionTransactions.get(0).getMemberInvovled(), -discount));
         }
 
         Dialog.alertBox("Transaction completed.");

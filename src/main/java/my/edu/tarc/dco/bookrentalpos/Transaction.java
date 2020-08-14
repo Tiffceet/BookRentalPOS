@@ -71,9 +71,11 @@ public class Transaction extends Entity {
 
     /**
      * Constructor used to create a Transaction for discount deduction
+     * @param memberInvovled memberID
      * @param cashFlow amount of discount amount given
      */
-    public Transaction(double cashFlow) {
+    public Transaction(int memberInvovled, double cashFlow) {
+        this.memberInvovled = memberInvovled;
         this.type = TransactionType.DISCOUNT;
         this.cashFlow = cashFlow;
     }

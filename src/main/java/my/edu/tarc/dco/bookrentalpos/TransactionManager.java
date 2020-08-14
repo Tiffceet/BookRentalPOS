@@ -121,6 +121,7 @@ public class TransactionManager {
                     case DISCOUNT:
                         Member memberToEdit = mm.getMember(trans.getMemberInvovled());
                         if (memberToEdit != null) {
+                            System.out.println("HOWDY");
                             memberToEdit.setMemberPoints(memberToEdit.getMemberPoints() - 500);
                             this.mm.updateMember(memberToEdit);
                         }
