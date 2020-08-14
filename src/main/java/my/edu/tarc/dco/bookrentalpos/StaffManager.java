@@ -34,6 +34,9 @@ public class StaffManager {
             java.sql.ResultSet rs = db.resultQuery(sql);
             while (rs.next()) {
                 Staff s = new Staff(rs.getInt("id"), rs.getString("date"), rs.getString("name"), rs.getString("password"));
+                if(s.getName().equals("root")) {
+                    s.setAdminStatus(true);
+                }
                 staffList[staffCount++] = s;
             }
         } catch (java.sql.SQLException err) {
@@ -44,6 +47,7 @@ public class StaffManager {
         Staff rootStaff = this.getStaffByName("root");
         if (rootStaff == null) {
             rootStaff = new Staff("root", "");
+            rootStaff.setAdminStatus(true);
             this.registerStaff(rootStaff);
             staffList[staffCount++] = rootStaff;
         }

@@ -1,6 +1,7 @@
 package bookrentalpos;
 
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -10,11 +11,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import sun.rmi.runtime.Log;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class MainMenuController {
+public class MainMenuController implements Initializable {
 
     public Button transactionButton;
     public Button bookButton;
@@ -27,8 +29,12 @@ public class MainMenuController {
     public ImageView staffImage;
     public static Stage mainWindow;
 
-    public void initialize() {
-        if (LoginController.isAdmin && staffButton != null) {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        if(staffButton == null) {
+            return;
+        }
+        if (Main.sm.getLogOnStaff().isAdmin()) {
             setStaffVisible();
         }
     }

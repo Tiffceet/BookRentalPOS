@@ -65,4 +65,16 @@ public class Staff extends Entity {
     public String getPW() {
         return this.pwHash;
     }
+
+    /**
+     *
+     * @param pass in true if you wish to set this staff as admin, vice versa
+     */
+    public void setAdminStatus(boolean bool) { this.isAdmin = bool; }
+
+    /**
+     *
+     * @return true if this staff is admin
+     */
+    public boolean isAdmin() { return this.isAdmin; }
 }
