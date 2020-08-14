@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" stylesheets="@../../ManagerStyle.css" vgap="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" stylesheets="@../../ManagerStyle.css" vgap="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrentalpos.StaffManagerController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     </columnConstraints>
@@ -25,7 +25,7 @@
             <Insets />
          </GridPane.margin>
          <children>
-            <Label styleClass="upperTitle" text="16/04/2020" />
+             <Label fx:id="dateTime" prefHeight="29.0" prefWidth="250.0" styleClass="upperTitle" text="00/00/0000 00:00:00" />
             <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="22.0" styleClass="upperTitle" text="Staff Manager" HBox.hgrow="ALWAYS">
             </Label>
             <Label styleClass="upperTitle" text="HuaheeCheh">
@@ -54,7 +54,7 @@
             </children></HBox>
         <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" style="-fx-padding: 0 10 0 10;" styleClass="lower" GridPane.rowIndex="3">
             <children>
-                <Button maxHeight="30.0" maxWidth="70.0" minHeight="30.0" minWidth="70.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="70.0" text="Back" />
+                <Button maxHeight="30.0" maxWidth="70.0" minHeight="30.0" minWidth="70.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="70.0" text="Back" onMouseClicked="#backToMain" fx:id="backButton" />
                 <Pane HBox.hgrow="ALWAYS" />
                 <Button maxHeight="30.0" maxWidth="70.0" minHeight="30.0" minWidth="70.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="70.0" text="Add" />
                 <Button maxHeight="30.0" maxWidth="70.0" minHeight="30.0" minWidth="70.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="70.0" text="Edit" />
