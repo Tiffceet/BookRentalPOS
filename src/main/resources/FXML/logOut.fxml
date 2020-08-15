@@ -24,7 +24,7 @@
          <children>
             <ImageView fitHeight="117.0" fitWidth="290.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../../../Desktop/GUI/FXML%20v2/Image/logout/03.jpg" />
+                   <Image url="@../Image/logout/03.jpg" />
                </image>
                <HBox.margin>
                   <Insets bottom="50.0" left="20.0" />
