@@ -18,6 +18,10 @@ Label.upperTitle {
     -fx-font: 25px "Berlin Sans FB";
 }
 
+Label.welcomeBack {
+    -fx-font: 20px "Berlin Sans FB";
+}
+
 HBox.upper {
     -fx-background-color: linear-gradient(#BCFFFF 55%, #FFFFFF);
 }
@@ -39,6 +43,10 @@ Button {
 
 Button:hover {
     -fx-background-color: linear-gradient(#FFFFFF, #FFF0DD);
+}
+
+Button.mainMenuButton {
+    -fx-font: 20px "Berlin Sans FB";
 }
 
 .table-view .column-header .label {

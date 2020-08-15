@@ -12,8 +12,8 @@
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
   <rowConstraints>
-    <RowConstraints maxHeight="376.0" minHeight="10.0" prefHeight="167.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="637.0" minHeight="10.0" prefHeight="601.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="100.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="601.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
       <GridPane GridPane.rowIndex="1">
@@ -36,7 +36,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="toRentButton" mnemonicParsing="false" onMouseClicked="#toRentTransaction" prefHeight="80.0" prefWidth="280.0" text="Rent Transaction">
+                  <Button fx:id="toRentButton" mnemonicParsing="false" onMouseClicked="#toRentTransaction" prefHeight="80.0" prefWidth="280.0" styleClass="mainMenuButton" text="Rent Transaction">
                      <GridPane.margin>
                         <Insets left="345.0" />
                      </GridPane.margin>
@@ -60,7 +60,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="toReserveButton" mnemonicParsing="false" onMouseClicked="#toReserveTransaction" prefHeight="80.0" prefWidth="280.0" text="Reserve Transaction">
+                  <Button fx:id="toReserveButton" mnemonicParsing="false" onMouseClicked="#toReserveTransaction" prefHeight="80.0" prefWidth="280.0" styleClass="mainMenuButton" text="Reserve Transaction">
                      <GridPane.margin>
                         <Insets left="345.0" />
                      </GridPane.margin>
@@ -85,7 +85,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="toReturnButton" mnemonicParsing="false" onMouseClicked="#toReturnTransaction" prefHeight="80.0" prefWidth="280.0" text="Return Transaction">
+                  <Button fx:id="toReturnButton" mnemonicParsing="false" onMouseClicked="#toReturnTransaction" prefHeight="80.0" prefWidth="280.0" styleClass="mainMenuButton" text="Return Transaction">
                      <GridPane.margin>
                         <Insets left="345.0" />
                      </GridPane.margin>

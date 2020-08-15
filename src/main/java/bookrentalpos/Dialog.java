@@ -26,7 +26,7 @@ public class Dialog {
         Label label = new Label(message);
         label.setAlignment(Pos.CENTER);
         label.setMaxWidth(Double.MAX_VALUE);
-        label.setFont(Font.font("Bodoni MT", 20));
+        label.setFont(Font.font("Berlin Sans FB", 20));
         label.setWrapText(true);
         VBox.setMargin(label, new Insets(10, 5, 0, 5));
 
@@ -66,7 +66,7 @@ public class Dialog {
         Label label = new Label(message);
         HBox.setHgrow(label, Priority.ALWAYS);
         label.setAlignment(Pos.CENTER);
-        label.setFont(Font.font("Bodoni MT", 20));
+        label.setFont(Font.font("Berlin Sans FB", 20));
         label.setWrapText(true);
         label.setMaxWidth(Double.MAX_VALUE);
         label.setMaxHeight(Double.MAX_VALUE);

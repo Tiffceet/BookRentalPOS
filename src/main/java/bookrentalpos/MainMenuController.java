@@ -34,7 +34,7 @@ public class MainMenuController implements Initializable {
         if(staffButton == null) {
             return;
         }
-        if (Main.sm.getLogOnStaff().isAdmin()) {
+        if (Main.sm.getLogOnStaff().isAdmin() && staffButton != null) {
             setStaffVisible();
         }
     }

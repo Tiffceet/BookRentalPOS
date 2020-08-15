@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -11,12 +12,13 @@
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
   <rowConstraints>
-    <RowConstraints maxHeight="378.0" minHeight="10.0" prefHeight="170.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="100.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="645.0" minHeight="10.0" prefHeight="489.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="645.0" minHeight="10.0" prefHeight="115.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <GridPane GridPane.rowIndex="1">
+      <GridPane GridPane.rowIndex="2">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -36,7 +38,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="transactionButton" mnemonicParsing="false" onMouseClicked="#toManageTransaction" prefHeight="80.0" prefWidth="280.0" text="Manage Transaction">
+                  <Button fx:id="transactionButton" mnemonicParsing="false" onMouseClicked="#toManageTransaction" prefHeight="80.0" prefWidth="280.0" styleClass="mainMenuButton" text="Manage Transaction">
                      <GridPane.margin>
                         <Insets left="140.0" />
                      </GridPane.margin>
@@ -57,7 +59,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="bookButton" mnemonicParsing="false" onMouseClicked="#toManageBook" prefHeight="80.0" prefWidth="280.0" text="Management Book">
+                  <Button fx:id="bookButton" mnemonicParsing="false" onMouseClicked="#toManageBook" prefHeight="80.0" prefWidth="280.0" styleClass="mainMenuButton" text="Management Book">
                      <GridPane.margin>
                         <Insets left="140.0" />
                      </GridPane.margin></Button>
@@ -77,9 +79,9 @@
                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                  </rowConstraints>
                  <children>
-                     <Button fx:id="staffButton" disable="true" mnemonicParsing="false" prefHeight="80.0" prefWidth="280.0" text="Manage Staff" visible="false" onMouseClicked="#toManageStaff">
+                     <Button fx:id="staffButton" disable="true" mnemonicParsing="false" onMouseClicked="#toManageStaff" prefHeight="80.0" prefWidth="280.0" styleClass="mainMenuButton" text="Manage Staff" visible="false">
                          <GridPane.margin>
-                             <Insets left="100.0" />
+                             <Insets left="79.0" />
                          </GridPane.margin>
                      </Button>
                      <ImageView fx:id="staffImage" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="1">
@@ -98,7 +100,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="memberButton" mnemonicParsing="false" onMouseClicked="#toManageMember" prefHeight="80.0" prefWidth="280.0" text="Manage Member">
+                  <Button fx:id="memberButton" mnemonicParsing="false" onMouseClicked="#toManageMember" prefHeight="80.0" prefWidth="280.0" styleClass="mainMenuButton" text="Manage Member">
                      <GridPane.margin>
                         <Insets left="140.0" />
                      </GridPane.margin></Button>
@@ -118,9 +120,9 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="profileButton" mnemonicParsing="false" onMouseClicked="#popEditProfile" prefHeight="80.0" prefWidth="280.0" text="Manage Profile">
+                  <Button fx:id="profileButton" mnemonicParsing="false" onMouseClicked="#popEditProfile" prefHeight="80.0" prefWidth="280.0" styleClass="mainMenuButton" text="Manage Profile">
                      <GridPane.margin>
-                        <Insets left="100.0" />
+                        <Insets left="80.0" />
                      </GridPane.margin></Button>
                   <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
                      <image>
@@ -149,10 +151,18 @@
             <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="upperTitle" stylesheets="/ManagerStyle.css" text="Main Menu" HBox.hgrow="ALWAYS" />
          </children>
       </HBox>
-      <HBox prefHeight="100.0" prefWidth="200.0" styleClass="lower" GridPane.rowIndex="2">
+      <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
          <children>
-            <Label styleClass="upperTitle" text="Footer" />
+            <Label alignment="BOTTOM_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Version 1.0 © Copyright 2020. All Rights Reserved." HBox.hgrow="ALWAYS">
+               <padding>
+                  <Insets bottom="2.0" />
+               </padding></Label>
          </children>
       </HBox>
+      <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="welcomeBack" text="Welcome back, Name." GridPane.rowIndex="1">
+         <padding>
+            <Insets left="10.0" />
+         </padding>
+      </Label>
    </children>
 </GridPane>
