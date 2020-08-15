@@ -32,7 +32,12 @@ Then in the working directory, do `mvn -f jdk11-pom/pom-jdk11.xml clean package`
 
 The built jar will then be located in `jdk11-pom/target/BookRentalPOS-JRE11+.jar`
 
+First make sure your JAVA_HOME is pointing to JDK 1.8
+
+Then in the working directory, do `mvn clean package`
+
+The built jar will then be located in `target/bookrentalpos-1.0-jar-with-dependencies.jar`
+
 ## To run
 
-Open the jar file directly or use the following command-line
-`java -jar <jarfile>`
+In the `target` directory, do `java -jar bookrentalpos-1.0-jar-with-dependencies.jar`
