@@ -10,11 +10,11 @@ import my.edu.tarc.dco.bookrentalpos.*;
 
 public class Main extends Application {
 
-    static DBManager db;
-    static BookManager bm;
-    static StaffManager sm;
-    static MemberManager mm;
-    static TransactionManager tm;
+    public static DBManager db;
+    public static BookManager bm;
+    public static StaffManager sm;
+    public static MemberManager mm;
+    public static TransactionManager tm;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -26,12 +26,12 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    public static void main(String[] args) {
-        db = new DBManager();
-        bm = new BookManager(db);
-        sm = new StaffManager(db);
-        mm = new MemberManager(db);
-        tm = new TransactionManager(db, bm, mm);
+    static void startProgram(String[] args) {
+        Main.db = new DBManager();
+        Main.bm = new BookManager(db);
+        Main.sm = new StaffManager(db);
+        Main.mm = new MemberManager(db);
+        Main.tm = new TransactionManager(db, bm, mm);
 //        bm.addBook(new Book("Book A", "Looz", 92.3));
 //        bm.addBook(new Book("Book B", "Looz", 62.3));
 //        bm.addBook(new Book("Book C", "Looz", 12.3));

@@ -12,122 +12,157 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" stylesheets="@../../ManagerStyle.css" vgap="10.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrentalpos.ReserveTransactionController">
-  <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-  </columnConstraints>
-  <rowConstraints>
-    <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-  </rowConstraints>
-   <children>
-      <GridPane hgap="10.0" vgap="10.0" GridPane.rowIndex="1">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <GridPane styleClass="transactionBorder" vgap="5.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <Label styleClass="transactionFont" text="Book ID:" />
-                  <TextField fx:id="bookIDField" onKeyPressed="#bookIDFieldOnPressed" onKeyReleased="#bookIDFieldOnReleased" GridPane.columnIndex="1" />
-                  <TextArea fx:id="bookDetailTextArea" editable="false" prefHeight="200.0" prefWidth="200.0" promptText="Book Detail" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-               </children>
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </padding>
-            </GridPane>
-            <GridPane hgap="10.0" GridPane.rowIndex="1">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="894.0" minWidth="10.0" prefWidth="894.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="663.0" minWidth="10.0" prefWidth="442.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <GridPane styleClass="transactionBorder" vgap="5.0" GridPane.columnIndex="1">
-                     <children>
-                        <Label styleClass="transactionFont" text="Member ID:" />
-                        <TextField fx:id="memberIDField" onKeyPressed="#memberIDFieldOnPressed" onKeyReleased="#memberIDFieldOnReleased" GridPane.columnIndex="1" />
-                        <TextArea fx:id="memberDetailTextArea" editable="false" prefHeight="200.0" prefWidth="200.0" promptText="Member Detail" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-                        <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnSpan="2" GridPane.rowIndex="2">
-                           <children>
-                              <Button mnemonicParsing="false" onMousePressed="#checkReservationOnPressed" prefHeight="35.0" prefWidth="150.0" text="Check Reservation" />
-                              <Button mnemonicParsing="false" onMousePressed="#addReservationOnPressed" prefHeight="35.0" prefWidth="150.0" text="Add Reservation" />
-                           </children>
-                           <GridPane.margin>
-                              <Insets left="5.0" right="5.0" />
-                           </GridPane.margin>
-                        </HBox>
-                     </children>
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                     </columnConstraints>
-                     <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </padding>
-                     <rowConstraints>
-                        <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                  </GridPane>
-                  <TableView fx:id="reserveTransactionTable" prefHeight="200.0" prefWidth="200.0">
-                    <columns>
-                      <TableColumn prefWidth="157.0" text="Date Reserved" />
-                      <TableColumn prefWidth="69.0" text="Book ID" />
-                        <TableColumn prefWidth="546.0" text="Book Title" />
-                        <TableColumn prefWidth="116.0" text="Book Author" />
-                    </columns>
-                  </TableView>
-               </children>
-            </GridPane>
-         </children>
-         <GridPane.margin>
-            <Insets left="10.0" right="10.0" />
-         </GridPane.margin>
-      </GridPane>
-      <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" styleClass="upper">
-         <children>
-                <Label fx:id="dateTime" prefHeight="29.0" prefWidth="250.0" styleClass="upperTitle" text="00/00/0000 00:00:00" />
-                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="22.0" styleClass="upperTitle" text="Reserve Transaction Manager" HBox.hgrow="ALWAYS" />
-                <Label styleClass="upperTitle" text="HuaheeCheh" />
-         </children>
-         <padding>
-            <Insets left="10.0" right="10.0" />
-         </padding>
-      </HBox>
-      <GridPane prefHeight="34.0" prefWidth="1366.0" GridPane.rowIndex="2">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <HBox maxHeight="30.0" prefWidth="200.0" spacing="10.0">
-               <children>
-                  <Button fx:id="backButton" mnemonicParsing="false" onMouseClicked="#backToTransChoose" prefWidth="80.0" text="Back" />
-               </children>
-               <padding>
-                  <Insets left="15.0" right="15.0" />
-               </padding>
-            </HBox>
-         </children>
-      </GridPane>
-   </children>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0"
+          prefWidth="1366.0" stylesheets="@../../ManagerStyle.css" vgap="10.0" xmlns="http://javafx.com/javafx/8.0.171"
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrentalpos.ReserveTransactionController">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+    </rowConstraints>
+    <children>
+        <GridPane hgap="10.0" vgap="10.0" GridPane.rowIndex="1">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <children>
+                <GridPane styleClass="transactionBorder" vgap="5.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                    </rowConstraints>
+                    <children>
+                        <Label styleClass="transactionFont" text="Book ID:"/>
+                        <TextField fx:id="bookIDField" onKeyPressed="#bookIDFieldOnPressed"
+                                   onKeyReleased="#bookIDFieldOnReleased" GridPane.columnIndex="1"/>
+                        <TextArea fx:id="bookDetailTextArea" editable="false" prefHeight="200.0" prefWidth="200.0"
+                                  promptText="Book Detail" GridPane.columnSpan="2" GridPane.rowIndex="1"/>
+                    </children>
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                    </padding>
+                </GridPane>
+                <GridPane hgap="10.0" GridPane.rowIndex="1">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="894.0" minWidth="10.0" prefWidth="894.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="663.0" minWidth="10.0" prefWidth="442.0"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                    </rowConstraints>
+                    <children>
+                        <GridPane styleClass="transactionBorder" vgap="5.0" GridPane.columnIndex="1">
+                            <children>
+                                <Label styleClass="transactionFont" text="Member ID:"/>
+                                <TextField fx:id="memberIDField" onKeyPressed="#memberIDFieldOnPressed"
+                                           onKeyReleased="#memberIDFieldOnReleased" GridPane.columnIndex="1"/>
+                                <TextArea fx:id="memberDetailTextArea" editable="false" prefHeight="200.0"
+                                          prefWidth="200.0" promptText="Member Detail" GridPane.columnSpan="2"
+                                          GridPane.rowIndex="1"/>
+                                <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0"
+                                      GridPane.columnSpan="2" GridPane.rowIndex="2">
+                                    <children>
+                                        <Button mnemonicParsing="false" onMousePressed="#checkReservationOnPressed"
+                                                prefHeight="35.0" prefWidth="150.0" text="Check Reservation"/>
+                                        <Button mnemonicParsing="false" onMousePressed="#addReservationOnPressed"
+                                                prefHeight="35.0" prefWidth="150.0" text="Add Reservation"/>
+                                    </children>
+                                    <GridPane.margin>
+                                        <Insets left="5.0" right="5.0"/>
+                                    </GridPane.margin>
+                                </HBox>
+                            </children>
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0"
+                                                   prefWidth="100.0"/>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                            </columnConstraints>
+                            <padding>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                            </padding>
+                            <rowConstraints>
+                                <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                            </rowConstraints>
+                        </GridPane>
+                        <TableView fx:id="reserveTransactionTable" prefHeight="200.0" prefWidth="200.0">
+                            <columns>
+                                <TableColumn prefWidth="157.0" text="Date Reserved">
+                                    <cellValueFactory>
+                                        <PropertyValueFactory property="dateReserved"/>
+                                    </cellValueFactory>
+                                </TableColumn>
+                                <TableColumn prefWidth="69.0" text="Book ID">
+                                    <cellValueFactory>
+                                        <PropertyValueFactory property="bookID"/>
+                                    </cellValueFactory>
+                                </TableColumn>
+                                <TableColumn prefWidth="546.0" text="Book Title">
+                                    <cellValueFactory>
+                                        <PropertyValueFactory property="bookTitle"/>
+                                    </cellValueFactory>
+                                </TableColumn>
+                                <TableColumn prefWidth="116.0" text="Book Author">
+                                    <cellValueFactory>
+                                        <PropertyValueFactory property="bookAuthor"/>
+                                    </cellValueFactory>
+                                </TableColumn>
+                            </columns>
+                            <items>
+                                <FXCollections fx:factory="observableArrayList"/>
+                            </items>
+                        </TableView>
+                    </children>
+                </GridPane>
+            </children>
+            <GridPane.margin>
+                <Insets left="10.0" right="10.0"/>
+            </GridPane.margin>
+        </GridPane>
+        <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" styleClass="upper">
+            <children>
+                <Label fx:id="dateTime" prefHeight="29.0" prefWidth="250.0" styleClass="upperTitle"
+                       text="00/00/0000 00:00:00"/>
+                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="22.0" styleClass="upperTitle"
+                       text="Reserve Transaction Manager" HBox.hgrow="ALWAYS"/>
+                <Label styleClass="upperTitle" text="HuaheeCheh"/>
+            </children>
+            <padding>
+                <Insets left="10.0" right="10.0"/>
+            </padding>
+        </HBox>
+        <GridPane prefHeight="34.0" prefWidth="1366.0" GridPane.rowIndex="2">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <children>
+                <HBox maxHeight="30.0" prefWidth="200.0" spacing="10.0">
+                    <children>
+                        <Button fx:id="backButton" mnemonicParsing="false" onMouseClicked="#backToTransChoose"
+                                prefWidth="80.0" text="Back"/>
+                    </children>
+                    <padding>
+                        <Insets left="15.0" right="15.0"/>
+                    </padding>
+                </HBox>
+            </children>
+        </GridPane>
+    </children>
 </GridPane>

@@ -103,6 +103,15 @@ public class StaffManager {
     }
 
     /**
+     * This function return a copy of the staff list loaded from the database
+     * @return an array of Staff, use StaffManager.getStaffCount() to get the number of entry
+     * @see #getStaffCount()
+     */
+    public Staff[] getStaffListCache() {
+        return this.staffList.clone();
+    }
+
+    /**
      * @return staff that is log on using login() function
      */
     public Staff getLogOnStaff() {
@@ -197,4 +206,11 @@ public class StaffManager {
         this.logOnStaff = null;
     }
 
+    /**
+     *
+     * @return amount of staff loaded from database
+     */
+    public int getStaffCount() {
+        return staffCount;
+    }
 }

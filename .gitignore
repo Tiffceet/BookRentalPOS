@@ -3,5 +3,7 @@
 .project
 .settings/
 out/
-BookRentalPOS.iml
+*.iml
 .idea/
+jdk11-pom/src/
+jdk11-pom/target/

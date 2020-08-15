@@ -16,7 +16,6 @@ import my.edu.tarc.dco.bookrentalpos.Member;
 import my.edu.tarc.dco.bookrentalpos.Transaction;
 
 import java.io.IOException;
-import java.security.Key;
 import java.util.ArrayList;
 
 public class RentTransactionController implements TableInterface {
@@ -156,7 +155,7 @@ public class RentTransactionController implements TableInterface {
         }
 
         if (book.isReserved() && book.getLastReservedBy() != mem.getId()) {
-            Dialog.alertBox("This book was reserved by " + Main.bm.getBookById(book.getLastReservedBy()).getName());
+            Dialog.alertBox("This book was reserved by " + Main.mm.getMember(book.getLastReservedBy()).getName());
             return;
         }
 

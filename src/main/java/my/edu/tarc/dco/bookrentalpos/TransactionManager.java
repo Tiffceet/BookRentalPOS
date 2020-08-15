@@ -2,8 +2,10 @@ package my.edu.tarc.dco.bookrentalpos;
 
 import bookrentalpos.Dialog;
 
+import javax.swing.tree.TreeNode;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
@@ -121,7 +123,6 @@ public class TransactionManager {
                     case DISCOUNT:
                         Member memberToEdit = mm.getMember(trans.getMemberInvovled());
                         if (memberToEdit != null) {
-                            System.out.println("HOWDY");
                             memberToEdit.setMemberPoints(memberToEdit.getMemberPoints() - 500);
                             this.mm.updateMember(memberToEdit);
                         }
@@ -206,5 +207,45 @@ public class TransactionManager {
             }
         }
         return null;
+    }
+
+    /**
+     * This function returns Transaction of the last reserve record of a specific book
+     * @param bookID bookID to be checked
+     * @return Transaction reference object to the last reserve record, return null if bookid is not valid or the book is not reserved
+     */
+    public Transaction getBookLastReservedTransaction(int bookID) {
+        Book bk;
+        if ((bk = bm.getBookById(bookID)) == null) {
+            return null;
+        }
+        if (!bk.isReserved()) return null;
+
+        for (int a = this.transactionCount - 1; a != -1; a--) {
+            if(transactionList[a].getType() == TransactionType.RESERVE && transactionList[a].getBookInvovled() == bookID) {
+                return transactionList[a];
+            }
+        }
+        return null;
+    }
+
+    /**
+     * This function return an array list of books currently reserved by this member
+     *
+     * @return an arraylist of book reference from BookManager
+     */
+    public ArrayList<Book> getMemberActiveReservations(int memID) {
+        ArrayList<Book> books = new ArrayList<Book>();
+
+        String sql = "SELECT * FROM book WHERE isReserved=1 AND lastReservedBy=" + memID;
+        ResultSet rs = db.resultQuery(sql);
+        try {
+            while (rs.next()) {
+                books.add(bm.getBookById(rs.getInt("id")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return books;
     }
 }

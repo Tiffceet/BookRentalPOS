@@ -1,5 +1,6 @@
 package bookrentalpos;
 
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -13,9 +14,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import my.edu.tarc.dco.bookrentalpos.Book;
 import my.edu.tarc.dco.bookrentalpos.Member;
+import my.edu.tarc.dco.bookrentalpos.Transaction;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class ReserveTransactionController implements Initializable, TableInterface {
@@ -30,10 +33,43 @@ public class ReserveTransactionController implements Initializable, TableInterfa
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Clock.display(dateTime);
+        Main.tm.updateBookReservationStatus();
     }
 
     @Override
     public void reloadTableView() {
+        ObservableList ol = reserveTransactionTable.getItems();
+        ol.remove(0, ol.size());
+        String memID_str = memberIDField.getText();
+        if (memID_str.trim().isEmpty()) {
+            ol.remove(0, ol.size());
+            return;
+        }
+
+        int memID;
+        try {
+            memID = Integer.parseInt(memID_str);
+        } catch (NumberFormatException e) {
+            ol.remove(0, ol.size());
+            return;
+        }
+
+        Member mem = Main.mm.getMember(memID);
+        if (mem == null) {
+            ol.remove(0, ol.size());
+            return;
+        }
+
+        ArrayList<Book> reservedBooks = Main.tm.getMemberActiveReservations(memID);
+        for (int a = 0; a < reservedBooks.size(); a++) {
+            ReserveTransactionTableData rttd = new ReserveTransactionTableData(
+                    Main.tm.getBookLastReservedTransaction(reservedBooks.get(a).getId()).getDateCreated(),
+                    reservedBooks.get(a).getId() + "",
+                    reservedBooks.get(a).getName(),
+                    reservedBooks.get(a).getAuthor()
+            );
+            ol.add(rttd);
+        }
 
     }
 
@@ -56,9 +92,9 @@ public class ReserveTransactionController implements Initializable, TableInterfa
         window.setScene(mainMenuScene);
     }
 
-    // =======================================
+    // =================================================================================================================
     // Event functions
-    // =======================================
+    // =================================================================================================================
     public void bookIDFieldOnReleased(Event event) {
         reloadBookDetailTextArea();
     }
@@ -78,12 +114,62 @@ public class ReserveTransactionController implements Initializable, TableInterfa
     }
 
     public void checkReservationOnPressed(Event event) {
+        int memID;
+        try {
+            memID = Integer.parseInt(memberIDField.getText());
+        } catch (NumberFormatException e) {
+            Dialog.alertBox("Invalid member ID");
+            return;
+        }
+        Member mem = Main.mm.getMember(memID);
+        if (mem == null) {
+            Dialog.alertBox("Member ID not found");
+            return;
+        }
+        reloadTableView();
     }
 
     public void addReservationOnPressed(Event event) {
+        int bookID;
+        int memID;
+        try {
+            bookID = Integer.parseInt(bookIDField.getText());
+            memID = Integer.parseInt(memberIDField.getText());
+        } catch (NumberFormatException e) {
+            Dialog.alertBox("Invalid bookID or memID");
+            return;
+        }
+        Book bk = Main.bm.getBookById(bookID);
+        Member mem = Main.mm.getMember(memID);
+        if (bk == null) {
+            Dialog.alertBox("BookID do not exist");
+            return;
+        }
+
+        if (mem == null) {
+            Dialog.alertBox("BookID do not exist");
+            return;
+        }
+
+        if (!bk.isRented()) {
+            Dialog.alertBox("Only books that is currently rented can be reserved.");
+            return;
+        }
+
+        if(bk.getLastRentedBy() == mem.getId()) {
+            Dialog.alertBox("Uhh, but you are the one renting this book... (._.)");
+            return;
+        }
+
+        Transaction t = new Transaction(Main.sm.getLogOnStaff().getId(), mem.getId(), bk.getId());
+        if (Main.tm.addTransaction(t)) {
+            Dialog.alertBox("Book reserved successfully;\nNote: book reservation will be cancelled if the book is not rented 7 days after its returned.");
+        } else Dialog.alertBox("Something went wrong when trying to reserve the book");
+        reloadTableView();
+
     }
-    // =======================================
-    // =======================================
+    // =================================================================================================================
+    // =================================================================================================================
 
     public void reloadMemberDetailTextArea() {
         String memID_str = memberIDField.getText();
