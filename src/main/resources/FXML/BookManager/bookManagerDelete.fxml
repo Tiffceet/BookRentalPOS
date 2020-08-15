@@ -29,7 +29,7 @@
          <children>
             <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Confim to delete?" HBox.hgrow="ALWAYS">
                <font>
-                  <Font name="Bodoni MT" size="24.0" />
+                  <Font name="Berlin Sans FB" size="24.0" />
                </font>
             </Label>
          </children>
