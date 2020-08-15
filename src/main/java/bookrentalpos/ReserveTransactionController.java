@@ -156,7 +156,12 @@ public class ReserveTransactionController implements Initializable, TableInterfa
             return;
         }
 
-        if(bk.getLastRentedBy() == mem.getId()) {
+        if (bk.isReserved()) {
+            Dialog.alertBox("Sorry but this book was reserved by " + Main.mm.getMember(bk.getLastReservedBy()).getName());
+            return;
+        }
+
+        if (bk.getLastRentedBy() == mem.getId()) {
             Dialog.alertBox("Uhh, but you are the one renting this book... (._.)");
             return;
         }

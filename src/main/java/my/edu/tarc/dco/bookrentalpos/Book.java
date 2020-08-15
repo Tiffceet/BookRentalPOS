@@ -10,6 +10,16 @@ public class Book extends Entity {
 
     private boolean rented;
     private boolean reserved;
+
+    /**
+     * Used for FXML PropertyFactory to laod
+     */
+    private String rentedText;
+    /**
+     * Used for FXML PropertyFactory to laod
+     */
+    private String reservedText;
+
     private double retailPrice;
     private int lastRentedBy;
     private int lastReservedBy;
@@ -162,4 +172,31 @@ public class Book extends Entity {
         return retailPrice;
     }
 
+    /**
+     * FXML use
+     */
+    public String getRentedText() {
+        return rentedText;
+    }
+
+    /**
+     * FXML use
+     */
+    public void setRentedText(String rentedText) {
+        this.rentedText = rentedText;
+    }
+
+    /**
+     * FXML use
+     */
+    public String getReservedText() {
+        return reservedText;
+    }
+
+    /**
+     * FXML use
+     */
+    public void setReservedText(String reservedText) {
+        this.reservedText = reservedText;
+    }
 }

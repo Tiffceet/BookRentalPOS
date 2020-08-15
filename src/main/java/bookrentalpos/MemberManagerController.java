@@ -327,17 +327,17 @@ public class MemberManagerController implements Initializable, TableInterface {
         String idQuery = searchByIDField.getText();
         for (int a = 0; a < Main.mm.getMemberCount(); a++) {
             if (!nameQuery.trim().isEmpty()) {
-                if (!mem[a].getName().equals(nameQuery)) {
+                if (!mem[a].getName().contains(nameQuery)) {
                     continue;
                 }
             }
             if (!icQuery.trim().isEmpty()) {
-                if (!mem[a].getIcNo().equals(icQuery)) {
+                if (!mem[a].getIcNo().contains(icQuery)) {
                     continue;
                 }
             }
             if (!idQuery.trim().isEmpty()) {
-                if (!(mem[a].getId() + "").equals(idQuery)) {
+                if (!(mem[a].getId() + "").contains(idQuery)) {
                     continue;
                 }
             }

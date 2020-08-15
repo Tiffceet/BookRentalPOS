@@ -91,9 +91,8 @@ public class RentTransactionController implements TableInterface {
     }
 
     public void bookIDOnKeyPressed(Event event) {
-        if (((KeyEvent) event).getCode() == KeyCode.ENTER) {
-            reloadBookDetailsField();
-        }
+        reloadBookDetailsField();
+
     }
 
     public void bookIDOnKeyReleased(Event event) {
@@ -101,9 +100,7 @@ public class RentTransactionController implements TableInterface {
     }
 
     public void memberIDOnKeyPressed(Event event) {
-        if (((KeyEvent) event).getCode() == KeyCode.ENTER) {
-            reloadMemberDetailsField();
-        }
+        reloadMemberDetailsField();
     }
 
     public void memberIDOnKeyReleased(Event event) {

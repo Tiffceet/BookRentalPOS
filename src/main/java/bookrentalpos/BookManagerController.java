@@ -99,6 +99,8 @@ public class BookManagerController implements TableInterface, Initializable {
         Book[] books = Main.bm.getBooKListCache(); // get book List
         // As stated in getMemberListCache() javadoc, you could obtain the length of the array through getMemberCount
         for (int a = 0; a < Main.bm.getBookCount(); a++) {
+            books[a].setReservedText(books[a].isReserved() ? "✓": "✘");
+            books[a].setRentedText((books[a].isRented() ? "✓": "✘"));
             bookTableView.getItems().add(books[a]);
         }
     }
@@ -214,6 +216,8 @@ public class BookManagerController implements TableInterface, Initializable {
             return;
         }
 
+        newRentPrice = Double.parseDouble(String.format("%.2f", newRentPrice));
+
         if (!Main.bm.addBook(new Book(bookName, bookAuthor, newRentPrice))) {
             Dialog.alertBox("Soemthing went wrong and your book was not added");
             return;
@@ -237,6 +241,8 @@ public class BookManagerController implements TableInterface, Initializable {
             Dialog.alertBox("Rental price need to be a number");
             return;
         }
+        newRentPrice = Double.parseDouble(String.format("%.2f", newRentPrice));
+
         Book bookToEdit = Main.bm.getBookById(bookID);
         bookToEdit.setName(bookName);
         bookToEdit.setAuthor(bookAuthor);
@@ -272,12 +278,12 @@ public class BookManagerController implements TableInterface, Initializable {
 
         for (int a = 0; a < Main.bm.getBookCount(); a++) {
             if (!nameQuery.trim().isEmpty()) {
-                if (!books[a].getName().equals(nameQuery)) {
+                if (!books[a].getName().contains(nameQuery)) {
                     continue;
                 }
             }
             if (!authorQuery.trim().isEmpty()) {
-                if (!books[a].getAuthor().equals(authorQuery)) {
+                if (!books[a].getAuthor().contains(authorQuery)) {
                     continue;
                 }
             }

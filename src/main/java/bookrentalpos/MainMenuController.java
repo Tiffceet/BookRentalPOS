@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -27,15 +28,20 @@ public class MainMenuController implements Initializable {
     public Button cancelLogOutButton;
     public Button staffButton;
     public ImageView staffImage;
+    public Label welcomeLabel;
     public static Stage mainWindow;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if(staffButton == null) {
+        if (staffButton == null) {
             return;
         }
         if (Main.sm.getLogOnStaff().isAdmin() && staffButton != null) {
             setStaffVisible();
+        }
+
+        if (welcomeLabel != null) {
+            welcomeLabel.setText("Welcome back, " + Main.sm.getLogOnStaff().getName() + "."); // set welcome msg
         }
     }
 
@@ -43,7 +49,7 @@ public class MainMenuController implements Initializable {
         Parent manageBookParent = FXMLLoader.load(getClass().getResource("/FXML/TransactionManager/transactionChoose.fxml"));
         Scene manageBookScene = new Scene(manageBookParent);
 
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setTitle("Transaction Manager - Huahee Library");
         window.setScene(manageBookScene);
     }
@@ -52,7 +58,7 @@ public class MainMenuController implements Initializable {
         Parent manageBookParent = FXMLLoader.load(getClass().getResource("/FXML/BookManager/bookManager.fxml"));
         Scene manageBookScene = new Scene(manageBookParent);
 
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setTitle("Book Manager - Huahee Library");
         window.setScene(manageBookScene);
     }
@@ -61,7 +67,7 @@ public class MainMenuController implements Initializable {
         Parent manageBookParent = FXMLLoader.load(getClass().getResource("/FXML/MemberManager/memberManager.fxml"));
         Scene manageBookScene = new Scene(manageBookParent);
 
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setTitle("Member Manager - Huahee Library");
         window.setScene(manageBookScene);
     }
@@ -70,7 +76,7 @@ public class MainMenuController implements Initializable {
         Parent manageBookParent = FXMLLoader.load(getClass().getResource("/FXML/StaffManager/staffManager.fxml"));
         Scene manageBookScene = new Scene(manageBookParent);
 
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setTitle("Member Manager - Huahee Library");
         window.setScene(manageBookScene);
     }
@@ -81,7 +87,7 @@ public class MainMenuController implements Initializable {
         EditProfileController epc = fl.getController();
         epc.nameField.setText(Main.sm.getLogOnStaff().getName());
         // admin will not be able to change username
-        if(Main.sm.getLogOnStaff().getName().equals("root")) {
+        if (Main.sm.getLogOnStaff().getName().equals("root")) {
             epc.nameField.setStyle("-fx-text-inner-color: grey;");
             epc.nameField.setEditable(false);
             epc.nameField.setFocusTraversable(false);
@@ -101,7 +107,7 @@ public class MainMenuController implements Initializable {
     public void popLogOut(MouseEvent event) throws IOException {
         Parent logOutParent = FXMLLoader.load(getClass().getResource("/FXML/logOut.fxml"));
         Stage logOutWindow = new Stage();
-        mainWindow = (Stage)((Node)event.getSource()).getScene().getWindow();
+        mainWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         logOutWindow.initModality(Modality.APPLICATION_MODAL);
         logOutWindow.setTitle("Logout - Huahee Library");
@@ -118,12 +124,12 @@ public class MainMenuController implements Initializable {
 
         mainWindow.setScene(loginScreenScene);
         mainWindow.centerOnScreen();
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.close();
     }
 
     public void cancelLogOut(MouseEvent event) {
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.close();
     }
 

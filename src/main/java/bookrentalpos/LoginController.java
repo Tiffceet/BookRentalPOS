@@ -28,7 +28,9 @@ public class LoginController {
         // if login() returns -1, meaning the username or password is wrong
         if (staffID != -1) {
             Parent mainMenuParent;
-            mainMenuParent = FXMLLoader.load(getClass().getResource("/FXML/mainMenu.fxml"));
+            FXMLLoader fl = new FXMLLoader(getClass().getResource("/FXML/mainMenu.fxml"));
+            mainMenuParent = (Parent) fl.load();
+
             Scene mainMenuScene = new Scene(mainMenuParent, 1366, 768);
 
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -37,6 +39,7 @@ public class LoginController {
             window.centerOnScreen();
         } else {
             Dialog.alertBox("Wrong username or password");
+            usernameTextField.selectAll();
         }
     }
 
