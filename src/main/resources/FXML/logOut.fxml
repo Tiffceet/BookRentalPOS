@@ -29,7 +29,6 @@
                <HBox.margin>
                   <Insets bottom="50.0" left="20.0" />
                </HBox.margin>
-                //
             </ImageView>
              <Button fx:id="cancelLogOutButton" mnemonicParsing="false" onMouseClicked="#cancelLogOut" prefWidth="90.0" text="Cancel">
                <font>
