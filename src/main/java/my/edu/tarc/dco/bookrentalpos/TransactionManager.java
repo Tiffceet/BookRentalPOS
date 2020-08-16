@@ -1,14 +1,13 @@
 package my.edu.tarc.dco.bookrentalpos;
 
 import bookrentalpos.Dialog;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import javax.swing.tree.TreeNode;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Used to load all transactions from the database
@@ -16,7 +15,7 @@ import java.util.concurrent.TimeUnit;
  * @author Looz
  * @version 1.0
  */
-public class TransactionManager {
+public class TransactionManager extends Manager<Transaction> {
 
     private Transaction[] transactionList;
     private final int ARRAY_SIZE = 100;
@@ -29,7 +28,7 @@ public class TransactionManager {
      * Contains the rates for the deposit to pay for customer
      * HashMap keys:    rentalWeeks
      * HashMap values:  rates in %
-     * If more than 4 weeks, 10% applies
+     * If more than 4 weeks, max % applies
      */
     public final HashMap<Integer, Integer> DEPOSIT_RATES = new HashMap<Integer, Integer>() {
         {
@@ -82,7 +81,8 @@ public class TransactionManager {
      * @param trans accept Transaction object
      * @return Return true if the transaction was added into database successfully
      */
-    public boolean addTransaction(Transaction trans) {
+    @Override
+    public boolean add(Transaction trans) {
         String sql = String.format(
                 "INSERT INTO transactions(type, staffHandled, memberInvolved, bookInvolved, rentDurationInDays, cashFlow) VALUES('%s',%d,%d,%d,%d,%f)",
                 trans.getType(),
@@ -103,28 +103,28 @@ public class TransactionManager {
                 transactionList[transactionCount++] = trans;
 
                 // Update respective table based on the transaction type
-                Book b = bm.getBookById(trans.getBookInvovled());
+                Book b = bm.getById(trans.getBookInvovled());
                 switch (trans.getType()) {
                     case RENT:
                         b.setLastRentedBy(trans.getMemberInvovled());
                         b.setRented(true);
                         b.setReserved(false);
-                        bm.updateBook(b);
+                        bm.update(b);
                         break;
                     case RETURN:
                         b.setRented(false);
-                        bm.updateBook(b);
+                        bm.update(b);
                         break;
                     case RESERVE:
                         b.setLastReservedBy(trans.getMemberInvovled());
                         b.setReserved(true);
-                        bm.updateBook(b);
+                        bm.update(b);
                         break;
                     case DISCOUNT:
-                        Member memberToEdit = mm.getMember(trans.getMemberInvovled());
+                        Member memberToEdit = mm.getById(trans.getMemberInvovled());
                         if (memberToEdit != null) {
                             memberToEdit.setMemberPoints(memberToEdit.getMemberPoints() - 500);
-                            this.mm.updateMember(memberToEdit);
+                            this.mm.update(memberToEdit);
                         }
                         break;
                 }
@@ -139,17 +139,98 @@ public class TransactionManager {
     }
 
     /**
+     * get Transaction by ID
+     *
+     * @param id Transaction ID
+     * @return Transaction reference object if found, null if nothing was found
+     */
+    @Override
+    public Transaction getById(int id) {
+        for (int a = 0; a < this.transactionCount; a++) {
+            if (transactionList[a].getId() == id) {
+                return transactionList[a];
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Get a cache of the transaction list<br>
+     * Note: for the count of data you should get it from TransactionManager.getTransactionCount()
+     *
+     * @return an copy of Transaction list array
+     * @see #getTransactionCount()
+     */
+    @Override
+    public Transaction[] getCache() {
+        return this.transactionList.clone();
+    }
+
+    /**
+     * Update transaction table in database
+     *
+     * @param ref Transaction reference object preferably from Transaction.getById
+     * @return true if update was successful, false if otherwise
+     * @see #getById(int)
+     */
+    @Override
+    public boolean update(Transaction ref) {
+        String sql = String.format(
+                "UPDATE transactions\n" +
+                        "SET rentDurationInDays=%d, type='%s', staffHandled=%s, memberInvolved=%s, bookInvolved=%s, cashFlow=%.2f\n" +
+                        "WHERE id=%d",
+                ref.getRentDurationInDays(),
+                ref.getType(),
+                ref.getStaffHandled() == 0 ? "null" : ref.getStaffHandled() + "",
+                ref.getMemberInvovled() == 0 ? "null" : ref.getMemberInvovled() + "",
+                ref.getBookInvovled() == 0 ? "null" : ref.getBookInvovled() + "",
+                ref.getCashFlow(),
+                ref.getId());
+        if (db.updateQuery(sql) != 1) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Remove transaction of specific id from database
+     *
+     * @param id transaction id
+     * @return true if it was removed successfully, false if otherwise
+     */
+    @Override
+    public boolean remove(int id) {
+        String sql = "DELETE FROM transactions WHERE id=" + id;
+        if (db.updateQuery(sql) != 1) {
+            return false;
+        }
+
+        // [1,23,4,5,6]
+        // [1, 23, 5, 6]
+        int b = 0;
+        Transaction[] tmpList = new Transaction[ARRAY_SIZE];
+        for (int a = 0; a < this.transactionCount; a++) {
+            if (transactionList[a].getId() != id) {
+                tmpList[b++] = transactionList[a];
+            }
+        }
+        this.transactionCount--;
+        this.transactionList = tmpList.clone();
+        return true;
+    }
+
+    /**
      * This function is suppose to update the reservation status of all the books<br>
      * Criteria as stated below: <br>
      * - If the book is not reserved, dont touch it<br>
      * - If the book is reserved, check if the book is being rented at the moment<br>
      * - If the book is rented, dont touch it<br>
-     * - If the book is not rented, or in other words it was returned, check if (return date - current date) > 7 days<br>
-     * - If > 7 days, set reserved status as false<br>
-     * - If !(> 7 days), dont touch it
+     * - If the book is not rented, or in other words it was returned, check if (return date - current date) &gt; 7 days<br>
+     * - If &gt; 7 days, set reserved status as false<br>
+     * - If !(&gt; 7 days), dont touch it
      */
     public void updateBookReservationStatus() {
-        Book[] bookList = this.bm.getBooKListCache();
+        Book[] bookList = this.bm.getCache();
         for (int a = 0; a < bm.getBookCount(); a++) {
             if (bookList[a].isReserved()) {
                 if (!bookList[a].isRented()) {
@@ -179,9 +260,9 @@ public class TransactionManager {
                     long diff = CustomUtil.daysDifference(currentDate, bookReturnedDate);
 
                     if (diff > 7) {
-                        Book bookToModify = bm.getBookById(bookList[a].getId());
+                        Book bookToModify = bm.getById(bookList[a].getId());
                         bookToModify.setReserved(false);
-                        bm.updateBook(bookToModify);
+                        bm.update(bookToModify);
                     }
 
                 }
@@ -197,7 +278,7 @@ public class TransactionManager {
      */
     public Transaction getBookLastRentTransaction(int bookID) {
         Book bk;
-        if ((bk = bm.getBookById(bookID)) == null) {
+        if ((bk = bm.getById(bookID)) == null) {
             return null;
         }
         if (!bk.isRented()) return null;
@@ -211,18 +292,19 @@ public class TransactionManager {
 
     /**
      * This function returns Transaction of the last reserve record of a specific book
+     *
      * @param bookID bookID to be checked
      * @return Transaction reference object to the last reserve record, return null if bookid is not valid or the book is not reserved
      */
     public Transaction getBookLastReservedTransaction(int bookID) {
         Book bk;
-        if ((bk = bm.getBookById(bookID)) == null) {
+        if ((bk = bm.getById(bookID)) == null) {
             return null;
         }
         if (!bk.isReserved()) return null;
 
         for (int a = this.transactionCount - 1; a != -1; a--) {
-            if(transactionList[a].getType() == TransactionType.RESERVE && transactionList[a].getBookInvovled() == bookID) {
+            if (transactionList[a].getType() == TransactionType.RESERVE && transactionList[a].getBookInvovled() == bookID) {
                 return transactionList[a];
             }
         }
@@ -232,6 +314,7 @@ public class TransactionManager {
     /**
      * This function return an array list of books currently reserved by this member
      *
+     * @param memID member ID
      * @return an arraylist of book reference from BookManager
      */
     public ArrayList<Book> getMemberActiveReservations(int memID) {
@@ -241,11 +324,35 @@ public class TransactionManager {
         ResultSet rs = db.resultQuery(sql);
         try {
             while (rs.next()) {
-                books.add(bm.getBookById(rs.getInt("id")));
+                books.add(bm.getById(rs.getInt("id")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return books;
+    }
+
+    /**
+     * @return transaction count loaded from database
+     */
+    public int getTransactionCount() {
+        return this.transactionCount;
+    }
+
+    // ================================================================================================================
+    // Unimplemented Method
+    // ================================================================================================================
+
+    /**
+     * Not implemented<br>
+     * Reason: Transaction do not use the name field
+     *
+     * @param name Not implemented
+     * @return Not implemented
+     * @throws NotImplementedException when called
+     */
+    @Override
+    public Transaction getByName(String name) {
+        throw new NotImplementedException();
     }
 }

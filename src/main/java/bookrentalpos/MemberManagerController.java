@@ -98,7 +98,7 @@ public class MemberManagerController implements Initializable, TableInterface {
             return;
         memberTableView.getItems().clear();
 
-        Member[] mem = Main.mm.getMemberListCache(); // get member List
+        Member[] mem = Main.mm.getCache(); // get member List
         // As stated in getMemberListCache() javadoc, you could obtain the length of the array through getMemberCount
         for (int a = 0; a < Main.mm.getMemberCount(); a++) {
             memberTableView.getItems().add(mem[a]);
@@ -183,7 +183,7 @@ public class MemberManagerController implements Initializable, TableInterface {
 
         if (Dialog.confirmBox("Are you sure you want to delete " + ol.size() + " record(s) ?")) {
             for (int a = 0; a < ol.size(); a++) {
-                if (Main.mm.removeMember(((Member) ol.get(a)).getId())) {
+                if (Main.mm.remove(((Member) ol.get(a)).getId())) {
                     // do nothing yet
                 } else {
                     // Somewhere in the database went wrong
@@ -232,7 +232,7 @@ public class MemberManagerController implements Initializable, TableInterface {
 
         // Code to add entry to database
         Member newMember = new Member(memberIC, memberName, memberPhone, memberEmail);
-        if (!Main.mm.registerMember(newMember)) {
+        if (!Main.mm.add(newMember)) {
             Dialog.alertBox("Same IC number have been registered before");
             return;
         }
@@ -276,12 +276,12 @@ public class MemberManagerController implements Initializable, TableInterface {
         }
 
         // Modify the member
-        Member m = Main.mm.getMember(memID);
+        Member m = Main.mm.getById(memID);
         m.setName(memberName);
         m.setIcNo(memberIC);
         m.setEmail(memberEmail);
         m.setPhoneNo(memberPhone);
-        if (!Main.mm.updateMember(m)) {
+        if (!Main.mm.update(m)) {
             Dialog.alertBox("Same IC number have been registered before");
             return;
         }
@@ -308,7 +308,7 @@ public class MemberManagerController implements Initializable, TableInterface {
         memberTableView.getItems().clear();
 
         // load the cache from MemberManager
-        Member[] mem = Main.mm.getMemberListCache();
+        Member[] mem = Main.mm.getCache();
         String nameQuery = searchByNameField.getText();
         String icQuery = searchByICField.getText();
         String idQuery = searchByIDField.getText();

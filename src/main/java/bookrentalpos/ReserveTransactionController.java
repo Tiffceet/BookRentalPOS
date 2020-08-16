@@ -54,7 +54,7 @@ public class ReserveTransactionController implements Initializable, TableInterfa
             return;
         }
 
-        Member mem = Main.mm.getMember(memID);
+        Member mem = Main.mm.getById(memID);
         if (mem == null) {
             ol.remove(0, ol.size());
             return;
@@ -121,7 +121,7 @@ public class ReserveTransactionController implements Initializable, TableInterfa
             Dialog.alertBox("Invalid member ID");
             return;
         }
-        Member mem = Main.mm.getMember(memID);
+        Member mem = Main.mm.getById(memID);
         if (mem == null) {
             Dialog.alertBox("Member ID not found");
             return;
@@ -139,8 +139,8 @@ public class ReserveTransactionController implements Initializable, TableInterfa
             Dialog.alertBox("Invalid bookID or memID");
             return;
         }
-        Book bk = Main.bm.getBookById(bookID);
-        Member mem = Main.mm.getMember(memID);
+        Book bk = Main.bm.getById(bookID);
+        Member mem = Main.mm.getById(memID);
         if (bk == null) {
             Dialog.alertBox("BookID do not exist");
             return;
@@ -157,7 +157,7 @@ public class ReserveTransactionController implements Initializable, TableInterfa
         }
 
         if (bk.isReserved()) {
-            Dialog.alertBox("Sorry but this book was reserved by " + Main.mm.getMember(bk.getLastReservedBy()).getName());
+            Dialog.alertBox("Sorry but this book was reserved by " + Main.mm.getById(bk.getLastReservedBy()).getName());
             return;
         }
 
@@ -167,7 +167,7 @@ public class ReserveTransactionController implements Initializable, TableInterfa
         }
 
         Transaction t = new Transaction(Main.sm.getLogOnStaff().getId(), mem.getId(), bk.getId());
-        if (Main.tm.addTransaction(t)) {
+        if (Main.tm.add(t)) {
             Dialog.alertBox("Book reserved successfully;\nNote: book reservation will be cancelled if the book is not rented 7 days after its returned.");
         } else Dialog.alertBox("Something went wrong when trying to reserve the book");
         reloadTableView();
@@ -185,7 +185,7 @@ public class ReserveTransactionController implements Initializable, TableInterfa
             return;
         }
         Member mem;
-        if ((mem = Main.mm.getMember(memID)) != null) {
+        if ((mem = Main.mm.getById(memID)) != null) {
             memberDetailTextArea.setText(mem.toString());
         } else {
             memberDetailTextArea.setText("");
@@ -201,7 +201,7 @@ public class ReserveTransactionController implements Initializable, TableInterfa
             return;
         }
         Book bk;
-        if ((bk = Main.bm.getBookById(bookID)) != null) {
+        if ((bk = Main.bm.getById(bookID)) != null) {
             bookDetailTextArea.setText(bk.toString());
         } else {
             bookDetailTextArea.setText("");

@@ -1,5 +1,4 @@
 package my.edu.tarc.dco.bookrentalpos;
-
 /**
  * Class used to load Staff Data into the POS system
  *
@@ -34,7 +33,7 @@ public class StaffManager {
             java.sql.ResultSet rs = db.resultQuery(sql);
             while (rs.next()) {
                 Staff s = new Staff(rs.getInt("id"), rs.getString("date"), rs.getString("name"), rs.getString("password"));
-                if(s.getName().equals("root")) {
+                if (s.getName().equals("root")) {
                     s.setAdminStatus(true);
                 }
                 staffList[staffCount++] = s;
@@ -104,6 +103,7 @@ public class StaffManager {
 
     /**
      * This function return a copy of the staff list loaded from the database
+     *
      * @return an array of Staff, use StaffManager.getStaffCount() to get the number of entry
      * @see #getStaffCount()
      */
@@ -207,7 +207,6 @@ public class StaffManager {
     }
 
     /**
-     *
      * @return amount of staff loaded from database
      */
     public int getStaffCount() {

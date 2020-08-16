@@ -40,7 +40,10 @@ public class Transaction extends Entity {
     /**
      * Constructor used for Returntransaction
      *
-     * @param cashFlow deposit returned to customer - penalty(if any)
+     * @param staff          staffID
+     * @param memberInvovled memberID
+     * @param bookInvovled   bookID
+     * @param cashFlow       deposit returned to customer - penalty(if any)
      * @see #Transaction(int, int, int)
      */
     public Transaction(int staff, int memberInvovled, int bookInvovled, double cashFlow) {
@@ -54,6 +57,9 @@ public class Transaction extends Entity {
     /**
      * Constructor used to create a new RentTransaction
      *
+     * @param staff              staffID
+     * @param memberInvovled     memberID
+     * @param bookInvovled       bookID
      * @param rentDurationInDays integer, you may set this to 0 if this field is
      *                           not needed
      * @param cashFlow           Double, you may set it to 0 if this field is not needed
@@ -71,8 +77,9 @@ public class Transaction extends Entity {
 
     /**
      * Constructor used to create a Transaction for discount deduction
+     *
      * @param memberInvovled memberID
-     * @param cashFlow amount of discount amount given
+     * @param cashFlow       amount of discount amount given
      */
     public Transaction(int memberInvovled, double cashFlow) {
         this.memberInvovled = memberInvovled;
@@ -84,6 +91,15 @@ public class Transaction extends Entity {
      * Constructor used for importing data from database<br>
      * DO NOT use this to create new Transaction
      *
+     * @param id                 Transaction ID
+     * @param date               Transaction Date
+     * @param type               TransactionType Enumeration
+     * @param staff              staffID
+     * @param memberInvovled     memberID
+     * @param bookInvovled       bookID
+     * @param rentDurationInDays integer, you may set this to 0 if this field is
+     *                           not needed
+     * @param cashFlow           Double, you may set it to 0 if this field is not needed
      * @see #Transaction(int, int, int, int, double)
      * @see #Transaction(int, int, int, double)
      */
@@ -174,7 +190,6 @@ public class Transaction extends Entity {
     }
 
     /**
-     *
      * @return cash flow of this transaction. Refer to constructor for how its being used
      * @see #Transaction(int, int, int, double)
      * @see #Transaction(int, int, int, int, double)
@@ -184,7 +199,6 @@ public class Transaction extends Entity {
     }
 
     /**
-     *
      * @param cashFlow cashFlow of the Return / Rent Transaction
      */
     public void setCashFlow(double cashFlow) {

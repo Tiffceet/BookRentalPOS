@@ -52,6 +52,9 @@ public class Book extends Entity {
      *
      * @param id             Book ID
      * @param date           Date the book was added into database
+     * @param name           Book Title
+     * @param author         Book Author
+     * @param retailPrice    Book's rental price per day
      * @param lastRentedBy   MemberID of whoever last rented the book
      * @param lastReservedBy MemberID of whoever last reserved the book
      * @param isRented       Although int is used in database, it is stored as boolean
@@ -174,6 +177,8 @@ public class Book extends Entity {
 
     /**
      * FXML use
+     *
+     * @return Rented status of the book, but in text
      */
     public String getRentedText() {
         return rentedText;
@@ -181,6 +186,8 @@ public class Book extends Entity {
 
     /**
      * FXML use
+     *
+     * @param rentedText rented status of the book, but in text
      */
     public void setRentedText(String rentedText) {
         this.rentedText = rentedText;
@@ -188,6 +195,8 @@ public class Book extends Entity {
 
     /**
      * FXML use
+     *
+     * @return Reserved status of the book, but in text
      */
     public String getReservedText() {
         return reservedText;
@@ -195,6 +204,8 @@ public class Book extends Entity {
 
     /**
      * FXML use
+     *
+     * @param reservedText reserved status of the book, but in text
      */
     public void setReservedText(String reservedText) {
         this.reservedText = reservedText;

@@ -32,10 +32,11 @@ public class Main extends Application {
         Main.sm = new StaffManager(db);
         Main.mm = new MemberManager(db);
         Main.tm = new TransactionManager(db, bm, mm);
+        tm.remove(2);
     }
 
     static void startProgram(String[] args) {
         loadDB();
-        launch(args);
+        // launch(args);
     }
 }

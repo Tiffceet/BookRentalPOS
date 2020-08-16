@@ -68,7 +68,7 @@ public class Staff extends Entity {
 
     /**
      *
-     * @param pass in true if you wish to set this staff as admin, vice versa
+     * @param bool pass in true if you wish to set this staff as admin, vice versa
      */
     public void setAdminStatus(boolean bool) { this.isAdmin = bool; }
 

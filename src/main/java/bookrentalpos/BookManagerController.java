@@ -98,7 +98,7 @@ public class BookManagerController implements TableInterface, Initializable {
             return;
         bookTableView.getItems().clear();
 
-        Book[] books = Main.bm.getBooKListCache(); // get book List
+        Book[] books = Main.bm.getCache(); // get book List
         // As stated in getMemberListCache() javadoc, you could obtain the length of the array through getMemberCount
         for (int a = 0; a < Main.bm.getBookCount(); a++) {
             books[a].setReservedText(books[a].isReserved() ? "✓": "✘");
@@ -183,7 +183,7 @@ public class BookManagerController implements TableInterface, Initializable {
 
         if (Dialog.confirmBox("Are you sure you want to delete " + ol.size() + " record(s) ?")) {
             for (int a = 0; a < ol.size(); a++) {
-                if (Main.bm.removeBook(((Book) ol.get(a)).getId())) {
+                if (Main.bm.remove(((Book) ol.get(a)).getId())) {
 
                 } else {
 
@@ -216,7 +216,7 @@ public class BookManagerController implements TableInterface, Initializable {
 
         newRentPrice = Double.parseDouble(String.format("%.2f", newRentPrice));
 
-        if (!Main.bm.addBook(new Book(bookName, bookAuthor, newRentPrice))) {
+        if (!Main.bm.add(new Book(bookName, bookAuthor, newRentPrice))) {
             Dialog.alertBox("Soemthing went wrong and your book was not added");
             return;
         }
@@ -241,12 +241,12 @@ public class BookManagerController implements TableInterface, Initializable {
         }
         newRentPrice = Double.parseDouble(String.format("%.2f", newRentPrice));
 
-        Book bookToEdit = Main.bm.getBookById(bookID);
+        Book bookToEdit = Main.bm.getById(bookID);
         bookToEdit.setName(bookName);
         bookToEdit.setAuthor(bookAuthor);
         bookToEdit.setRetailPrice(newRentPrice);
 
-        if (!Main.bm.updateBook(bookToEdit)) {
+        if (!Main.bm.update(bookToEdit)) {
             Dialog.alertBox("Something went wrong and the book was not deleted");
             return;
         }
@@ -270,7 +270,7 @@ public class BookManagerController implements TableInterface, Initializable {
             return;
         bookTableView.getItems().clear();
         // load the cache from MemberManager
-        Book[] books = Main.bm.getBooKListCache();
+        Book[] books = Main.bm.getCache();
         String nameQuery = searchByNameField.getText();
         String authorQuery = searchByAuthorField.getText();
 

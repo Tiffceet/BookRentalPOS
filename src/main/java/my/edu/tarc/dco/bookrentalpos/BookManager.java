@@ -9,7 +9,7 @@ import java.sql.SQLException;
  * @author Looz
  * @version 1.0
  */
-public class BookManager {
+public class BookManager extends Manager<Book> {
 
     private Book[] bookList;
     private int bookCount;
@@ -48,9 +48,26 @@ public class BookManager {
      * @return Reference to the book object in this class. Will return null if
      * book of specified ID was not found
      */
-    public Book getBookById(int bookID) {
+    @Override
+    public Book getById(int bookID) {
         for (int i = 0; i < bookCount; i++) {
             if (bookList[i].getId() == bookID) {
+                return bookList[i];
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Get the reference to the book object with specified Name
+     *
+     * @return Reference to the book object in this class. Will return null if
+     * book of specified Name was not found
+     */
+    @Override
+    public Book getByName(String name) {
+        for (int i = 0; i < bookCount; i++) {
+            if (bookList[i].getName().equals(name)) {
                 return bookList[i];
             }
         }
@@ -65,7 +82,8 @@ public class BookManager {
      * @see BookManager#getBookCount()
      * @see BookManager#ARRAY_SIZE
      */
-    public Book[] getBooKListCache() {
+    @Override
+    public Book[] getCache() {
         return this.bookList.clone();
     }
 
@@ -76,7 +94,8 @@ public class BookManager {
      * @return True if the book is added to database successfully
      * @see Book#Book(String, String, double)
      */
-    public boolean addBook(Book book) {
+    @Override
+    public boolean add(Book book) {
         String sql = String.format("INSERT INTO book(title, retailPrice, author, lastRentedBy, lastReservedBy, isRented, isReserved) VALUES('%s', '%f', '%s', %s, %s, %d, %d)",
                 book.getName(),
                 book.getRetailPrice(),
@@ -112,7 +131,8 @@ public class BookManager {
      * @return True if the book is successfuly updated. Will return false if it
      * failed or the provided Book object dont contain ID
      */
-    public boolean updateBook(Book bk) {
+    @Override
+    public boolean update(Book bk) {
         if (bk.getId() == 0) {
             return false;
         }
@@ -140,7 +160,8 @@ public class BookManager {
      * @param bookID BookID to be removed
      * @return True if the book is removed successfully
      */
-    public boolean removeBook(int bookID) {
+    @Override
+    public boolean remove(int bookID) {
         db.execQuery("UPDATE transactions\n"
                 + "SET bookInvolved=NULL\n"
                 + "WHERE bookInvolved=" + bookID);

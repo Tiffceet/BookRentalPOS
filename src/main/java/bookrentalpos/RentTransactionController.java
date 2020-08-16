@@ -133,8 +133,8 @@ public class RentTransactionController implements TableInterface {
             return;
         }
 
-        Book book = Main.bm.getBookById(bookid);
-        Member mem = Main.mm.getMember(memberID);
+        Book book = Main.bm.getById(bookid);
+        Member mem = Main.mm.getById(memberID);
 
         if (book == null) {
             Dialog.alertBox("Book ID not found");
@@ -152,7 +152,7 @@ public class RentTransactionController implements TableInterface {
         }
 
         if (book.isReserved() && book.getLastReservedBy() != mem.getId()) {
-            Dialog.alertBox("This book was reserved by " + Main.mm.getMember(book.getLastReservedBy()).getName());
+            Dialog.alertBox("This book was reserved by " + Main.mm.getById(book.getLastReservedBy()).getName());
             return;
         }
 
@@ -213,7 +213,7 @@ public class RentTransactionController implements TableInterface {
             return;
         }
         Member mem;
-        if ((mem = Main.mm.getMember(memID)) == null) {
+        if ((mem = Main.mm.getById(memID)) == null) {
             Dialog.alertBox("Please has at least one transaction before applying the discount");
             return;
         }
@@ -238,14 +238,14 @@ public class RentTransactionController implements TableInterface {
             return;
         }
         for (int a = 0; a < sessionTransactions.size(); a++) {
-            if (Main.tm.addTransaction(sessionTransactions.get(a))) {
+            if (Main.tm.add(sessionTransactions.get(a))) {
 
             } else {
                 // if something went wrong this will happen
             }
         }
         if (haveDiscount) {
-            Main.tm.addTransaction(new Transaction(sessionTransactions.get(0).getMemberInvovled(), -discount));
+            Main.tm.add(new Transaction(sessionTransactions.get(0).getMemberInvovled(), -discount));
         }
 
         Dialog.alertBox("Transaction completed.");
@@ -297,7 +297,7 @@ public class RentTransactionController implements TableInterface {
             return;
         }
         Book bk;
-        if ((bk = Main.bm.getBookById(bookID)) != null) {
+        if ((bk = Main.bm.getById(bookID)) != null) {
             bookDetailField.setText(bk.toString());
         } else {
             bookDetailField.setText("");
@@ -315,7 +315,7 @@ public class RentTransactionController implements TableInterface {
             return;
         }
         Member mem;
-        if ((mem = Main.mm.getMember(memberID)) != null) {
+        if ((mem = Main.mm.getById(memberID)) != null) {
             memberDetailField.setText(mem.toString());
         } else memberDetailField.setText("");
     }

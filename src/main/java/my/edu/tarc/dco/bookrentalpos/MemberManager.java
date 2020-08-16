@@ -11,7 +11,7 @@ import java.sql.SQLException;
  * @author Looz
  * @version 1.0
  */
-public class MemberManager {
+public class MemberManager extends Manager<Member> {
 
     private Member[] memberList;
     private int memberCount;
@@ -40,9 +40,25 @@ public class MemberManager {
      *
      * @return Member object reference
      */
-    public Member getMember(int memID) {
+    @Override
+    public Member getById(int memID) {
         for (int i = 0; i < memberCount; i++) {
             if (memberList[i].getId() == memID) {
+                return memberList[i];
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Get reference to member object with specified Name
+     *
+     * @return Member object reference
+     */
+    @Override
+    public Member getByName(String name) {
+        for (int i = 0; i < memberCount; i++) {
+            if (memberList[i].getName().equals(name)) {
                 return memberList[i];
             }
         }
@@ -56,7 +72,8 @@ public class MemberManager {
      * @return A copy of Member array with 100 size pre-allocated
      * @see MemberManager#getMemberCount()
      */
-    public Member[] getMemberListCache() {
+    @Override
+    public Member[] getCache() {
         return this.memberList.clone();
     }
 
@@ -67,7 +84,8 @@ public class MemberManager {
      * @return True if member is successfully registered
      * @see Member#Member(java.lang.String, java.lang.String)
      */
-    public boolean registerMember(Member mem) {
+    @Override
+    public boolean add(Member mem) {
         String sql = String.format("INSERT INTO member(name, phoneNo, email, IC, points) VALUES('%s', '%s', '%s', '%s', %d)",
                 mem.getName(), mem.getPhoneNo(), mem.getEmail(), mem.getIcNo(), mem.getMemberPoints());
         if (db.updateQuery(sql) == 1) {
@@ -98,7 +116,8 @@ public class MemberManager {
      *            instead of new Member object
      * @return True if the member's data is updated successfully
      */
-    public boolean updateMember(Member mem) {
+    @Override
+    public boolean update(Member mem) {
         if (mem.getId() == 0) {
             return false;
         }
@@ -119,7 +138,8 @@ public class MemberManager {
      * @param memID MemberID which to be removed
      * @return true if member was removed successfully
      */
-    public boolean removeMember(int memID) {
+    @Override
+    public boolean remove(int memID) {
         db.execQuery("UPDATE book\n"
                 + "SET lastRentedBy=NULL\n"
                 + "WHERE lastRentedBy=" + memID);
