@@ -1,7 +1,6 @@
 package my.edu.tarc.dco.bookrentalpos;
 
 import bookrentalpos.Dialog;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -356,11 +355,10 @@ public class TransactionManager extends Manager<Transaction> {
      * Reason: Transaction do not use the name field
      *
      * @param name Not implemented
-     * @return Not implemented
-     * @throws NotImplementedException when called
+     * @return null
      */
     @Override
     public Transaction getByName(String name) {
-        throw new NotImplementedException();
+        return null;
     }
 }
