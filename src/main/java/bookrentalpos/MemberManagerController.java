@@ -28,6 +28,7 @@ import java.util.ResourceBundle;
 
 public class MemberManagerController implements Initializable, TableInterface {
     public Button backButton;
+    public Label recordsCount;
     public static Stage getWindow;
     public JFXTextField memberNameField;
     public JFXTextField memberICField;
@@ -102,6 +103,12 @@ public class MemberManagerController implements Initializable, TableInterface {
         for (int a = 0; a < Main.mm.getMemberCount(); a++) {
             memberTableView.getItems().add(mem[a]);
         }
+        reloadRecordsCountLabel();
+    }
+
+    public void reloadRecordsCountLabel() {
+        ObservableList ol = memberTableView.getItems();
+        recordsCount.setText(ol.size() + " record(s) Found.");
     }
 
     public void backToMain(MouseEvent event) throws IOException {
@@ -109,7 +116,7 @@ public class MemberManagerController implements Initializable, TableInterface {
         Scene mainMenuScene = new Scene(mainMenuParent);
 
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setTitle("Main Menu - Huahee Library");
+        window.setTitle("Main Menu - HuaheeCheh");
         window.setScene(mainMenuScene);
     }
 
@@ -118,7 +125,7 @@ public class MemberManagerController implements Initializable, TableInterface {
         Stage addMemberWindow = new Stage();
 
         addMemberWindow.initModality(Modality.APPLICATION_MODAL);
-        addMemberWindow.setTitle("Add Member - Huahee Library");
+        addMemberWindow.setTitle("Add Member - HuaheeCheh");
         addMemberWindow.getIcons().add(new Image(Main.class.getResourceAsStream("/Image/icon.png")));
         addMemberWindow.setScene(new Scene(addMemberParent, 800, 600));
         addMemberWindow.showAndWait();
@@ -157,7 +164,7 @@ public class MemberManagerController implements Initializable, TableInterface {
         Stage editMemberWindow = new Stage();
 
         editMemberWindow.initModality(Modality.APPLICATION_MODAL);
-        editMemberWindow.setTitle("Edit Member - Huahee Library");
+        editMemberWindow.setTitle("Edit Member - HuaheeCheh");
         editMemberWindow.getIcons().add(new Image(Main.class.getResourceAsStream("/Image/icon.png")));
         editMemberWindow.setScene(new Scene(editMemberParent, 800, 600));
         editMemberWindow.showAndWait();
@@ -174,28 +181,7 @@ public class MemberManagerController implements Initializable, TableInterface {
             return;
         }
 
-        // I changed the code here so it uses YesNoDialogController to track the response
-        // Parent deleteMemberParent = FXMLLoader.load(getClass().getResource("/FXML/MemberManager/memberManagerDelete.fxml"));
-        FXMLLoader fl = new FXMLLoader(getClass().getResource("/FXML/MemberManager/memberManagerDelete.fxml"));
-        Parent deleteMemberParent;
-        try {
-            deleteMemberParent = (Parent) fl.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Dialog.alertBox("Something went wrong and delete pop up was unable to show");
-            return;
-        }
-        YesNoDialogController ync = fl.getController(); // get the controller of this fxml
-
-        Stage deleteMemberWindow = new Stage();
-
-        deleteMemberWindow.initModality(Modality.APPLICATION_MODAL);
-        deleteMemberWindow.setTitle("Delete Member - Huahee Library");
-        deleteMemberWindow.getIcons().add(new Image(Main.class.getResourceAsStream("/Image/icon.png")));
-        deleteMemberWindow.setScene(new Scene(deleteMemberParent, 400, 150));
-        deleteMemberWindow.showAndWait();
-
-        if (ync.response == 1) {
+        if (Dialog.confirmBox("Are you sure you want to delete " + ol.size() + " record(s) ?")) {
             for (int a = 0; a < ol.size(); a++) {
                 if (Main.mm.removeMember(((Member) ol.get(a)).getId())) {
                     // do nothing yet
@@ -312,6 +298,7 @@ public class MemberManagerController implements Initializable, TableInterface {
         searchByICField.setText("");
         searchByIDField.setText("");
         searchByNameField.setText("");
+        Dialog.alertBox("Search query cleared.");
     }
 
     public void searchButtonClicked(MouseEvent event) throws IOException {
@@ -325,25 +312,37 @@ public class MemberManagerController implements Initializable, TableInterface {
         String nameQuery = searchByNameField.getText();
         String icQuery = searchByICField.getText();
         String idQuery = searchByIDField.getText();
+
+        boolean checkName = !nameQuery.isEmpty();
+        boolean checkIC = !icQuery.isEmpty();
+        boolean checkID = !idQuery.isEmpty();
+
+        if(!checkIC && !checkID && !checkName) {
+            Dialog.alertBox("Please insert search query");
+            reloadTableView();
+            return;
+        }
+
         for (int a = 0; a < Main.mm.getMemberCount(); a++) {
-            if (!nameQuery.trim().isEmpty()) {
+            if (checkName) {
                 if (!mem[a].getName().contains(nameQuery)) {
                     continue;
                 }
             }
-            if (!icQuery.trim().isEmpty()) {
+            if (checkIC) {
                 if (!mem[a].getIcNo().contains(icQuery)) {
                     continue;
                 }
             }
-            if (!idQuery.trim().isEmpty()) {
+            if (checkID) {
                 if (!(mem[a].getId() + "").contains(idQuery)) {
                     continue;
                 }
             }
             memberTableView.getItems().add(mem[a]);
         }
-
+        reloadRecordsCountLabel();
+        Dialog.alertBox(memberTableView.getItems().size() + " records found");
     }
 
     public void textFieldOnKeyPressed(KeyEvent event) throws IOException {

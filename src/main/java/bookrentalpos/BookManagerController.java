@@ -22,6 +22,7 @@ import java.util.ResourceBundle;
 
 public class BookManagerController implements TableInterface, Initializable {
     public static Stage getWindow;
+    public Label recordsCount;
     public Button backButton;
     public Button addBookButton;
     public Button cancelButton;
@@ -46,8 +47,9 @@ public class BookManagerController implements TableInterface, Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         if (bookTableView != null) {
             bookTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+            reloadTableView();
         }
-        reloadTableView();
+
 
         // Because some popup uses the controller class, we need to check if its null before allowing the clock to start
         if (dateTime != null) {
@@ -103,6 +105,12 @@ public class BookManagerController implements TableInterface, Initializable {
             books[a].setRentedText((books[a].isRented() ? "✓": "✘"));
             bookTableView.getItems().add(books[a]);
         }
+        reloadRecordsCountLabel();
+    }
+
+    public void reloadRecordsCountLabel() {
+        ObservableList ol = bookTableView.getItems();
+        recordsCount.setText(ol.size() + " record(s) Found.");
     }
 
     public void backToMain(MouseEvent event) throws IOException {
@@ -110,7 +118,7 @@ public class BookManagerController implements TableInterface, Initializable {
         Scene mainMenuScene = new Scene(mainMenuParent);
 
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setTitle("Main Menu - Huahee Library");
+        window.setTitle("Main Menu - HuaheeCheh");
         window.setScene(mainMenuScene);
     }
 
@@ -119,7 +127,7 @@ public class BookManagerController implements TableInterface, Initializable {
         Stage addBookWindow = new Stage();
 
         addBookWindow.initModality(Modality.APPLICATION_MODAL);
-        addBookWindow.setTitle("Add Book - Huahee Library");
+        addBookWindow.setTitle("Add Book - HuaheeCheh");
         addBookWindow.getIcons().add(new Image(Main.class.getResourceAsStream("/Image/icon.png")));
         addBookWindow.setScene(new Scene(addBookParent, 600, 350));
         addBookWindow.showAndWait();
@@ -158,7 +166,7 @@ public class BookManagerController implements TableInterface, Initializable {
         Stage editBookWindow = new Stage();
 
         editBookWindow.initModality(Modality.APPLICATION_MODAL);
-        editBookWindow.setTitle("Add Book - Huahee Library");
+        editBookWindow.setTitle("Add Book - HuaheeCheh");
         editBookWindow.getIcons().add(new Image(Main.class.getResourceAsStream("/Image/icon.png")));
         editBookWindow.setScene(new Scene(editBookParent, 600, 350));
         editBookWindow.showAndWait();
@@ -172,18 +180,8 @@ public class BookManagerController implements TableInterface, Initializable {
             Dialog.alertBox("Please select at least 1 row of data to remove");
             return;
         }
-        FXMLLoader fl = new FXMLLoader(getClass().getResource("/FXML/BookManager/bookManagerDelete.fxml"));
-        Parent deleteBookParent = (Parent) fl.load();
-        YesNoDialogController ync = fl.getController();
 
-        Stage deleteBookWindow = new Stage();
-
-        deleteBookWindow.initModality(Modality.APPLICATION_MODAL);
-        deleteBookWindow.setTitle("Delete Book - Huahee Library");
-        deleteBookWindow.getIcons().add(new Image(Main.class.getResourceAsStream("/Image/icon.png")));
-        deleteBookWindow.setScene(new Scene(deleteBookParent, 400, 150));
-        deleteBookWindow.showAndWait();
-        if (ync.response == 1) {
+        if (Dialog.confirmBox("Are you sure you want to delete " + ol.size() + " record(s) ?")) {
             for (int a = 0; a < ol.size(); a++) {
                 if (Main.bm.removeBook(((Book) ol.get(a)).getId())) {
 
@@ -276,19 +274,30 @@ public class BookManagerController implements TableInterface, Initializable {
         String nameQuery = searchByNameField.getText();
         String authorQuery = searchByAuthorField.getText();
 
+        boolean checkName = !nameQuery.isEmpty();
+        boolean checkAuthor = !authorQuery.isEmpty();
+
+        if(!checkAuthor && !checkName) {
+            Dialog.alertBox("Please insert search query");
+            reloadTableView();
+            return;
+        }
+
         for (int a = 0; a < Main.bm.getBookCount(); a++) {
-            if (!nameQuery.trim().isEmpty()) {
+            if (checkName) {
                 if (!books[a].getName().contains(nameQuery)) {
                     continue;
                 }
             }
-            if (!authorQuery.trim().isEmpty()) {
+            if (checkAuthor) {
                 if (!books[a].getAuthor().contains(authorQuery)) {
                     continue;
                 }
             }
             bookTableView.getItems().add(books[a]);
         }
+        reloadRecordsCountLabel();
+        Dialog.alertBox(bookTableView.getItems().size() + " records found");
     }
 
     public void clearOnPressed(Event evt) {
@@ -299,6 +308,7 @@ public class BookManagerController implements TableInterface, Initializable {
         if (searchByAuthorField != null) {
             searchByAuthorField.setText("");
         }
+        Dialog.alertBox("Search query cleared.");
     }
 
     public void textFieldOnKeyPressed(Event event) {

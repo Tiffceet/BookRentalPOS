@@ -1,5 +1,7 @@
 package bookrentalpos;
 
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -15,8 +17,8 @@ import java.io.IOException;
 
 public class LoginController {
 
-    public TextField usernameTextField;
-    public PasswordField passwordTextField;
+    public JFXTextField usernameTextField;
+    public JFXPasswordField passwordTextField;
     public Button loginButton;
 
     public void validateAccount(Event event) throws IOException {
@@ -34,7 +36,7 @@ public class LoginController {
             Scene mainMenuScene = new Scene(mainMenuParent, 1366, 768);
 
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setTitle("Main Menu - Huahee Library");
+            window.setTitle("Main Menu - HuaheeCheh");
             window.setScene(mainMenuScene);
             window.centerOnScreen();
         } else {

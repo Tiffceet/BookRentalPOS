@@ -23,7 +23,7 @@ public class TransactionManagerController {
         Scene mainMenuScene = new Scene(mainMenuParent);
 
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setTitle("Main Menu - Huahee Library");
+        window.setTitle("Main Menu - HuaheeCheh");
         window.setScene(mainMenuScene);
     }
 
@@ -48,7 +48,7 @@ public class TransactionManagerController {
         Stage returnTranWindow = new Stage();
 
         returnTranWindow.initModality(Modality.APPLICATION_MODAL);
-        returnTranWindow.setTitle("Return Transaction Manager - Huahee Library");
+        returnTranWindow.setTitle("Return Transaction Manager - HuaheeCheh");
         returnTranWindow.getIcons().add(new Image(Main.class.getResourceAsStream("/Image/icon.png")));
         returnTranWindow.setScene(new Scene(returnTranParent, 600, 600));
         returnTranWindow.setResizable(false);

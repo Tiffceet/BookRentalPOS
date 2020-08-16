@@ -4,6 +4,8 @@ package my.edu.tarc.dco.bookrentalpos;
  * @author Looz
  */
 
+import bookrentalpos.Dialog;
+
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -113,6 +115,18 @@ public class DBManager {
         } catch (SQLException err) {
             System.out.println(err.getMessage());
             this.lastErrorMessage = err.getMessage();
+        }
+    }
+
+    /**
+     * Used to disconnect current database connection
+     */
+    public void disconnectDB() {
+        try {
+            if (conn != null)
+                this.conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 

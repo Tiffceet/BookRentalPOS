@@ -1,5 +1,7 @@
 package my.edu.tarc.dco.bookrentalpos;
 
+import bookrentalpos.Main;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -122,7 +124,7 @@ public class MemberManager {
                 + "SET lastRentedBy=NULL\n"
                 + "WHERE lastRentedBy=" + memID);
         db.execQuery("UPDATE book\n"
-                + "SET lastReservedBy=NULL\n"
+                + "SET lastReservedBy=NULL, isReserved=0\n"
                 + "WHERE lastReservedBy=" + memID);
         db.execQuery("UPDATE transactions\n"
                 + "SET memberInvolved=NULL\n"

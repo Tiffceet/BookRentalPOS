@@ -2,6 +2,7 @@ package bookrentalpos;
 
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.HPos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -10,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -50,7 +52,7 @@ public class MainMenuController implements Initializable {
         Scene manageBookScene = new Scene(manageBookParent);
 
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setTitle("Transaction Manager - Huahee Library");
+        window.setTitle("Transaction Manager - HuaheeCheh");
         window.setScene(manageBookScene);
     }
 
@@ -59,7 +61,7 @@ public class MainMenuController implements Initializable {
         Scene manageBookScene = new Scene(manageBookParent);
 
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setTitle("Book Manager - Huahee Library");
+        window.setTitle("Book Manager - HuaheeCheh");
         window.setScene(manageBookScene);
     }
 
@@ -68,16 +70,18 @@ public class MainMenuController implements Initializable {
         Scene manageBookScene = new Scene(manageBookParent);
 
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setTitle("Member Manager - Huahee Library");
+        window.setTitle("Member Manager - HuaheeCheh");
         window.setScene(manageBookScene);
     }
 
     public void toManageStaff(MouseEvent event) throws IOException {
-        Parent manageBookParent = FXMLLoader.load(getClass().getResource("/FXML/StaffManager/staffManager.fxml"));
+        FXMLLoader fl = new FXMLLoader(getClass().getResource("/FXML/StaffManager/staffManager.fxml"));
+        Parent manageBookParent = (Parent) fl.load();
+
         Scene manageBookScene = new Scene(manageBookParent);
 
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setTitle("Member Manager - Huahee Library");
+        window.setTitle("Staff Manager - HuaheeCheh");
         window.setScene(manageBookScene);
     }
 
@@ -98,7 +102,7 @@ public class MainMenuController implements Initializable {
         Stage profileWindow = new Stage();
 
         profileWindow.initModality(Modality.APPLICATION_MODAL);
-        profileWindow.setTitle("Edit Profile - Huahee Library");
+        profileWindow.setTitle("Edit Profile - HuaheeCheh");
         profileWindow.getIcons().add(new Image(Main.class.getResourceAsStream("/Image/icon.png")));
         profileWindow.setScene(new Scene(editProfileParent, 600, 350));
         profileWindow.showAndWait();
@@ -110,7 +114,7 @@ public class MainMenuController implements Initializable {
         mainWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         logOutWindow.initModality(Modality.APPLICATION_MODAL);
-        logOutWindow.setTitle("Logout - Huahee Library");
+        logOutWindow.setTitle("Logout - HuaheeCheh");
         logOutWindow.getIcons().add(new Image(Main.class.getResourceAsStream("/Image/icon.png")));
         logOutWindow.setScene(new Scene(logOutParent, 400, 150));
         logOutWindow.setResizable(false);

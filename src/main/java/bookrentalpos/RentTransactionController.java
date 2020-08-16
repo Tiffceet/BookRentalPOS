@@ -209,10 +209,12 @@ public class RentTransactionController implements TableInterface {
         try {
             memID = Integer.parseInt(memberIDField.getText());
         } catch (NumberFormatException e) {
+            Dialog.alertBox("Please has at least one transaction before applying the discount");
             return;
         }
         Member mem;
         if ((mem = Main.mm.getMember(memID)) == null) {
+            Dialog.alertBox("Please has at least one transaction before applying the discount");
             return;
         }
 

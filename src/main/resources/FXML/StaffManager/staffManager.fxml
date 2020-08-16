@@ -41,19 +41,19 @@
         <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" style="-fx-padding: 0 10 0 10;" GridPane.rowIndex="1">
             <children>
                 <Label maxHeight="30.0" minHeight="30.0" prefHeight="30.0" text="Search Filter:" />
-                <TextField maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" prefHeight="30.0" promptText="Search by Name..." HBox.hgrow="ALWAYS" />
-                <TextField maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" prefHeight="30.0" prefWidth="235.0" promptText="Search by ID..." />
-                <Button maxHeight="30.0" maxWidth="70.0" minHeight="30.0" minWidth="70.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="70.0" text="Search">
+                <TextField fx:id="searchByNameTextField" maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" prefHeight="30.0" promptText="Search by Name..." HBox.hgrow="ALWAYS" />
+                <TextField fx:id="searchByIdTextField" maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" prefHeight="30.0" prefWidth="235.0" promptText="Search by ID..." />
+                <Button maxHeight="30.0" maxWidth="70.0" minHeight="30.0" minWidth="70.0" mnemonicParsing="false" onMousePressed="#searchOnPressed" prefHeight="30.0" prefWidth="70.0" text="Search">
                     <HBox.margin>
                         <Insets />
                     </HBox.margin>
                 </Button>
-                <Button maxHeight="30.0" maxWidth="70.0" minHeight="30.0" minWidth="70.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="70.0" text="Clear" />
+                <Button maxHeight="30.0" maxWidth="70.0" minHeight="30.0" minWidth="70.0" mnemonicParsing="false" onMousePressed="#clearOnPressed" prefHeight="30.0" prefWidth="70.0" text="Clear" />
             </children>
         </HBox>
         <HBox prefHeight="100.0" prefWidth="200.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
             <children>
-                <TableView fx:id="staffManagerTable" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                <TableView fx:id="staffManagerTable" onKeyPressed="#tableOnKeyPressed" onMouseClicked="#tableOnClick" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                     <columns>
                         <TableColumn prefWidth="75.0" text="Staff ID">
                             <cellValueFactory>
@@ -80,15 +80,16 @@
         <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" style="-fx-padding: 0 10 0 10;" styleClass="lower" GridPane.rowIndex="3">
             <children>
                 <Label text="*Hint: Hold ctrl to select multiple rows" />
+            <Label fx:id="recordsCount" text="0 record(s) Found" textAlignment="RIGHT" textFill="#5e00ff" HBox.hgrow="ALWAYS" />
             </children>
         </HBox>
         <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" style="-fx-padding: 0 10 0 10;" styleClass="lower" GridPane.rowIndex="4">
             <children>
                 <Button fx:id="backButton" maxHeight="30.0" maxWidth="70.0" minHeight="30.0" minWidth="70.0" mnemonicParsing="false" onMouseClicked="#backToMain" prefHeight="30.0" prefWidth="70.0" text="Back" />
                 <Pane HBox.hgrow="ALWAYS" />
-                <Button maxHeight="30.0" maxWidth="70.0" minHeight="30.0" minWidth="70.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="70.0" text="Add" />
-                <Button maxHeight="30.0" maxWidth="70.0" minHeight="30.0" minWidth="70.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="70.0" text="Edit" />
-                <Button maxHeight="30.0" maxWidth="80.0" minHeight="30.0" minWidth="80.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="Remove" />
+                <Button maxHeight="30.0" maxWidth="70.0" minHeight="30.0" minWidth="70.0" mnemonicParsing="false" onMousePressed="#addButtonOnPressed" prefHeight="30.0" prefWidth="70.0" text="Add" />
+                <Button maxHeight="30.0" maxWidth="70.0" minHeight="30.0" minWidth="70.0" mnemonicParsing="false" onMousePressed="#editButtonOnPressed" prefHeight="30.0" prefWidth="70.0" text="Edit" />
+                <Button maxHeight="30.0" maxWidth="80.0" minHeight="30.0" minWidth="80.0" mnemonicParsing="false" onMousePressed="#removeButtonOnPressed" prefHeight="30.0" prefWidth="80.0" text="Remove" />
             </children>
             <GridPane.margin>
             </GridPane.margin>

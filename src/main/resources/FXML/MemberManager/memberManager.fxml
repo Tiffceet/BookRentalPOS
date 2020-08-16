@@ -101,6 +101,7 @@
         <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" style="-fx-padding: 0 10 0 10;" styleClass="lower" GridPane.rowIndex="3">
             <children>
                 <Label text="*Hint: Hold ctrl to select multiple rows" />
+                <Label fx:id="recordsCount" text="0 record(s) Found" textAlignment="RIGHT" textFill="#5e00ff" HBox.hgrow="ALWAYS" />
             </children>
         </HBox>
         <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" style="-fx-padding: 0 10 0 10;" styleClass="lower" GridPane.rowIndex="4">

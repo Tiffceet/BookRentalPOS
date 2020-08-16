@@ -121,7 +121,7 @@ public class ReturnTransactionController {
         try {
             bookID = Integer.parseInt(bookIDTextField.getText());
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
             Dialog.alertBox("Invalid / Empty BookID");
             return;
         }
