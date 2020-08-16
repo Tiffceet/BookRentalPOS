@@ -5,7 +5,6 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import my.edu.tarc.dco.bookrentalpos.Staff;
 
@@ -31,7 +30,7 @@ public class EditProfileController {
             return;
         }
 
-        Staff stfToEdit = Main.sm.getStaffById(Integer.parseInt(staffIDLabel.getText()));
+        Staff stfToEdit = Main.sm.getById(Integer.parseInt(staffIDLabel.getText()));
         if (!passwordField.getText().equals(confirmPasswordField.getText())) {
             Dialog.alertBox("Password do not match");
             return;
@@ -39,7 +38,7 @@ public class EditProfileController {
 
         // if username already exist
         // only check usernames of other staff and not self
-        if (Main.sm.getStaffByName(newUsername) != null && Main.sm.getStaffByName(newUsername).getId() != stfToEdit.getId()) {
+        if (Main.sm.getByName(newUsername) != null && Main.sm.getByName(newUsername).getId() != stfToEdit.getId()) {
             Dialog.alertBox("Username already exist");
             return;
         }
@@ -52,7 +51,7 @@ public class EditProfileController {
         stfToEdit.setName(newUsername);
 
         // update staff to database
-        if (!Main.sm.updateStaff(stfToEdit)) {
+        if (!Main.sm.update(stfToEdit)) {
             Dialog.alertBox("Something went wrong. Please contact the admin.");
         }
 

@@ -53,8 +53,16 @@ public class TransactionManager extends Manager<Transaction> {
         this.db = db;
         this.bm = bm;
         this.mm = mm;
-        transactionCount = 0;
         transactionList = new Transaction[ARRAY_SIZE];
+        reload();
+    }
+
+    /**
+     * Reload all the data from database
+     */
+    @Override
+    public void reload() {
+        transactionCount = 0;
         try {
             ResultSet rs = db.resultQuery("SELECT * FROM transactions");
             while (rs.next()) {

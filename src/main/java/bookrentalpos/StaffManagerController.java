@@ -2,7 +2,6 @@ package bookrentalpos;
 
 import javafx.collections.ObservableList;
 import javafx.event.Event;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -15,7 +14,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import my.edu.tarc.dco.bookrentalpos.Staff;
-import sun.security.util.Password;
 
 import java.io.IOException;
 
@@ -45,7 +43,7 @@ public class StaffManagerController implements TableInterface {
     public void reloadTableView() {
         ObservableList ol = staffManagerTable.getItems();
         ol.clear();
-        Staff[] stfs = Main.sm.getStaffListCache();
+        Staff[] stfs = Main.sm.getCache();
 
         for (int a = 0; a < Main.sm.getStaffCount(); a++)
             ol.add(stfs[a]);
@@ -103,7 +101,7 @@ public class StaffManagerController implements TableInterface {
             reloadTableView();
             return;
         }
-        Staff[] stfList = Main.sm.getStaffListCache();
+        Staff[] stfList = Main.sm.getCache();
         for (int a = 0; a < Main.sm.getStaffCount(); a++) {
             if (checkName && !stfList[a].getName().contains(nameQuery)) {
                 continue;
@@ -204,7 +202,7 @@ public class StaffManagerController implements TableInterface {
             return;
         }
         for (int a = 0; a < ol.size(); a++) {
-            if (Main.sm.removeStaff(((Staff) ol.get(a)).getId())) {
+            if (Main.sm.remove(((Staff) ol.get(a)).getId())) {
 
             } else {
                 // not sure how to handle this
@@ -229,7 +227,7 @@ public class StaffManagerController implements TableInterface {
             return;
         }
 
-        if (Main.sm.getStaffByName(newUsername) != null) {
+        if (Main.sm.getByName(newUsername) != null) {
             Dialog.alertBox("Username already exists.");
             return;
         }
@@ -245,7 +243,7 @@ public class StaffManagerController implements TableInterface {
         }
 
         Staff newStaff = new Staff(newUsername, newPassword);
-        if (Main.sm.registerStaff(newStaff)) {
+        if (Main.sm.add(newStaff)) {
             Dialog.alertBox("Staff registration successful");
         } else
             Dialog.alertBox("Something went wrong internally and staff was not registered.");

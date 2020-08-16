@@ -19,9 +19,17 @@ public class MemberManager extends Manager<Member> {
     private final int ARRAY_SIZE = 100;
 
     public MemberManager(DBManager db) {
-        memberCount = 0;
         memberList = new Member[ARRAY_SIZE];
         this.db = db;
+        reload();
+    }
+
+    /**
+     * Reload all the data from database
+     */
+    @Override
+    public void reload() {
+        memberCount = 0;
         String sql = "SELECT * FROM member;";
         try {
             java.sql.ResultSet rs = db.resultQuery(sql);

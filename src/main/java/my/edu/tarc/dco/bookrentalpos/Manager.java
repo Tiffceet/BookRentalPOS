@@ -13,4 +13,5 @@ public abstract class Manager<T> {
     public abstract boolean add(T entry);
     public abstract boolean update(T ref);
     public abstract boolean remove(int id);
+    public abstract void reload();
 }

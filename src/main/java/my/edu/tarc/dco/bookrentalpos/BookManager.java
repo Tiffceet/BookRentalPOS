@@ -17,9 +17,17 @@ public class BookManager extends Manager<Book> {
     private final int ARRAY_SIZE = 100;
 
     public BookManager(DBManager db) {
-        bookCount = 0;
         bookList = new Book[ARRAY_SIZE];
         this.db = db;
+        reload();
+    }
+
+    /**
+     * Reload all the data from database
+     */
+    @Override
+    public void reload() {
+        bookCount = 0;
         String sql = "SELECT * FROM book;";
         try {
             java.sql.ResultSet rs = db.resultQuery(sql);

@@ -9,7 +9,7 @@ package my.edu.tarc.dco.bookrentalpos;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class StaffManager {
+public class StaffManager extends Manager<Staff> {
 
     private Staff[] staffList;
 
@@ -26,8 +26,25 @@ public class StaffManager {
     public StaffManager(DBManager db) {
         this.db = db;
         logOnStaff = null;
-        staffCount = 0;
         staffList = new Staff[ARRAY_SIZE];
+        reload();
+
+        // Code to add default 'root' user to database if not exist
+        Staff rootStaff = this.getByName("root");
+        if (rootStaff == null) {
+            rootStaff = new Staff("root", "");
+            rootStaff.setAdminStatus(true);
+            this.add(rootStaff);
+            staffList[staffCount++] = rootStaff;
+        }
+    }
+
+    /**
+     * Reload the staff database
+     */
+    @Override
+    public void reload() {
+        staffCount = 0;
         String sql = "SELECT * FROM staff;";
         try {
             java.sql.ResultSet rs = db.resultQuery(sql);
@@ -40,15 +57,6 @@ public class StaffManager {
             }
         } catch (java.sql.SQLException err) {
             System.out.println(err.getMessage());
-        }
-
-        // Code to add default 'root' user to database if not exist
-        Staff rootStaff = this.getStaffByName("root");
-        if (rootStaff == null) {
-            rootStaff = new Staff("root", "");
-            rootStaff.setAdminStatus(true);
-            this.registerStaff(rootStaff);
-            staffList[staffCount++] = rootStaff;
         }
     }
 
@@ -76,7 +84,8 @@ public class StaffManager {
      * @return Staff object reference of specified ID, return null if StaffID
      * was not found
      */
-    public Staff getStaffById(int staffID) {
+    @Override
+    public Staff getById(int staffID) {
         for (int i = 0; i < staffCount; i++) {
             if (staffList[i].getId() == staffID) {
                 return staffList[i];
@@ -92,7 +101,8 @@ public class StaffManager {
      * @return Staff object reference of specified ID, return null if StaffID
      * was not found
      */
-    public Staff getStaffByName(String name) {
+    @Override
+    public Staff getByName(String name) {
         for (int i = 0; i < staffCount; i++) {
             if (staffList[i].getName().equals(name)) {
                 return staffList[i];
@@ -107,7 +117,8 @@ public class StaffManager {
      * @return an array of Staff, use StaffManager.getStaffCount() to get the number of entry
      * @see #getStaffCount()
      */
-    public Staff[] getStaffListCache() {
+    @Override
+    public Staff[] getCache() {
         return this.staffList.clone();
     }
 
@@ -126,7 +137,8 @@ public class StaffManager {
      * existed
      * @see Staff#Staff(java.lang.String, java.lang.String)
      */
-    public boolean registerStaff(Staff stf) {
+    @Override
+    public boolean add(Staff stf) {
 
         String sql = String.format("INSERT INTO staff(name, password) VALUES(\"%s\", \"%s\")", stf.getName(), stf.getPW());
         // updateQuery() return rows affected from the sql query
@@ -156,7 +168,8 @@ public class StaffManager {
      *            Staff object
      * @return true if staff info was updated successfully
      */
-    public boolean updateStaff(Staff stf) {
+    @Override
+    public boolean update(Staff stf) {
         if (stf.getId() == 0) {
             return false;
         }
@@ -176,7 +189,8 @@ public class StaffManager {
      * @param staffID int
      * @return true if staff was removed successfully
      */
-    public boolean removeStaff(int staffID) {
+    @Override
+    public boolean remove(int staffID) {
         db.execQuery("UPDATE transactions\n"
                 + "SET staffHandled=NULL\n"
                 + "WHERE staffHandled=" + staffID);

@@ -37,6 +37,6 @@ public class Main extends Application {
 
     static void startProgram(String[] args) {
         loadDB();
-        // launch(args);
+        launch(args);
     }
 }
