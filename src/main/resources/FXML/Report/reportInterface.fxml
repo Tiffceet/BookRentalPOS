@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" stylesheets="@../../ManagerStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrentalpos.ReportController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="100.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="150.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <HBox prefHeight="100.0" prefWidth="200.0" styleClass="upper" stylesheets="/ManagerStyle.css" GridPane.columnSpan="2">
+         <children>
+            <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="upperTitle" stylesheets="/ManagerStyle.css" text="Report Menu" HBox.hgrow="ALWAYS" />
+         </children></HBox>
+      <GridPane GridPane.columnIndex="1" GridPane.rowIndex="3">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="537.0" minWidth="10.0" prefWidth="506.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="333.0" minWidth="10.0" prefWidth="177.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="backButton" mnemonicParsing="false" onMouseClicked="#backToMain" prefHeight="40.0" prefWidth="88.0" text="Back" GridPane.halignment="RIGHT">
+               <GridPane.margin>
+                  <Insets right="50.0" />
+               </GridPane.margin>
+            </Button>
+             <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+                <image>
+                    <Image url="@../../Image/StaffAdminInterface/exit.png" />
+                </image>
+               <GridPane.margin>
+                  <Insets right="25.0" />
+               </GridPane.margin>
+             </ImageView>
+         </children>
+      </GridPane>
+      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.rowIndex="1">
+         <children>
+            <Label maxHeight="1.7976931348623157E308" maxWidth="-Infinity" styleClass="transactionFont" text="Select a report form:" />
+            <ChoiceBox fx:id="reportSelect" prefWidth="250.0" />
+         </children>
+         <padding>
+            <Insets left="10.0" />
+         </padding>
+      </HBox>
+      <GridPane GridPane.rowIndex="2">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <VBox fx:id="inputPanel" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+               <children>
+                  <GridPane>
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                  </GridPane>
+               </children>
+            </VBox>
+         </children>
+         <GridPane.margin>
+            <Insets left="10.0" top="10.0" />
+         </GridPane.margin>
+      </GridPane>
+      <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
+         <children>
+            <Button fx:id="generateButton" onMouseClicked="#showReport" alignment="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="88.0" text="Generate">
+               <HBox.margin>
+                  <Insets right="30.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+   </children>
+</GridPane>

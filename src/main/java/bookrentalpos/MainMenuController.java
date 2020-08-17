@@ -32,6 +32,7 @@ public class MainMenuController implements Initializable {
     public ImageView staffImage;
     public Label welcomeLabel;
     public static Stage mainWindow;
+    public Button reportButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -75,6 +76,17 @@ public class MainMenuController implements Initializable {
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setTitle("Member Manager - HuaheeCheh");
         window.setScene(manageBookScene);
+    }
+
+    public void toGenerateReport(MouseEvent event) throws IOException {
+        FXMLLoader fl = new FXMLLoader(getClass().getResource("/FXML/Report/reportInterface.fxml"));
+        Parent generateReportParent = (Parent) fl.load();
+
+        Scene generateReportScene = new Scene(generateReportParent);
+
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setTitle("Report Menu - HuaheeCheh");
+        window.setScene(generateReportScene);
     }
 
     public void toManageStaff(MouseEvent event) throws IOException {
