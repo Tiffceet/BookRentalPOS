@@ -360,6 +360,25 @@ public class TransactionManager extends Manager<Transaction> {
     }
 
     /**
+     * This function returns an array list of transactions for specific staff ID
+     *
+     * @param staffID   staffID
+     * @param startDate add filter to the records by specifying start date
+     * @param endDate   add filter to the records by specifying end date
+     * @return
+     */
+    public ArrayList<Transaction> getTransactionByStaffID(int staffID, Date startDate, Date endDate) {
+        ArrayList<Transaction> trans = new ArrayList<Transaction>();
+        for (int a = 0; a < this.transactionCount; a++) {
+            if (transactionList[a].getStaffHandled() == staffID) {
+                if (!CustomUtil.stringToDate(transactionList[a].getDateCreated()).before(startDate) && !CustomUtil.stringToDate(transactionList[a].getDateCreated()).after(endDate))
+                    trans.add(transactionList[a]);
+            }
+        }
+        return trans;
+    }
+
+    /**
      * @return transaction count loaded from database
      */
     public int getTransactionCount() {

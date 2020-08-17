@@ -1,5 +1,7 @@
 package bookrentalpos;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -11,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.io.IOException;
 import java.time.Instant;
@@ -64,8 +67,26 @@ class DatePickerInput {
         return localDate.toString();
     }
 
+    /**
+     * @return LocalDate representation of the value in input
+     */
+    public LocalDate getDate() {
+        return inputField.getValue();
+    }
+
+    /**
+     * @param dayCellFactory Callback function for the dayCellFactory
+     */
+    public void setDayCellFactory(Callback<DatePicker, DateCell> dayCellFactory) {
+        this.inputField.setDayCellFactory(dayCellFactory);
+    }
+
     public GridPane getInputGrid() {
         return inputGrid;
+    }
+
+    public DatePicker getInputField() {
+        return inputField;
     }
 }
 
@@ -173,6 +194,39 @@ public class ReportController {
 
         startDate = new DatePickerInput("Start Date");
         endDate = new DatePickerInput("End Date");
+
+        // I will be honest, i got this part from somewhere
+        // This part is suppose to prevent endDate from picking dates before startDate
+        final Callback<DatePicker, DateCell> dayCellFactory =
+                new Callback<DatePicker, DateCell>() {
+                    @Override
+                    public DateCell call(final DatePicker datePicker) {
+                        return new DateCell() {
+                            @Override
+                            public void updateItem(LocalDate item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (startDate.getDate() == null) {
+                                    return;
+                                }
+                                // The checks is being done here
+                                if (item.isBefore(
+                                        startDate.getDate())
+                                ) {
+                                    setDisable(true);
+                                    setStyle("-fx-background-color: #ffc0cb;");
+                                }
+                            }
+                        };
+                    }
+                };
+        endDate.getInputField().setDisable(true); // disabled by default
+        endDate.setDayCellFactory(dayCellFactory); // apply the day cell factory
+
+        // Once a date is being picked, end Date will be enabled
+        startDate.getInputField().valueProperty().addListener((ov, oldValue, newValue) -> {
+            endDate.getInputField().setDisable(false);
+        });
+
         inputPanel.getChildren().addAll(startDate.getInputGrid(), endDate.getInputGrid());
 
         switch (index.intValue()) {
@@ -189,7 +243,11 @@ public class ReportController {
     }
 
     public void showReport() throws IOException {
-        // Validate everything first.
+        // Pretty much hard-coded, im tired
+        if (reportIndex != 4 && (startDate.getInputField().getValue() == null || endDate.getInputField().getValue() == null)) {
+            Dialog.alertBox("Date has not been picked :(");
+            return;
+        }
 
         Parent reportParent;
         Stage reportWindow = new Stage();
@@ -225,6 +283,19 @@ public class ReportController {
                 reportWindow.setTitle("Monthly Report - HuaheeCheh");
                 break;
             case 3:
+                // Staff ID validation before showing the report
+                int stfID;
+                try {
+                    stfID = Integer.parseInt(staffID.value());
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                    Dialog.alertBox("Invalid staff ID");
+                    return;
+                }
+                if(Main.sm.getById(stfID) == null) {
+                    Dialog.alertBox("Staff ID not found");
+                    return;
+                }
                 fl = new FXMLLoader(getClass().getResource("/FXML/Report/staffTransactionReport.fxml"));
                 reportParent = (Parent) fl.load();
                 grc = fl.getController();

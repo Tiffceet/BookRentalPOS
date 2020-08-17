@@ -196,18 +196,26 @@ public class BookManager extends Manager<Book> {
     }
 
     /**
-     * This function returns an arraylist of stockLevelReportTableData
+     * This function returns an arraylist of stockLevelReportTableData<br>
+     * The idea of this method: I abused the fact that COUNT() only returns the count of not null values.<br>
+     * So, to actually count the number of rented books, all i have to do is temporary set those not rented
+     * books(marked as 0) to null and then execute the query<br>
+     * After the function ends, the query will update null values back to 0<br>
      *
      * @return Arraylist of type _stockLevelReportTableData
      */
     public ArrayList<_stockLevelReportTableData> getBookCountInSystem() {
-        // Very illegal way to get data
+        // Set books that are not rented as null
         db.execQuery("UPDATE book SET isRented = null WHERE isRented == 0;");
 
+        // Bad naming, yes, im sorry
         ArrayList<_stockLevelReportTableData> rlrtd = new ArrayList<_stockLevelReportTableData>();
+        // How I abused COUNT()
         String sql = "SELECT DISTINCT title, author, COUNT(isRented) as booksRented, COUNT(title) AS bookCount, retailPrice * COUNT(title) AS amountInMYR FROM book GROUP BY title, author;";
         ResultSet rs;
         if ((rs = db.resultQuery(sql)) == null) {
+            // Set books that are not rented back to 0
+            db.execQuery("UPDATE book SET isRented = 0 WHERE isRented is null; ");
             return null;
         }
         try {
@@ -223,7 +231,8 @@ public class BookManager extends Manager<Book> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        // Very illegal way to get data
+
+        // Set books that are not rented back to 0
         db.execQuery("UPDATE book SET isRented = 0 WHERE isRented is null; ");
         return rlrtd;
     }

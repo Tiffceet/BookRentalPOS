@@ -59,6 +59,8 @@ public class GenerateReportController implements TableInterface {
     private Label staffTransactionLabel;
     @FXML
     private Label stockLastMonthLabel;
+    @FXML
+    private TableView staffTransactionReportTable;
 
     // Stock level report.
     @FXML
@@ -84,6 +86,7 @@ public class GenerateReportController implements TableInterface {
             case MONTHLY_REPORT:
                 break;
             case STAFF_TRANSACTION:
+                loadStaffTransactionReport();
                 break;
             case MEMBER_TRANSACTION:
                 break;
@@ -168,5 +171,40 @@ public class GenerateReportController implements TableInterface {
         booksInStoreLabel.setText(totalBooksInStore + "");
         booksInSystemLabel.setText(totalBooksInSystem + "");
         booksNetWorthLabel.setText(String.format("RM %.2f", finalAmount));
+    }
+
+    public void loadStaffTransactionReport() {
+        int staffID = 0;
+        try {
+            staffID = Integer.parseInt(staffIDLabel.getText());
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        ArrayList<Transaction> t;
+        try {
+            t = Main.tm.getTransactionByStaffID(staffID,
+                    new SimpleDateFormat("yyyy-MM-dd").parse(startDateLabel.getText()),
+                    new SimpleDateFormat("yyyy-MM-dd").parse(endDateLabel.getText()));
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+            Dialog.alertBox("This is not suppose to happen");
+            return;
+        }
+
+        ObservableList ol = staffTransactionReportTable.getItems();
+        for (int a = 0; a < t.size(); a++) {
+            ol.add(
+                    new _staffTransactionReportTableData(
+                            t.get(a).getDateCreated(),
+                            t.get(a).getId() + "",
+                            Main.mm.getById(t.get(a).getMemberInvovled()).getName(),
+                            Main.bm.getById(t.get(a).getBookInvovled()).getName(),
+                            t.get(a).getType().toString(),
+                            t.get(a).getCashFlow() + "")
+            );
+        }
+        staffTransactionLabel.setText(ol.size() + "");
     }
 }

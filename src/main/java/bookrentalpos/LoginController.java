@@ -48,6 +48,6 @@ public class LoginController {
     }
 
     public void forgetPassword(MouseEvent event) {
-        Dialog.alertBox("Please contact the admin to retrieve your password");
+        Dialog.alertBox("Please contact the admin to reset your password");
     }
 }
