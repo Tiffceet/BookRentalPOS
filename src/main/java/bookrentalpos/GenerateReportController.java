@@ -2,6 +2,14 @@ package bookrentalpos;
 
 import javafx.scene.control.Label;
 
+enum ReportType {
+    MEMBER_POINT,
+    MEMBER_TRANSACTION,
+    MONTHLY_REPORT,
+    STAFF_TRANSACTION,
+    STOCK_LEVEL
+}
+
 public class GenerateReportController {
     // All report.
     public Label startDateLabel;
@@ -33,17 +41,28 @@ public class GenerateReportController {
     public Label stockQuantityLabel;
     public Label stockTotalLabel;
 
-    public void initialize() {
-        if (ReportController.reportIndex != 4) {
-            startDateLabel.setText(ReportController.startDate.value());
-            endDateLabel.setText(ReportController.endDate.value());
-        }
+    private ReportType type;
 
-        switch (ReportController.reportIndex) {
-            case 1:
-                memberIDLabel.setText(ReportController.memberID.value());
-            case 3:
-                staffIDLabel.setText(ReportController.staffID.value());
+    public void initialize() {
+
+    }
+
+    public void setReportType(ReportType rt) {
+        this.type = rt;
+    }
+
+    public void loadDataIntoReport(String startDate, String endDate, String memberID, String staffID) {
+        if(startDateLabel != null) {
+            startDateLabel.setText(startDate);
+        }
+        if(endDateLabel != null) {
+            endDateLabel.setText(endDate);
+        }
+        if(memberIDLabel != null) {
+            memberIDLabel.setText(memberID);
+        }
+        if(staffIDLabel != null) {
+            staffIDLabel.setText(staffID);
         }
     }
 }

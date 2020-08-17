@@ -2,6 +2,7 @@ package bookrentalpos;
 
 import javafx.collections.ObservableList;
 import javafx.event.Event;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -22,13 +23,20 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class ReserveTransactionController implements Initializable, TableInterface {
-    public Label dateTime;
-    public TextField bookIDField;
-    public TextArea bookDetailTextArea;
-    public TextField memberIDField;
-    public TextArea memberDetailTextArea;
-    public Button backButton;
-    public TableView reserveTransactionTable;
+    @FXML
+    private Label dateTime;
+    @FXML
+    private TextField bookIDField;
+    @FXML
+    private TextArea bookDetailTextArea;
+    @FXML
+    private TextField memberIDField;
+    @FXML
+    private TextArea memberDetailTextArea;
+    @FXML
+    private Button backButton;
+    @FXML
+    private TableView reserveTransactionTable;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

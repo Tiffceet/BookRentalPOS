@@ -2,6 +2,7 @@ package bookrentalpos;
 
 import javafx.collections.ObservableList;
 import javafx.event.Event;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -19,18 +20,30 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class RentTransactionController implements TableInterface {
-    public Label dateTime;
-    public Button backButton;
-    public TextField bookIDField;
-    public TextField rentDurationField;
-    public TextField memberIDField;
-    public TextArea bookDetailField;
-    public TextArea memberDetailField;
-    public TableView rentTransactionTable;
-    public Label totalDepositLabel;
-    public Label totalChargesLabel;
-    public Label discountLabel;
-    public Label netAmountToPayLabel;
+    @FXML
+    private Label dateTime;
+    @FXML
+    private Button backButton;
+    @FXML
+    private TextField bookIDField;
+    @FXML
+    private TextField rentDurationField;
+    @FXML
+    private TextField memberIDField;
+    @FXML
+    private TextArea bookDetailField;
+    @FXML
+    private TextArea memberDetailField;
+    @FXML
+    private TableView rentTransactionTable;
+    @FXML
+    private Label totalDepositLabel;
+    @FXML
+    private Label totalChargesLabel;
+    @FXML
+    private Label discountLabel;
+    @FXML
+    private Label netAmountToPayLabel;
 
     private double totalCharges = 0;
     private double totalDeposit = 0;

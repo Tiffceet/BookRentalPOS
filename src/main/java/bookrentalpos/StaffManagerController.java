@@ -2,6 +2,7 @@ package bookrentalpos;
 
 import javafx.collections.ObservableList;
 import javafx.event.Event;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -18,15 +19,24 @@ import my.edu.tarc.dco.bookrentalpos.Staff;
 import java.io.IOException;
 
 public class StaffManagerController implements TableInterface {
-    public Label dateTime;
-    public Label recordsCount;
-    public Button backButton;
-    public TableView staffManagerTable;
-    public TextField usernameField;
-    public TextField searchByNameTextField;
-    public TextField searchByIdTextField;
-    public PasswordField passwordField;
-    public PasswordField confirmPasswordField;
+    @FXML
+    private  Label dateTime;
+    @FXML
+    private  Label recordsCount;
+    @FXML
+    private  Button backButton;
+    @FXML
+    private  TableView staffManagerTable;
+    @FXML
+    private  TextField usernameField;
+    @FXML
+    private  TextField searchByNameTextField;
+    @FXML
+    private  TextField searchByIdTextField;
+    @FXML
+    private  PasswordField passwordField;
+    @FXML
+    private  PasswordField confirmPasswordField;
 
     public void initialize() {
         // Because some popup uses the controller class, we need to check if its null before allowing the clock to start
@@ -164,15 +174,11 @@ public class StaffManagerController implements TableInterface {
             return;
         }
         EditProfileController epc = fl.getController();
-        epc.nameField.setText(stfToEdit.getName());
         // admin will not be able to change username
         if (stfToEdit.getName().equals("root")) {
-            epc.nameField.setStyle("-fx-text-inner-color: grey;");
-            epc.nameField.setEditable(false);
-            epc.nameField.setFocusTraversable(false);
-            epc.passwordField.requestFocus();
+            epc.disableNameTextField();
         }
-        epc.staffIDLabel.setText(stfToEdit.getId() + "");
+        epc.loadDataToEdit(stfToEdit);
 
         Stage addStaffWindow = new Stage();
 
@@ -267,4 +273,5 @@ public class StaffManagerController implements TableInterface {
     }
     // ========================================================================================================================
     // ========================================================================================================================
+
 }

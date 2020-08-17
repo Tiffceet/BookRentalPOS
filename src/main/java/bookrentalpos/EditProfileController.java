@@ -1,6 +1,7 @@
 package bookrentalpos;
 
 import javafx.event.Event;
+import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
@@ -9,12 +10,18 @@ import javafx.stage.Stage;
 import my.edu.tarc.dco.bookrentalpos.Staff;
 
 public class EditProfileController {
-    public Button cancelButton;
-    public Button confirmButton;
-    public TextField nameField;
-    public PasswordField passwordField;
-    public PasswordField confirmPasswordField;
-    public Label staffIDLabel;
+    @FXML
+    private Button cancelButton;
+    @FXML
+    private Button confirmButton;
+    @FXML
+    private TextField nameField;
+    @FXML
+    private PasswordField passwordField;
+    @FXML
+    private PasswordField confirmPasswordField;
+    @FXML
+    private Label staffIDLabel;
 
     public void cancelEdit(Event event) {
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -68,5 +75,23 @@ public class EditProfileController {
         if(((KeyEvent) event).getCode() == KeyCode.ENTER) {
             confirmEdit(event);
         }
+    }
+
+    /**
+     * Used when i dont want staff to change name
+     */
+    public void disableNameTextField() {
+        nameField.setStyle("-fx-text-inner-color: grey;");
+        nameField.setEditable(false);
+        nameField.setFocusTraversable(false);
+        passwordField.requestFocus();
+    }
+
+    /**
+     * Referring to Staff ID and staff name
+     */
+    public void loadDataToEdit(Staff stf) {
+        nameField.setText(stf.getName());
+        staffIDLabel.setText(stf.getId() + "");
     }
 }

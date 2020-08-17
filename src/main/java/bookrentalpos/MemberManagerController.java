@@ -3,6 +3,7 @@ package bookrentalpos;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -27,26 +28,45 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MemberManagerController implements Initializable, TableInterface {
-    public Button backButton;
-    public Label recordsCount;
+    @FXML
+    private Button backButton;
+    @FXML
+    private Label recordsCount;
     public static Stage getWindow;
-    public JFXTextField memberNameField;
-    public JFXTextField memberICField;
-    public JFXTextField memberPhoneField;
-    public JFXTextField memberEmailField;
-    public TextField memberID; // used for edit popup
-    public TextField searchByNameField;
-    public TextField searchByICField;
-    public TextField searchByIDField;
-    public Button addMemberButton;
-    public Button editMemberButton;
-    public Button deleteMemberButton;
-    public Button confirmAddButton;
-    public Button cancelButton;
-    public Button confirmEditButton;
-    public Button cancelDeleteButton;
-    public Button confirmDeleteButton;
-    public Label dateTime;
+    @FXML
+    private JFXTextField memberNameField;
+    @FXML
+    private JFXTextField memberICField;
+    @FXML
+    private JFXTextField memberPhoneField;
+    @FXML
+    private JFXTextField memberEmailField;
+    @FXML
+    private TextField memberID; // used for edit popup
+    @FXML
+    private TextField searchByNameField;
+    @FXML
+    private TextField searchByICField;
+    @FXML
+    private TextField searchByIDField;
+    @FXML
+    private Button addMemberButton;
+    @FXML
+    private Button editMemberButton;
+    @FXML
+    private Button deleteMemberButton;
+    @FXML
+    private Button confirmAddButton;
+    @FXML
+    private Button cancelButton;
+    @FXML
+    private Button confirmEditButton;
+    @FXML
+    private Button cancelDeleteButton;
+    @FXML
+    private Button confirmDeleteButton;
+    @FXML
+    private Label dateTime;
 
     public TableView memberTableView;
 
@@ -138,8 +158,8 @@ public class MemberManagerController implements Initializable, TableInterface {
             Dialog.alertBox("Sorry but batch edit is not supported.\nPlease select only 1 row of data.");
             return;
         }
-        Member memToDelete = (Member) ol.get(0);
-        if (memToDelete == null) {
+        Member memToEdit = (Member) ol.get(0);
+        if (memToEdit == null) {
             // User didnt select the row to delete
             Dialog.alertBox("Please select a row of data to edit.");
             return;
@@ -155,11 +175,7 @@ public class MemberManagerController implements Initializable, TableInterface {
             return;
         }
         MemberManagerController mmc = fl.getController();
-        mmc.memberID.setText(memToDelete.getId() + "");
-        mmc.memberNameField.setText(memToDelete.getName());
-        mmc.memberEmailField.setText(memToDelete.getEmail());
-        mmc.memberPhoneField.setText(memToDelete.getPhoneNo());
-        mmc.memberICField.setText(memToDelete.getIcNo());
+        mmc.loadDataToEdit(memToEdit);
 
         Stage editMemberWindow = new Stage();
 
@@ -350,5 +366,17 @@ public class MemberManagerController implements Initializable, TableInterface {
         if (event.getCode() == KeyCode.ESCAPE) {
             cancelButton(event);
         }
+    }
+
+    /**
+     * Referring to member pop up edit
+     * @param memToEdit member object reference
+     */
+    public void loadDataToEdit(Member memToEdit) {
+        memberID.setText(memToEdit.getId() + "");
+        memberNameField.setText(memToEdit.getName());
+        memberEmailField.setText(memToEdit.getEmail());
+        memberPhoneField.setText(memToEdit.getPhoneNo());
+        memberICField.setText(memToEdit.getIcNo());
     }
 }

@@ -1,5 +1,6 @@
 package bookrentalpos;
 
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -17,12 +18,23 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
-class ReportInput {
-    public GridPane inputGrid;
-    public Label inputLabel;
-    public DatePicker inputField;
+/**
+ * Class containing Label and DatePicker Component
+ *
+ * @author Caferatte89
+ */
+class DatePickerInput {
+    @FXML
+    private GridPane inputGrid;
+    @FXML
+    private Label inputLabel;
+    @FXML
+    private DatePicker inputField;
 
-    public ReportInput(String labelMessage) {
+    /**
+     * @param labelMessage text to show on Label component
+     */
+    public DatePickerInput(String labelMessage) {
         inputGrid = new GridPane();
         inputLabel = new Label(labelMessage);
         inputField = new DatePicker();
@@ -44,26 +56,90 @@ class ReportInput {
         inputGrid.add(inputField, 1, 0);
     }
 
+    /**
+     * @return a string representation of the value in input
+     */
     public String value() {
         LocalDate localDate = inputField.getValue();
-        Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
-        Date date = Date.from(instant);
         return localDate.toString();
+    }
+
+    public GridPane getInputGrid() {
+        return inputGrid;
+    }
+}
+
+/**
+ * Class containing Label and TextField component
+ *
+ * @author Caferatte89
+ */
+class TextFieldInput {
+    @FXML
+    private GridPane inputGrid;
+    @FXML
+    private Label inputLabel;
+    @FXML
+    private TextField inputField;
+
+    /**
+     * @param labelMessage Text for the label component
+     */
+    public TextFieldInput(String labelMessage) {
+        inputGrid = new GridPane();
+        inputLabel = new Label(labelMessage);
+        inputField = new TextField();
+
+        // Set Column size.
+        ColumnConstraints defaultCC = new ColumnConstraints();
+        defaultCC.setHgrow(Priority.SOMETIMES);
+        defaultCC.setMinWidth(10.0);
+        defaultCC.setPrefWidth(100.0);
+
+        inputGrid.getColumnConstraints().add(defaultCC);
+        inputGrid.getColumnConstraints().add(defaultCC);
+        inputGrid.getRowConstraints().add(new RowConstraints());
+
+        // Set stylesheet.
+        inputLabel.getStyleClass().add("transactionFont");
+
+        inputGrid.add(inputLabel, 0, 0);
+        inputGrid.add(inputField, 1, 0);
+    }
+
+    /**
+     * @return a string representation of the value in input
+     */
+    public String value() {
+        return inputField.getText();
+    }
+
+    public GridPane getInputGrid() {
+        return inputGrid;
     }
 }
 
 public class ReportController {
 
-    public Button backButton;
-    public ChoiceBox<String> reportSelect;
-    public VBox inputPanel;
-    public Button generateButton;
+    @FXML
+    private Button backButton;
+    @FXML
+    private ChoiceBox<String> reportSelect;
+    @FXML
+    private VBox inputPanel;
+    @FXML
+    private Button generateButton;
 
-    public static int reportIndex;
-    public static ReportInput startDate;
-    public static ReportInput endDate;
-    public static ReportInput memberID;
-    public static ReportInput staffID;
+    @FXML
+    private DatePickerInput startDate;
+    @FXML
+    private DatePickerInput endDate;
+    @FXML
+    private TextFieldInput memberID;
+    @FXML
+    private TextFieldInput staffID;
+
+    private int reportIndex;
 
     public void initialize() {
         reportSelect.getItems().addAll("Member Point Report", "Member Transaction Report", "Monthly Report",
@@ -79,7 +155,7 @@ public class ReportController {
         Parent mainMenuParent = FXMLLoader.load(getClass().getResource("/FXML/mainMenu.fxml"));
         Scene mainMenuScene = new Scene(mainMenuParent);
 
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setTitle("Main Menu - HuaheeCheh");
         window.setScene(mainMenuScene);
     }
@@ -95,19 +171,19 @@ public class ReportController {
             return;
         }
 
-        startDate = new ReportInput("Start Date");
-        endDate = new ReportInput("End Date");
-        inputPanel.getChildren().addAll(startDate.inputGrid, endDate.inputGrid);
+        startDate = new DatePickerInput("Start Date");
+        endDate = new DatePickerInput("End Date");
+        inputPanel.getChildren().addAll(startDate.getInputGrid(), endDate.getInputGrid());
 
         switch (index.intValue()) {
             case 1:
-                memberID = new ReportInput("Customer ID");
-                inputPanel.getChildren().add(memberID.inputGrid);
+                memberID = new TextFieldInput("Customer ID");
+                inputPanel.getChildren().add(memberID.getInputGrid());
                 break;
 
             case 3:
-                staffID = new ReportInput("Staff ID");
-                inputPanel.getChildren().add(staffID.inputGrid);
+                staffID = new TextFieldInput("Staff ID");
+                inputPanel.getChildren().add(staffID.getInputGrid());
                 break;
         }
     }
@@ -118,25 +194,47 @@ public class ReportController {
         Parent reportParent;
         Stage reportWindow = new Stage();
 
+        FXMLLoader fl;
+        GenerateReportController grc;
         switch (reportIndex) {
             case 0:
-                reportParent = FXMLLoader.load(getClass().getResource("/FXML/Report/memberPointReport.fxml"));
+                fl = new FXMLLoader(getClass().getResource("/FXML/Report/memberPointReport.fxml"));
+                reportParent = (Parent) fl.load();
+                grc = fl.getController();
+                grc.loadDataIntoReport(startDate.value(), endDate.value(), "", "");
+                grc.setReportType(ReportType.MEMBER_POINT);
                 reportWindow.setTitle("Member Point Report - HuaheeCheh");
                 break;
             case 1:
-                reportParent = FXMLLoader.load(getClass().getResource("/FXML/Report/memberTransactionReport.fxml"));
+                fl = new FXMLLoader(getClass().getResource("/FXML/Report/memberTransactionReport.fxml"));
+                reportParent = (Parent) fl.load();
+                grc = fl.getController();
+                grc.loadDataIntoReport(startDate.value(), endDate.value(), memberID.value(), "");
+                grc.setReportType(ReportType.MEMBER_TRANSACTION);
                 reportWindow.setTitle("Member Transaction Report - HuaheeCheh");
                 break;
             case 2:
-                reportParent = FXMLLoader.load(getClass().getResource("/FXML/Report/monthlyReport.fxml"));
+                fl = new FXMLLoader(getClass().getResource("/FXML/Report/monthlyReport.fxml"));
+                reportParent = (Parent) fl.load();
+                grc = fl.getController();
+                grc.setReportType(ReportType.MONTHLY_REPORT);
+                grc.loadDataIntoReport(startDate.value(), endDate.value(), "", "");
                 reportWindow.setTitle("Monthly Report - HuaheeCheh");
                 break;
             case 3:
-                reportParent = FXMLLoader.load(getClass().getResource("/FXML/Report/staffTransactionReport.fxml"));
+                fl = new FXMLLoader(getClass().getResource("/FXML/Report/staffTransactionReport.fxml"));
+                reportParent = (Parent) fl.load();
+                grc = fl.getController();
+                grc.setReportType(ReportType.STAFF_TRANSACTION);
+                grc.loadDataIntoReport(startDate.value(), endDate.value(), "", staffID.value());
                 reportWindow.setTitle("Staff Transaction Report - HuaheeCheh");
                 break;
             case 4:
-                reportParent = FXMLLoader.load(getClass().getResource("/FXML/Report/stockLevelReport.fxml"));
+                fl = new FXMLLoader(getClass().getResource("/FXML/Report/stockLevelReport.fxml"));
+                reportParent = (Parent) fl.load();
+                grc = fl.getController();
+                grc.setReportType(ReportType.STOCK_LEVEL);
+                grc.loadDataIntoReport("", "", "", "");
                 reportWindow.setTitle("Stock Level Report - HuaheeCheh");
                 break;
             default:

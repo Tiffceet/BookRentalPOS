@@ -1,6 +1,7 @@
 package bookrentalpos;
 
 import javafx.event.Event;
+import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -19,16 +20,25 @@ import java.io.IOException;
 import java.util.Date;
 
 public class ReturnTransactionController {
-    public Label dateTime;
-    public Button closeButton;
-    public TextArea bookDetailTextArea;
-    public TextArea memberDetailTextArea;
-    public TextField bookIDTextField;
+    @FXML
+    private  Label dateTime;
+    @FXML
+    private  Button closeButton;
+    @FXML
+    private  TextArea bookDetailTextArea;
+    @FXML
+    private  TextArea memberDetailTextArea;
+    @FXML
+    private  TextField bookIDTextField;
 
-    public Label depositPaidLabel;
-    public Label bookReturnStatus;
-    public Label penaltyLabel;
-    public Label netDepositReturnLabel;
+    @FXML
+    private  Label depositPaidLabel;
+    @FXML
+    private  Label bookReturnStatus;
+    @FXML
+    private  Label penaltyLabel;
+    @FXML
+    private  Label netDepositReturnLabel;
 
     private double depositPaid;
     private long daysSinceRented;

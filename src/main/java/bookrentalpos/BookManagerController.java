@@ -2,6 +2,7 @@ package bookrentalpos;
 
 import javafx.collections.ObservableList;
 import javafx.event.Event;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -22,26 +23,44 @@ import java.util.ResourceBundle;
 
 public class BookManagerController implements TableInterface, Initializable {
     public static Stage getWindow;
-    public Label recordsCount;
-    public Button backButton;
-    public Button addBookButton;
-    public Button cancelButton;
-    public TextField bookIDField;
-    public TextField bookTitleField;
-    public TextField bookAuthorField;
-    public TextField retailPriceField;
-    public Button confirmAddButton;
-    public Button closeButton;
-    public Button editBookButton;
-    public Button confirmEditButton;
-    public Button cancelDeleteButton;
-    public Button confirmDeleteButton;
-    public Button deleteBookButton;
-    public Label dateTime;
-    public TableView bookTableView;
-
-    public TextField searchByNameField;
-    public TextField searchByAuthorField;
+    @FXML
+    private Label recordsCount;
+    @FXML
+    private Button backButton;
+    @FXML
+    private Button addBookButton;
+    @FXML
+    private Button cancelButton;
+    @FXML
+    private TextField bookIDField;
+    @FXML
+    private TextField bookTitleField;
+    @FXML
+    private TextField bookAuthorField;
+    @FXML
+    private TextField retailPriceField;
+    @FXML
+    private Button confirmAddButton;
+    @FXML
+    private Button closeButton;
+    @FXML
+    private Button editBookButton;
+    @FXML
+    private Button confirmEditButton;
+    @FXML
+    private Button cancelDeleteButton;
+    @FXML
+    private Button confirmDeleteButton;
+    @FXML
+    private Button deleteBookButton;
+    @FXML
+    private Label dateTime;
+    @FXML
+    private TableView bookTableView;
+    @FXML
+    private TextField searchByNameField;
+    @FXML
+    private TextField searchByAuthorField;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -63,7 +82,7 @@ public class BookManagerController implements TableInterface, Initializable {
             try {
                 // only triger this event when there are row selected
                 // prevents the error box saying "Please select a row of data to edit" when user click on blank area of the table view
-                if(bookTableView.getSelectionModel().getSelectedItems().size() >= 1)
+                if (bookTableView.getSelectionModel().getSelectedItems().size() >= 1)
                     popEditBook();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -101,8 +120,8 @@ public class BookManagerController implements TableInterface, Initializable {
         Book[] books = Main.bm.getCache(); // get book List
         // As stated in getMemberListCache() javadoc, you could obtain the length of the array through getMemberCount
         for (int a = 0; a < Main.bm.getBookCount(); a++) {
-            books[a].setReservedText(books[a].isReserved() ? "✓": "✘");
-            books[a].setRentedText((books[a].isRented() ? "✓": "✘"));
+            books[a].setReservedText(books[a].isReserved() ? "✓" : "✘");
+            books[a].setRentedText((books[a].isRented() ? "✓" : "✘"));
             bookTableView.getItems().add(books[a]);
         }
         reloadRecordsCountLabel();
@@ -153,15 +172,10 @@ public class BookManagerController implements TableInterface, Initializable {
         BookManagerController bmc = fl.getController();
 
         // Disable ID as it shouldnt be edited
-        bmc.bookIDField.setStyle("-fx-text-inner-color: grey;");
-        bmc.bookIDField.setEditable(false);
-        bmc.bookIDField.setFocusTraversable(false);
+        bmc.disableBookIDTextField();
 
         // load the data to be edited
-        bmc.bookTitleField.setText(bookToEdit.getName());
-        bmc.bookAuthorField.setText(bookToEdit.getAuthor());
-        bmc.bookIDField.setText(bookToEdit.getId() + "");
-        bmc.retailPriceField.setText(bookToEdit.getRetailPrice() + "");
+        bmc.loadDataToEdit(bookToEdit);
 
         Stage editBookWindow = new Stage();
 
@@ -277,7 +291,7 @@ public class BookManagerController implements TableInterface, Initializable {
         boolean checkName = !nameQuery.isEmpty();
         boolean checkAuthor = !authorQuery.isEmpty();
 
-        if(!checkAuthor && !checkName) {
+        if (!checkAuthor && !checkName) {
             Dialog.alertBox("Please insert search query");
             reloadTableView();
             return;
@@ -315,5 +329,26 @@ public class BookManagerController implements TableInterface, Initializable {
         if (((KeyEvent) event).getCode() == KeyCode.ESCAPE) {
             cancelButton(event);
         }
+    }
+
+    /**
+     * Referring to Edit Pop Up Text Field
+     */
+    public void disableBookIDTextField() {
+        if (bookIDField != null) {
+            bookIDField.setStyle("-fx-text-inner-color: grey;");
+            bookIDField.setEditable(false);
+            bookIDField.setFocusTraversable(false);
+        }
+    }
+
+    /**
+     * Referring to the fields in the Edit Pop up
+     */
+    public void loadDataToEdit(Book bookToEdit) {
+        bookTitleField.setText(bookToEdit.getName());
+        bookAuthorField.setText(bookToEdit.getAuthor());
+        bookIDField.setText(bookToEdit.getId() + "");
+        retailPriceField.setText(bookToEdit.getRetailPrice() + "");
     }
 }

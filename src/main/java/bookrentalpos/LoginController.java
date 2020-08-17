@@ -3,13 +3,12 @@ package bookrentalpos;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.Event;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -17,9 +16,12 @@ import java.io.IOException;
 
 public class LoginController {
 
-    public JFXTextField usernameTextField;
-    public JFXPasswordField passwordTextField;
-    public Button loginButton;
+    @FXML
+    private JFXTextField usernameTextField;
+    @FXML
+    private JFXPasswordField passwordTextField;
+    @FXML
+    private Button loginButton;
 
     public void validateAccount(Event event) throws IOException {
         String username = usernameTextField.getText();

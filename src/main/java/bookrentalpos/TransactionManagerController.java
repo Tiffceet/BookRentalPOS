@@ -1,5 +1,6 @@
 package bookrentalpos;
 
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -13,16 +14,20 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class TransactionManagerController {
-    public Button backButton;
-    public Button toRentButton;
-    public Button toReserveButton;
-    public Button toReturnButton;
+    @FXML
+    private Button backButton;
+    @FXML
+    private Button toRentButton;
+    @FXML
+    private Button toReserveButton;
+    @FXML
+    private Button toReturnButton;
 
     public void backToMain(MouseEvent event) throws IOException {
         Parent mainMenuParent = FXMLLoader.load(getClass().getResource("/FXML/mainMenu.fxml"));
         Scene mainMenuScene = new Scene(mainMenuParent);
 
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setTitle("Main Menu - HuaheeCheh");
         window.setScene(mainMenuScene);
     }
@@ -31,7 +36,7 @@ public class TransactionManagerController {
         Parent rentTranParent = FXMLLoader.load(getClass().getResource("/FXML/TransactionManager/rentTransaction.fxml"));
         Scene rentTranScene = new Scene(rentTranParent);
 
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(rentTranScene);
     }
 
@@ -39,7 +44,7 @@ public class TransactionManagerController {
         Parent reserveTranParent = FXMLLoader.load(getClass().getResource("/FXML/TransactionManager/reserveTransaction.fxml"));
         Scene reserveTranScene = new Scene(reserveTranParent);
 
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(reserveTranScene);
     }
 

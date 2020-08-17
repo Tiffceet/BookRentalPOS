@@ -1,5 +1,6 @@
 package bookrentalpos;
 
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
@@ -21,18 +22,29 @@ import java.util.ResourceBundle;
 
 public class MainMenuController implements Initializable {
 
-    public Button transactionButton;
-    public Button bookButton;
-    public Button memberButton;
-    public Button profileButton;
-    public Button logOutButton;
-    public Button confirmLogOutButton;
-    public Button cancelLogOutButton;
-    public Button staffButton;
-    public ImageView staffImage;
-    public Label welcomeLabel;
+    @FXML
+    private Button transactionButton;
+    @FXML
+    private Button bookButton;
+    @FXML
+    private Button memberButton;
+    @FXML
+    private Button profileButton;
+    @FXML
+    private Button logOutButton;
+    @FXML
+    private Button confirmLogOutButton;
+    @FXML
+    private Button cancelLogOutButton;
+    @FXML
+    private Button staffButton;
+    @FXML
+    private ImageView staffImage;
+    @FXML
+    private Label welcomeLabel;
     public static Stage mainWindow;
-    public Button reportButton;
+    @FXML
+    private Button reportButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -104,15 +116,12 @@ public class MainMenuController implements Initializable {
         FXMLLoader fl = new FXMLLoader(getClass().getResource("/FXML/EditProfile/editProfile.fxml"));
         Parent editProfileParent = (Parent) fl.load();
         EditProfileController epc = fl.getController();
-        epc.nameField.setText(Main.sm.getLogOnStaff().getName());
+
+        epc.loadDataToEdit(Main.sm.getLogOnStaff());
         // admin will not be able to change username
         if (Main.sm.getLogOnStaff().getName().equals("root")) {
-            epc.nameField.setStyle("-fx-text-inner-color: grey;");
-            epc.nameField.setEditable(false);
-            epc.nameField.setFocusTraversable(false);
-            epc.passwordField.requestFocus();
+            epc.disableNameTextField();
         }
-        epc.staffIDLabel.setText(Main.sm.getLogOnStaff().getId() + "");
 
         Stage profileWindow = new Stage();
 
