@@ -38,7 +38,7 @@ public class EditProfileController {
 
         // if username already exist
         // only check usernames of other staff and not self
-        if (Main.sm.getByName(newUsername) != null && Main.sm.getByName(newUsername).getId() != stfToEdit.getId()) {
+        if (Main.sm.getByName(newUsername) != null && Main.sm.getByName(newUsername).equals(stfToEdit.getId())) {
             Dialog.alertBox("Username already exist");
             return;
         }
