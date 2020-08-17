@@ -1,7 +1,12 @@
 package my.edu.tarc.dco.bookrentalpos;
 
+import bookrentalpos._stockLevelReportTableData;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Class used to load all the Book data from the database
@@ -188,6 +193,39 @@ public class BookManager extends Manager<Book> {
         } else {
             return false;
         }
+    }
+
+    /**
+     * This function returns an arraylist of stockLevelReportTableData
+     *
+     * @return Arraylist of type _stockLevelReportTableData
+     */
+    public ArrayList<_stockLevelReportTableData> getBookCountInSystem() {
+        // Very illegal way to get data
+        db.execQuery("UPDATE book SET isRented = null WHERE isRented == 0;");
+
+        ArrayList<_stockLevelReportTableData> rlrtd = new ArrayList<_stockLevelReportTableData>();
+        String sql = "SELECT DISTINCT title, author, COUNT(isRented) as booksRented, COUNT(title) AS bookCount, retailPrice * COUNT(title) AS amountInMYR FROM book GROUP BY title, author;";
+        ResultSet rs;
+        if ((rs = db.resultQuery(sql)) == null) {
+            return null;
+        }
+        try {
+            while (rs.next()) {
+                rlrtd.add(
+                        new _stockLevelReportTableData(rs.getString("title"),
+                                rs.getString("author"),
+                                rs.getInt("bookCount") + "",
+                                (rs.getInt("bookCount") - rs.getInt("booksRented")) + "",
+                                String.format("%.2f", rs.getDouble("amountInMYR"))
+                        ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        // Very illegal way to get data
+        db.execQuery("UPDATE book SET isRented = 0 WHERE isRented is null; ");
+        return rlrtd;
     }
 
     /**

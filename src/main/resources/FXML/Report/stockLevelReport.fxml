@@ -1,129 +1,117 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" stylesheets="@../../ManagerStyle.css" vgap="5.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrentalpos.GenerateReportController">
-  <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-  </columnConstraints>
-  <rowConstraints>
-    <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="125.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" vgrow="SOMETIMES" />
-  </rowConstraints>
-   <children>
-      <VBox prefHeight="200.0" prefWidth="100.0" styleClass="upper" GridPane.columnSpan="2">
-         <children>
-            <HBox alignment="CENTER" prefHeight="75.0" prefWidth="200.0">
-               <children>
-                  <ImageView fitHeight="75.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-                  <Label styleClass="upperTitle" text="HuaheeCheh" HBox.hgrow="ALWAYS" />
-               </children>
-            </HBox>
-            <Label alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="upperTitle" text="Stock Level Report" />
-         </children>
-      </VBox>
-      <TableView prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="3">
-         <columns>
-            <TableColumn prefWidth="200.0" text="Book ID" />
-            <TableColumn prefWidth="200.0" text="Name" />
-            <TableColumn prefWidth="200.0" text="Author" />
-            <TableColumn prefWidth="200.0" text="L.Quantity" />
-            <TableColumn prefWidth="200.0" text="N.Quantity" />
-            <TableColumn prefWidth="200.0" text="Amount (RM)" />
-         </columns>
-         <GridPane.margin>
-            <Insets />
-         </GridPane.margin></TableView>
-      <GridPane alignment="CENTER" maxWidth="500.0" styleClass="transactionFont" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints />
-            <ColumnConstraints />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="HuaheeCheh Sdn Bhd." GridPane.columnSpan="3" />
-            <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="018-4612707 ~ huaheecheh@gmail.com ~ huaheecheh.com" GridPane.rowIndex="1" />
-         </children>
-         <padding>
-            <Insets bottom="5.0" />
-         </padding>
-      </GridPane>
-      <GridPane styleClass="transactionFont" GridPane.columnSpan="2" GridPane.rowIndex="1">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Last Month: " />
-            <Label text="Add:" GridPane.columnIndex="2" />
-            <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Less:" GridPane.columnIndex="4" />
-            <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Delete:" GridPane.columnIndex="6" />
-            <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Quantity:" GridPane.columnIndex="8" />
-            <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Total:" GridPane.columnIndex="10" />
-            <Label fx:id="stockLastMonthLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="12" GridPane.columnIndex="1" />
-            <Label fx:id="stockAddLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="0" GridPane.columnIndex="3" />
-            <Label fx:id="stockLessLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="0" GridPane.columnIndex="5" />
-            <Label fx:id="stockDeleteLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="0" GridPane.columnIndex="7" />
-            <Label fx:id="stockQuantityLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="0" GridPane.columnIndex="9" />
-            <Label fx:id="stockTotalLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="RM XXXXX.XX" GridPane.columnIndex="11" />
-         </children>
-         <padding>
-            <Insets left="10.0" right="10.0" />
-         </padding>
-      </GridPane>
-      <HBox alignment="BOTTOM_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnSpan="2" GridPane.rowIndex="2">
-         <children>
-            <Label text="(*)=delete book" />
-            <Label text="(-)=no record" />
-            <Label text="(0)=no return" />
-         </children>
-         <padding>
-            <Insets left="10.0" right="10.0" />
-         </padding>
-      </HBox>
-      <GridPane GridPane.columnSpan="2" GridPane.rowIndex="4">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="200.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="200.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Label text="0" GridPane.columnIndex="1" />
-            <Label text="Total" />
-            <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="XXX.XX" GridPane.columnIndex="2" />
-         </children>
-         <padding>
-            <Insets bottom="10.0" left="5.0" right="5.0" />
-         </padding>
-      </GridPane>
-   </children>
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" stylesheets="@../../ManagerStyle.css" vgap="5.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrentalpos.GenerateReportController">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="125.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" vgrow="SOMETIMES" />
+    </rowConstraints>
+    <children>
+        <VBox prefHeight="200.0" prefWidth="100.0" styleClass="upper" GridPane.columnSpan="2">
+            <children>
+                <HBox alignment="CENTER" prefHeight="75.0" prefWidth="200.0">
+                    <children>
+                        <ImageView fitHeight="75.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+                        <Label styleClass="upperTitle" text="HuaheeCheh" HBox.hgrow="ALWAYS" />
+                    </children>
+                </HBox>
+                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="upperTitle" text="Stock Level Report" />
+            </children>
+        </VBox>
+        <TableView fx:id="stockLevelReportTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="2">
+            <columns>
+                <TableColumn prefWidth="505.0" text="Book Title">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="bookTitle" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="222.0" text="Author">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="author" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="129.0" text="Amount in System">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="amountInSystem" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="125.0" text="Amount in Store">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="amountInStore" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="209.0" text="Amount (RM)">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="finalAmount" />
+                    </cellValueFactory>
+                </TableColumn>
+            </columns>
+            <items>
+                <FXCollections fx:factory="observableArrayList" />
+            </items>
+            <GridPane.margin>
+                <Insets />
+            </GridPane.margin>
+        </TableView>
+        <GridPane alignment="CENTER" maxWidth="500.0" styleClass="transactionFont" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints />
+                <ColumnConstraints />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="HuaheeCheh Sdn Bhd." GridPane.columnSpan="3" />
+                <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="018-4612707 ~ huaheecheh@gmail.com ~ huaheecheh.com" GridPane.rowIndex="1" />
+            </children>
+            <padding>
+                <Insets bottom="5.0" />
+            </padding>
+        </GridPane>
+        <GridPane styleClass="transactionFont" GridPane.columnSpan="2" GridPane.rowIndex="1">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <Label text="Books in System:" />
+                <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Books in Store:" GridPane.columnIndex="2" />
+                <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Books' Net Worth:" GridPane.columnIndex="4" />
+                <Label fx:id="booksInSystemLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="0" GridPane.columnIndex="1" />
+                <Label fx:id="booksInStoreLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="0" GridPane.columnIndex="3" />
+                <Label fx:id="booksNetWorthLabel" text="RM xx.xxx" GridPane.columnIndex="5" />
+            </children>
+            <padding>
+                <Insets left="10.0" right="10.0" />
+            </padding>
+        </GridPane>
+    </children>
 </GridPane>

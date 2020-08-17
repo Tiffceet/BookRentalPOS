@@ -2,6 +2,7 @@ package my.edu.tarc.dco.bookrentalpos;
 
 import bookrentalpos.Dialog;
 
+import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -337,6 +338,25 @@ public class TransactionManager extends Manager<Transaction> {
             e.printStackTrace();
         }
         return books;
+    }
+
+    /**
+     * This function returns an array list of transactions for specific member id
+     *
+     * @param memID     member id
+     * @param startDate add filter to the records by specifying start date
+     * @param endDate   add filter to the records by specifying end date
+     * @return an array list of reference to transactions
+     */
+    public ArrayList<Transaction> getTransactionsByMemberID(int memID, Date startDate, Date endDate) {
+        ArrayList<Transaction> trans = new ArrayList<Transaction>();
+        for (int a = 0; a < this.transactionCount; a++) {
+            if (transactionList[a].getMemberInvovled() == memID) {
+                if (!CustomUtil.stringToDate(transactionList[a].getDateCreated()).before(startDate) && !CustomUtil.stringToDate(transactionList[a].getDateCreated()).after(endDate))
+                    trans.add(transactionList[a]);
+            }
+        }
+        return trans;
     }
 
     /**

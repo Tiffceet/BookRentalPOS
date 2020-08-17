@@ -1,6 +1,15 @@
 package bookrentalpos;
 
+import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.scene.control.Label;
+import javafx.fxml.FXML;
+import javafx.scene.control.TableView;
+import my.edu.tarc.dco.bookrentalpos.Transaction;
+import my.edu.tarc.dco.bookrentalpos.TransactionType;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 enum ReportType {
     MEMBER_POINT,
@@ -10,40 +19,84 @@ enum ReportType {
     STOCK_LEVEL
 }
 
-public class GenerateReportController {
+public class GenerateReportController implements TableInterface {
     // All report.
-    public Label startDateLabel;
-    public Label endDateLabel;
+    @FXML
+    private Label startDateLabel;
+    @FXML
+    private Label endDateLabel;
+    @FXML
+    private Label reportTitle;
 
     // Member point report.
-    public Label pointRentedLabel;
-    public Label pointReturnLabel;
-    public Label pointTotalLabel;
+    @FXML
+    private Label pointRentedLabel;
+    @FXML
+    private Label pointReturnLabel;
+    @FXML
+    private Label pointTotalLabel;
+    @FXML
+    private TableView memberPointReportTable;
 
     // Member Transaction report.
-    public Label transactionNumberLabel;
-    public Label memberIDLabel;
+    @FXML
+    private Label transactionNumberLabel;
+    @FXML
+    private Label memberIDLabel;
 
     // Monthly report.
-    public Label monthlyRented;
-    public Label monthlyReturn;
-    public Label monthlyTotal;
+    @FXML
+    private Label monthlyRented;
+    @FXML
+    private Label monthlyReturn;
+    @FXML
+    private Label monthlyTotal;
 
     // Staff transaction report.
-    public Label staffIDLabel;
-    public Label staffTransactionLabel;
-    public Label stockLastMonthLabel;
+    @FXML
+    private Label staffIDLabel;
+    @FXML
+    private Label staffTransactionLabel;
+    @FXML
+    private Label stockLastMonthLabel;
 
     // Stock level report.
-    public Label stockAddLabel;
-    public Label stockLessLabel;
-    public Label stockDeleteLabel;
-    public Label stockQuantityLabel;
-    public Label stockTotalLabel;
+    @FXML
+    private TableView stockLevelReportTable;
+    @FXML
+    private Label booksInSystemLabel;
+    @FXML
+    private Label booksInStoreLabel;
+    @FXML
+    private Label booksNetWorthLabel;
 
     private ReportType type;
 
-    public void initialize() {
+    @Override
+    public void reloadTableView() {
+        switch (type) {
+            case MEMBER_POINT:
+                // loadMemberPointsReportData();
+                break;
+            case STOCK_LEVEL:
+                loadStockLevelReport();
+                break;
+            case MONTHLY_REPORT:
+                break;
+            case STAFF_TRANSACTION:
+                break;
+            case MEMBER_TRANSACTION:
+                break;
+        }
+    }
+
+    @Override
+    public void tableOnClick(Event event) {
+
+    }
+
+    @Override
+    public void tableOnKeyPressed(Event event) {
 
     }
 
@@ -52,17 +105,68 @@ public class GenerateReportController {
     }
 
     public void loadDataIntoReport(String startDate, String endDate, String memberID, String staffID) {
-        if(startDateLabel != null) {
+        if (startDateLabel != null) {
             startDateLabel.setText(startDate);
         }
-        if(endDateLabel != null) {
+        if (endDateLabel != null) {
             endDateLabel.setText(endDate);
         }
-        if(memberIDLabel != null) {
+        if (memberIDLabel != null) {
             memberIDLabel.setText(memberID);
         }
-        if(staffIDLabel != null) {
+        if (staffIDLabel != null) {
             staffIDLabel.setText(staffID);
         }
+    }
+
+    public void loadMemberPointsReportData() {
+        // rewrite this part after chen xiang re layout member points report
+        int memID = 1;
+        try {
+            memID = Integer.parseInt(memberIDLabel.getText());
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            Dialog.alertBox("Invalid memberID");
+            return;
+        }
+
+        if (Main.mm.getById(memID) == null) {
+            Dialog.alertBox("Member not found");
+            return;
+        }
+
+        ObservableList ol = memberPointReportTable.getItems();
+        ArrayList<Transaction> t;
+        try {
+            t = Main.tm.getTransactionsByMemberID(memID,
+                    new SimpleDateFormat("yyyy-MM-dd").parse(startDateLabel.getText()),
+                    new SimpleDateFormat("yyyy-MM-dd").parse(endDateLabel.getText()));
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+            Dialog.alertBox("This is not suppose to happen");
+            return;
+        }
+        for (int a = 0; a < t.size(); a++)
+            ol.add(new _memberPointReportTableData(t.get(a).getDateCreated(),
+                    t.get(a).getId() + "",
+                    t.get(a).getType() == TransactionType.RETURN ? "10" : "0")
+            );
+    }
+
+    public void loadStockLevelReport() {
+        int totalBooksInSystem = 0;
+        int totalBooksInStore = 0;
+        double finalAmount = 0;
+        ObservableList ol = stockLevelReportTable.getItems();
+        ArrayList<_stockLevelReportTableData> sllrtd = Main.bm.getBookCountInSystem();
+        for (int a = 0; a < sllrtd.size(); a++) {
+            ol.add(sllrtd.get(a));
+            totalBooksInStore += Integer.parseInt(sllrtd.get(a).getAmountInStore());
+            totalBooksInSystem += Integer.parseInt(sllrtd.get(a).getAmountInSystem());
+            finalAmount += Double.parseDouble(sllrtd.get(a).getFinalAmount());
+        }
+        booksInStoreLabel.setText(totalBooksInStore + "");
+        booksInSystemLabel.setText(totalBooksInSystem + "");
+        booksNetWorthLabel.setText(String.format("RM %.2f", finalAmount));
     }
 }

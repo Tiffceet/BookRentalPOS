@@ -88,12 +88,12 @@ public class RentTransactionController implements TableInterface {
                 return;
             }
             if (Dialog.confirmBox("Are you sure you want to remove this entry ? ")) {
-                RentTransactionTableData rttd = (RentTransactionTableData) ol.get(0);
+                _RentTransactionTableData rttd = (_RentTransactionTableData) ol.get(0);
                 totalCharges -= Double.parseDouble(rttd.getCharges());
                 totalDeposit -= Double.parseDouble(rttd.getDeposit());
                 reloadTotalPriceLabel();
                 rentTransactionTable.getItems().removeIf((data) -> {
-                    return ((RentTransactionTableData) data).getBookId() == rttd.getBookId();
+                    return ((_RentTransactionTableData) data).getBookId() == rttd.getBookId();
                 });
 
                 sessionTransactions.removeIf((data) -> {
@@ -170,7 +170,7 @@ public class RentTransactionController implements TableInterface {
         }
 
         // Add entry to table for view
-        RentTransactionTableData data = new RentTransactionTableData(
+        _RentTransactionTableData data = new _RentTransactionTableData(
                 bookid,
                 book.getName(),
                 book.getAuthor(),
@@ -181,7 +181,7 @@ public class RentTransactionController implements TableInterface {
         );
         ObservableList ol = rentTransactionTable.getItems();
         for (int a = 0; a < ol.size(); a++) {
-            if (bookid == ((RentTransactionTableData) ol.get(a)).getBookId()) {
+            if (bookid == ((_RentTransactionTableData) ol.get(a)).getBookId()) {
                 Dialog.alertBox("The book is already added into the list.");
                 return;
             }

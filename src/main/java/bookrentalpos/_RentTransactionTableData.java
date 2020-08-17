@@ -1,6 +1,6 @@
 package bookrentalpos;
 
-public class RentTransactionTableData {
+public class _RentTransactionTableData {
     private int bookId;
     private String bookTitle;
     private String bookAuthor;
@@ -9,10 +9,10 @@ public class RentTransactionTableData {
     private String rentDuration;
     private String totalPrice;
 
-    public RentTransactionTableData() {
+    public _RentTransactionTableData() {
     }
 
-    public RentTransactionTableData(int bookId, String bookTitle, String bookAuthor, String deposit, String charges, String rentDuration, String totalPrice) {
+    public _RentTransactionTableData(int bookId, String bookTitle, String bookAuthor, String deposit, String charges, String rentDuration, String totalPrice) {
         this.bookId = bookId;
         this.bookTitle = bookTitle;
         this.bookAuthor = bookAuthor;

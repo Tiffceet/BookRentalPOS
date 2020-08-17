@@ -1,15 +1,15 @@
 package bookrentalpos;
 
-public class ReserveTransactionTableData {
+public class _ReserveTransactionTableData {
     private String dateReserved;
     private String bookID;
     private String bookTitle;
     private String bookAuthor;
 
-    public ReserveTransactionTableData() {
+    public _ReserveTransactionTableData() {
     }
 
-    public ReserveTransactionTableData(String dateReserved, String bookID, String bookTitle, String bookAuthor) {
+    public _ReserveTransactionTableData(String dateReserved, String bookID, String bookTitle, String bookAuthor) {
         this.dateReserved = dateReserved;
         this.bookID = bookID;
         this.bookTitle = bookTitle;

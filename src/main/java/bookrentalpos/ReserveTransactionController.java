@@ -70,7 +70,7 @@ public class ReserveTransactionController implements Initializable, TableInterfa
 
         ArrayList<Book> reservedBooks = Main.tm.getMemberActiveReservations(memID);
         for (int a = 0; a < reservedBooks.size(); a++) {
-            ReserveTransactionTableData rttd = new ReserveTransactionTableData(
+            _ReserveTransactionTableData rttd = new _ReserveTransactionTableData(
                     Main.tm.getBookLastReservedTransaction(reservedBooks.get(a).getId()).getDateCreated(),
                     reservedBooks.get(a).getId() + "",
                     reservedBooks.get(a).getName(),

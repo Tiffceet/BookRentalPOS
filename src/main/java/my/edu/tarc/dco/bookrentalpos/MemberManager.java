@@ -46,7 +46,7 @@ public class MemberManager extends Manager<Member> {
     /**
      * Get reference to member object with specified ID
      *
-     * @return Member object reference
+     * @return Member object reference, null if no such member with this id
      */
     @Override
     public Member getById(int memID) {

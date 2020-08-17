@@ -177,7 +177,7 @@ public class ReportController {
 
         switch (index.intValue()) {
             case 1:
-                memberID = new TextFieldInput("Customer ID");
+                memberID = new TextFieldInput("Member ID");
                 inputPanel.getChildren().add(memberID.getInputGrid());
                 break;
 
@@ -203,6 +203,7 @@ public class ReportController {
                 grc = fl.getController();
                 grc.loadDataIntoReport(startDate.value(), endDate.value(), "", "");
                 grc.setReportType(ReportType.MEMBER_POINT);
+                grc.reloadTableView();
                 reportWindow.setTitle("Member Point Report - HuaheeCheh");
                 break;
             case 1:
@@ -211,6 +212,7 @@ public class ReportController {
                 grc = fl.getController();
                 grc.loadDataIntoReport(startDate.value(), endDate.value(), memberID.value(), "");
                 grc.setReportType(ReportType.MEMBER_TRANSACTION);
+                grc.reloadTableView();
                 reportWindow.setTitle("Member Transaction Report - HuaheeCheh");
                 break;
             case 2:
@@ -219,6 +221,7 @@ public class ReportController {
                 grc = fl.getController();
                 grc.setReportType(ReportType.MONTHLY_REPORT);
                 grc.loadDataIntoReport(startDate.value(), endDate.value(), "", "");
+                grc.reloadTableView();
                 reportWindow.setTitle("Monthly Report - HuaheeCheh");
                 break;
             case 3:
@@ -227,6 +230,7 @@ public class ReportController {
                 grc = fl.getController();
                 grc.setReportType(ReportType.STAFF_TRANSACTION);
                 grc.loadDataIntoReport(startDate.value(), endDate.value(), "", staffID.value());
+                grc.reloadTableView();
                 reportWindow.setTitle("Staff Transaction Report - HuaheeCheh");
                 break;
             case 4:
@@ -235,6 +239,7 @@ public class ReportController {
                 grc = fl.getController();
                 grc.setReportType(ReportType.STOCK_LEVEL);
                 grc.loadDataIntoReport("", "", "", "");
+                grc.reloadTableView();
                 reportWindow.setTitle("Stock Level Report - HuaheeCheh");
                 break;
             default:
