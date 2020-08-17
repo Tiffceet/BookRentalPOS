@@ -4,10 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -15,16 +12,20 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 
 class ReportInput {
     public GridPane inputGrid;
     public Label inputLabel;
-    public TextField inputField;
+    public DatePicker inputField;
 
     public ReportInput(String labelMessage) {
         inputGrid = new GridPane();
         inputLabel = new Label(labelMessage);
-        inputField = new TextField();
+        inputField = new DatePicker();
 
         // Set Column size.
         ColumnConstraints defaultCC = new ColumnConstraints();
@@ -44,7 +45,10 @@ class ReportInput {
     }
 
     public String value() {
-        return inputField.getText();
+        LocalDate localDate = inputField.getValue();
+        Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+        Date date = Date.from(instant);
+        return localDate.toString();
     }
 }
 
