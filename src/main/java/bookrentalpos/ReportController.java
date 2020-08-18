@@ -140,6 +140,52 @@ class TextFieldInput {
     }
 }
 
+class DropDownInput {
+    @FXML
+    private GridPane inputGrid;
+    @FXML
+    private Label inputLabel;
+    @FXML
+    private ChoiceBox<String> inputDropDown;
+
+    public DropDownInput(String labelMessage, String[] dropDownList) {
+
+        inputGrid = new GridPane();
+        inputLabel = new Label(labelMessage);
+        inputDropDown = new ChoiceBox<>();
+
+        // Add list to drop down menu.
+        for (String value: dropDownList) {
+            inputDropDown.getItems().add(value);
+        }
+
+        // Set Column size.
+        ColumnConstraints defaultCC = new ColumnConstraints();
+        defaultCC.setHgrow(Priority.SOMETIMES);
+        defaultCC.setMinWidth(10.0);
+        defaultCC.setPrefWidth(100.0);
+
+        inputGrid.getColumnConstraints().add(defaultCC);
+        inputGrid.getColumnConstraints().add(defaultCC);
+        inputGrid.getRowConstraints().add(new RowConstraints());
+
+        // Set stylesheet.
+        inputLabel.getStyleClass().add("transactionFont");
+
+        inputGrid.add(inputLabel, 0, 0);
+        inputGrid.add(inputDropDown, 1, 0);
+
+    }
+
+    public String value() {
+        return inputDropDown.getValue();
+    }
+
+    public GridPane getInputGrid() {
+        return inputGrid;
+    }
+}
+
 public class ReportController {
 
     @FXML
@@ -160,7 +206,14 @@ public class ReportController {
     @FXML
     private TextFieldInput staffID;
 
+    @FXML
+    private TextFieldInput monthlyYear;
+    @FXML
+    private DropDownInput monthlyMonth;
+
     private int reportIndex;
+    private String[] monthList = {"January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"};
 
     public void initialize() {
         reportSelect.getItems().addAll("Member Point Report", "Member Transaction Report", "Monthly Report",
@@ -192,7 +245,7 @@ public class ReportController {
             return;
         }
 
-        if (index.intValue() != 0) {
+        if (index.intValue() == 1 || index.intValue() == 3) {
             startDate = new DatePickerInput("Start Date");
             endDate = new DatePickerInput("End Date");
 
@@ -236,6 +289,12 @@ public class ReportController {
             case 1:
                 memberID = new TextFieldInput("Member ID");
                 inputPanel.getChildren().add(memberID.getInputGrid());
+                break;
+
+            case 2:
+                monthlyYear = new TextFieldInput("Year");
+                monthlyMonth = new DropDownInput("Month", monthList);
+                inputPanel.getChildren().addAll(monthlyYear.getInputGrid(), monthlyMonth.getInputGrid());
                 break;
 
             case 3:
