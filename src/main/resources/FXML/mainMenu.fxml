@@ -94,7 +94,7 @@
                      </Button>
                      <ImageView fx:id="staffImage" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" visible="false" GridPane.columnIndex="1">
                          <image>
-                             <Image url="@../Image/StaffAdminInterface/staff.jpg" />
+                             <Image url="@../Image/StaffAdminInterface/staff.png" />
                          </image>
                      </ImageView>
                  </children>
