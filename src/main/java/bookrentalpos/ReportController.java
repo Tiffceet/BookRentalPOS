@@ -192,44 +192,47 @@ public class ReportController {
             return;
         }
 
-        startDate = new DatePickerInput("Start Date");
-        endDate = new DatePickerInput("End Date");
+        if (index.intValue() != 0) {
+            startDate = new DatePickerInput("Start Date");
+            endDate = new DatePickerInput("End Date");
 
-        // I will be honest, i got this part from somewhere
-        // This part is suppose to prevent endDate from picking dates before startDate
-        final Callback<DatePicker, DateCell> dayCellFactory =
-                new Callback<DatePicker, DateCell>() {
-                    @Override
-                    public DateCell call(final DatePicker datePicker) {
-                        return new DateCell() {
-                            @Override
-                            public void updateItem(LocalDate item, boolean empty) {
-                                super.updateItem(item, empty);
-                                if (startDate.getDate() == null) {
-                                    return;
+            // I will be honest, i got this part from somewhere
+            // This part is suppose to prevent endDate from picking dates before startDate
+            final Callback<DatePicker, DateCell> dayCellFactory =
+                    new Callback<DatePicker, DateCell>() {
+                        @Override
+                        public DateCell call(final DatePicker datePicker) {
+                            return new DateCell() {
+                                @Override
+                                public void updateItem(LocalDate item, boolean empty) {
+                                    super.updateItem(item, empty);
+                                    if (startDate.getDate() == null) {
+                                        return;
+                                    }
+                                    // The checks is being done here
+                                    if (item.isBefore(
+                                            startDate.getDate())
+                                    ) {
+                                        setDisable(true);
+                                        setStyle("-fx-background-color: #ffc0cb;");
+                                    }
                                 }
-                                // The checks is being done here
-                                if (item.isBefore(
-                                        startDate.getDate())
-                                ) {
-                                    setDisable(true);
-                                    setStyle("-fx-background-color: #ffc0cb;");
-                                }
-                            }
-                        };
-                    }
-                };
-        endDate.getInputField().setDisable(true); // disabled by default
-        endDate.setDayCellFactory(dayCellFactory); // apply the day cell factory
+                            };
+                        }
+                    };
+            endDate.getInputField().setDisable(true); // disabled by default
+            endDate.setDayCellFactory(dayCellFactory); // apply the day cell factory
 
-        // Once a date is being picked, end Date will be enabled
-        startDate.getInputField().valueProperty().addListener((ov, oldValue, newValue) -> {
-            endDate.getInputField().setDisable(false);
-        });
+            // Once a date is being picked, end Date will be enabled
+            startDate.getInputField().valueProperty().addListener((ov, oldValue, newValue) -> {
+                endDate.getInputField().setDisable(false);
+            });
 
-        inputPanel.getChildren().addAll(startDate.getInputGrid(), endDate.getInputGrid());
+            inputPanel.getChildren().addAll(startDate.getInputGrid(), endDate.getInputGrid());
+        }
 
         switch (index.intValue()) {
+            case 0:
             case 1:
                 memberID = new TextFieldInput("Member ID");
                 inputPanel.getChildren().add(memberID.getInputGrid());

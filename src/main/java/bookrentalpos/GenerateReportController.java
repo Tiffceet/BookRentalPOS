@@ -20,6 +20,8 @@ enum ReportType {
 }
 
 public class GenerateReportController implements TableInterface {
+
+
     // All report.
     @FXML
     private Label startDateLabel;
@@ -30,11 +32,9 @@ public class GenerateReportController implements TableInterface {
 
     // Member point report.
     @FXML
-    private Label pointRentedLabel;
+    private Label pointMemberIDLabel;
     @FXML
-    private Label pointReturnLabel;
-    @FXML
-    private Label pointTotalLabel;
+    private Label totalPointLabel;
     @FXML
     private TableView memberPointReportTable;
 
