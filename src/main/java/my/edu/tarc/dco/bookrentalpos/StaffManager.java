@@ -36,6 +36,7 @@ public class StaffManager extends Manager<Staff> {
             rootStaff.setAdminStatus(true);
             this.add(rootStaff);
             staffList[staffCount++] = rootStaff;
+            reload();
         }
     }
 

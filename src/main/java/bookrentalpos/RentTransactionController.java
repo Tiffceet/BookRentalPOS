@@ -44,6 +44,10 @@ public class RentTransactionController implements TableInterface {
     private Label discountLabel;
     @FXML
     private Label netAmountToPayLabel;
+    @FXML
+    private TableView rentMemberOutstandingRentsTable;
+    @FXML
+    private Label memberOutstandingRentCounterLabel;
 
     private double totalCharges = 0;
     private double totalDeposit = 0;
@@ -69,10 +73,23 @@ public class RentTransactionController implements TableInterface {
     // Event Functions
     // ================================================================================================================
 
-
     @Override
     public void reloadTableView() {
-
+        ObservableList ol = rentMemberOutstandingRentsTable.getItems();
+        ol.clear();
+        if (memberIDField == null) return;
+        int memID;
+        try {
+            memID = Integer.parseInt(memberIDField.getText());
+        } catch (NumberFormatException e) {
+            memberOutstandingRentCounterLabel.setText("Count: 0");
+            return;
+        }
+        ArrayList<Book> b = Main.bm.getBooksRentedByMember(memID);
+        for (int a = 0; a < b.size(); a++) {
+            ol.add(b.get(a));
+        }
+        memberOutstandingRentCounterLabel.setText("Count: " + b.size());
     }
 
     @Override
@@ -114,10 +131,12 @@ public class RentTransactionController implements TableInterface {
 
     public void memberIDOnKeyPressed(Event event) {
         reloadMemberDetailsField();
+        reloadTableView();
     }
 
     public void memberIDOnKeyReleased(Event event) {
         reloadMemberDetailsField();
+        reloadTableView();
     }
 
     public void addTransactionOnPressed(Event event) {
@@ -143,6 +162,11 @@ public class RentTransactionController implements TableInterface {
 
         if (rentDuration <= 0) {
             Dialog.alertBox("Invalid Rent Duration");
+            return;
+        }
+
+        if (rentDuration >= 5) {
+            Dialog.alertBox("Maximum Rent Duration is 1 month (4 weeks)");
             return;
         }
 
@@ -215,6 +239,7 @@ public class RentTransactionController implements TableInterface {
         haveDiscount = false;
         netAmountToPay = 0;
         reloadTotalPriceLabel();
+        reloadTableView();
     }
 
     public void applyDiscountOnPressed(Event event) {
@@ -250,6 +275,12 @@ public class RentTransactionController implements TableInterface {
             Dialog.alertBox("There are no books to be rented.");
             return;
         }
+
+        if ((rentTransactionTable.getItems().size() + rentMemberOutstandingRentsTable.getItems().size()) > Main.tm.MAXIMUM_RENT_PER_MEMBER) {
+            Dialog.alertBox("1 Member cannot have more than " + Main.tm.MAXIMUM_RENT_PER_MEMBER + " rents.");
+            return;
+        }
+
         for (int a = 0; a < sessionTransactions.size(); a++) {
             if (Main.tm.add(sessionTransactions.get(a))) {
 
@@ -265,7 +296,7 @@ public class RentTransactionController implements TableInterface {
 
         clearTransactionButtonOnPressed(null);
         clearInputFields();
-
+        reloadTableView();
     }
     // ================================================================================================================
     // ================================================================================================================
@@ -286,6 +317,7 @@ public class RentTransactionController implements TableInterface {
         bookIDField.setText("");
         memberIDField.setText("");
         memberDetailField.setText("");
+        rentDurationField.setText("");
     }
 
     public void reloadTotalPriceLabel() {

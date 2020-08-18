@@ -238,6 +238,21 @@ public class BookManager extends Manager<Book> {
     }
 
     /**
+     * This function returns an array list of reference to the books record where it is currently rented by specifed member
+     * @param memID member ID
+     * @return arraylist of type Book
+     */
+    public ArrayList<Book> getBooksRentedByMember(int memID) {
+        ArrayList<Book> b = new ArrayList<Book>();
+        for (int a = 0; a < this.bookCount; a++) {
+            if (bookList[a].isRented() && bookList[a].getLastRentedBy() == memID) {
+                b.add(bookList[a]);
+            }
+        }
+        return b;
+    }
+
+    /**
      * @return Book count loaded into this instance from database
      */
     public int getBookCount() {

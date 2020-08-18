@@ -5,12 +5,18 @@ import javafx.event.Event;
 import javafx.scene.control.Label;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
+import my.edu.tarc.dco.bookrentalpos.Book;
 import my.edu.tarc.dco.bookrentalpos.Member;
 import my.edu.tarc.dco.bookrentalpos.Transaction;
 import my.edu.tarc.dco.bookrentalpos.TransactionType;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.Year;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 enum ReportType {
@@ -57,6 +63,8 @@ public class GenerateReportController implements TableInterface {
     private Label monthlyTotal;
     @FXML
     private TableView monthlyReportTable;
+    @FXML
+    private Label monthlyReportTitle;
 
     // Staff transaction report.
     @FXML
@@ -90,7 +98,9 @@ public class GenerateReportController implements TableInterface {
                 loadStockLevelReport();
                 break;
             case MONTHLY_REPORT:
-                loadMonthlyReport();
+                LocalDate ld = LocalDate.parse(startDateLabel.getText(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                Month m = ld.getMonth();
+                loadMonthlyReport(ld.getYear() + "", m.toString());
                 break;
             case STAFF_TRANSACTION:
                 loadStaffTransactionReport();
@@ -162,7 +172,7 @@ public class GenerateReportController implements TableInterface {
                 );
             }
         }
-        pointMemberIDLabel.setText(mem.getId() + "");
+        pointMemberIDLabel.setText(mem.getId() + " (" + mem.getName() + ")");
         totalPointLabel.setText(mem.getMemberPoints() + "");
     }
 
@@ -193,21 +203,38 @@ public class GenerateReportController implements TableInterface {
         ObservableList ol = memberTransactionTable.getItems();
         ArrayList<Transaction> t = Main.tm.getTransactionsByMemberID(memID, strDate, endDate);
         for (int a = 0; a < t.size(); a++) {
+            Book b = Main.bm.getById(t.get(a).getBookInvovled());
             ol.add(
                     new _memberTransactionTableData(
                             t.get(a).getDateCreated(),
                             t.get(a).getId() + "",
-                            Main.bm.getById(t.get(a).getBookInvovled()).getName(),
+                            b == null ? "<removed>" : b.getName(),
                             t.get(a).getType().toString(),
                             String.format("%.2f", t.get(a).getCashFlow())
                     )
             );
         }
         transactionNumberLabel.setText(t.size() + "");
+        pointMemberIDLabel.setText(pointMemberIDLabel.getText() + " (" + mem.getName() + ")");
     }
 
-    public void loadMonthlyReport() {
-
+    public void loadMonthlyReport(String year, String month) {
+        ObservableList ol = monthlyReportTable.getItems();
+        monthlyReportTitle.setText(year + " " + month + " Monthly Report");
+        Transaction[] t = Main.tm.getCache();
+        for (int a = 0; a < Main.tm.getTransactionCount(); a++) {
+            Member m = Main.mm.getById(t[a].getMemberInvovled());
+            Book b = Main.bm.getById(t[a].getBookInvovled());
+            ol.add(
+                    new _monthlyReportTableData(
+                            t[a].getDateCreated(),
+                            m == null ? "<removed>" : m.getName(),
+                            t[a].getType().toString(),
+                            b == null ? "<removed>" : b.getName(),
+                            String.format("%.2f", t[a].getCashFlow())
+                    )
+            );
+        }
     }
 
     public void loadStockLevelReport() {
@@ -249,16 +276,19 @@ public class GenerateReportController implements TableInterface {
 
         ObservableList ol = staffTransactionReportTable.getItems();
         for (int a = 0; a < t.size(); a++) {
+            Member mem = Main.mm.getById(t.get(a).getMemberInvovled());
+            Book b = Main.bm.getById(t.get(a).getBookInvovled());
             ol.add(
                     new _staffTransactionReportTableData(
                             t.get(a).getDateCreated(),
                             t.get(a).getId() + "",
-                            Main.mm.getById(t.get(a).getMemberInvovled()).getName(),
-                            Main.bm.getById(t.get(a).getBookInvovled()).getName(),
+                            mem == null ? "<removed>" : mem.getName(),
+                            b == null ? "<removed>" : b.getName(),
                             t.get(a).getType().toString(),
                             t.get(a).getCashFlow() + "")
             );
         }
         staffTransactionLabel.setText(ol.size() + "");
+        staffIDLabel.setText(staffIDLabel.getText() + " (" + Main.sm.getById(staffID).getName() + ")");
     }
 }

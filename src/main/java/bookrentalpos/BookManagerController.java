@@ -9,6 +9,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -17,6 +20,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import my.edu.tarc.dco.bookrentalpos.Book;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -197,6 +201,17 @@ public class BookManagerController implements TableInterface, Initializable {
 
         if (Dialog.confirmBox("Are you sure you want to delete " + ol.size() + " record(s) ?")) {
             for (int a = 0; a < ol.size(); a++) {
+                // if one of the books is rented
+                if (((Book) ol.get(a)).isRented()) {
+                    if(Dialog.confirmBox("The book(s) you are about to delete is currently rented, are you sure you still want to delete the book(s) ?")) {
+                        break;
+                    } else {
+                        Dialog.alertBox("Delete canceled.");
+                        return;
+                    }
+                }
+            }
+            for (int a = 0; a < ol.size(); a++) {
                 if (Main.bm.remove(((Book) ol.get(a)).getId())) {
 
                 } else {
@@ -213,7 +228,7 @@ public class BookManagerController implements TableInterface, Initializable {
         window.close();
     }
 
-    public void confirmAddButton(MouseEvent event) {
+    public void confirmAddButton(Event event) {
 
         getWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
@@ -328,6 +343,17 @@ public class BookManagerController implements TableInterface, Initializable {
     public void textFieldOnKeyPressed(Event event) {
         if (((KeyEvent) event).getCode() == KeyCode.ESCAPE) {
             cancelButton(event);
+            return;
+        }
+        if (((KeyEvent) event).getCode() == KeyCode.ENTER) {
+            try {
+                if (bookIDField == null) {
+                    confirmAddButton(event);
+                } else
+                    confirmEditButton(event);
+            } catch (IOException e) {
+                Dialog.alertBox("Corrupted jar file. Please redownload the program");
+            }
         }
     }
 

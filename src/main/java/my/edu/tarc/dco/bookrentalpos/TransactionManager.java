@@ -49,6 +49,8 @@ public class TransactionManager extends Manager<Transaction> {
      */
     public final int PENALTY_RATES = 5;
 
+    public final int MAXIMUM_RENT_PER_MEMBER = 10;
+
     public TransactionManager(DBManager db, BookManager bm, MemberManager mm) {
         this.db = db;
         this.bm = bm;
@@ -363,7 +365,7 @@ public class TransactionManager extends Manager<Transaction> {
      * @param memID     member id
      * @param startDate date filter to filter out record before this date
      * @param endDate   date filter to filter out record after this date
-     * @see #getTransactionsByMemberID(int) 
+     * @see #getTransactionsByMemberID(int)
      * @return an array list of reference to transactions
      */
     public ArrayList<Transaction> getTransactionsByMemberID(int memID, Date startDate, Date endDate) {

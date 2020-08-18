@@ -11,8 +11,8 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0"
           prefWidth="1200.0" stylesheets="@../../ManagerStyle.css" vgap="5.0" xmlns="http://javafx.com/javafx/8.0.171"
           xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrentalpos.GenerateReportController">
@@ -35,11 +35,12 @@
                         <Label styleClass="upperTitle" text="HuaheeCheh" HBox.hgrow="ALWAYS"/>
                     </children>
                 </HBox>
-                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="upperTitle"
-                       text="Monthly Report"/>
+                <Label fx:id="monthlyReportTitle" alignment="CENTER" maxWidth="1.7976931348623157E308"
+                       styleClass="upperTitle" text="Monthly Report"/>
             </children>
         </VBox>
-        <TableView prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="2">
+        <TableView fx:id="monthlyReportTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2"
+                   GridPane.rowIndex="2">
             <columns>
                 <TableColumn prefWidth="240.0" text="Date">
                     <cellValueFactory>

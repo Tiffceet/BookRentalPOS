@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -155,7 +156,7 @@ class DropDownInput {
         inputDropDown = new ChoiceBox<>();
 
         // Add list to drop down menu.
-        for (String value: dropDownList) {
+        for (String value : dropDownList) {
             inputDropDown.getItems().add(value);
         }
 
@@ -178,7 +179,7 @@ class DropDownInput {
     }
 
     public String value() {
-        return inputDropDown.getValue();
+        return inputDropDown.getSelectionModel().getSelectedItem();
     }
 
     public GridPane getInputGrid() {
@@ -213,7 +214,7 @@ public class ReportController {
 
     private int reportIndex;
     private String[] monthList = {"January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"};
+            "July", "August", "September", "October", "November", "December"};
 
     public void initialize() {
         reportSelect.getItems().addAll("Member Point Report", "Member Transaction Report", "Monthly Report",
@@ -312,9 +313,11 @@ public class ReportController {
         }
 
         // Report at index 4 and 0 do not need dates
-        if (reportIndex != 4 && reportIndex != 0 && (startDate.getInputField().getValue() == null || endDate.getInputField().getValue() == null)) {
-            Dialog.alertBox("Date has not been picked :(");
-            return;
+        if (reportIndex == 1 || reportIndex == 3) {
+            if (startDate.getInputField().getValue() == null || endDate.getInputField().getValue() == null) {
+                Dialog.alertBox("Date has not been picked :(");
+                return;
+            }
         }
 
         Parent reportParent;
@@ -322,10 +325,10 @@ public class ReportController {
 
         FXMLLoader fl;
         GenerateReportController grc;
+        int memID;
         switch (reportIndex) {
             case 0:
                 // member ID validation before showing the report
-                int memID;
                 try {
                     memID = Integer.parseInt(memberID.value());
                 } catch (NumberFormatException e) {
@@ -346,6 +349,18 @@ public class ReportController {
                 reportWindow.setTitle("Member Point Report - HuaheeCheh");
                 break;
             case 1:
+                // member ID validation before showing the report
+                try {
+                    memID = Integer.parseInt(memberID.value());
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                    Dialog.alertBox("Invalid Member ID");
+                    return;
+                }
+                if (Main.mm.getById(memID) == null) {
+                    Dialog.alertBox("Member ID not found");
+                    return;
+                }
                 fl = new FXMLLoader(getClass().getResource("/FXML/Report/memberTransactionReport.fxml"));
                 reportParent = (Parent) fl.load();
                 grc = fl.getController();
@@ -355,11 +370,31 @@ public class ReportController {
                 reportWindow.setTitle("Member Transaction Report - HuaheeCheh");
                 break;
             case 2:
+                int year;
+                int month;
+                // Validate Year here
+                try {
+                    year = Integer.parseInt(monthlyYear.value());
+                } catch (NumberFormatException e) {
+                    Dialog.alertBox("Invalid Date");
+                    return;
+                }
+                month = Arrays.asList(monthList).indexOf(monthlyMonth.value()) + 1;
+                if (month == 0) {
+                    Dialog.alertBox("Please select a month");
+                    return;
+                }
+
                 fl = new FXMLLoader(getClass().getResource("/FXML/Report/monthlyReport.fxml"));
                 reportParent = (Parent) fl.load();
                 grc = fl.getController();
                 grc.setReportType(ReportType.MONTHLY_REPORT);
-                grc.loadDataIntoReport(startDate.value(), endDate.value(), "", "");
+
+                // Set customer start date and end date for the selected month
+                LocalDate startingDate = LocalDate.of(year, month, 1);
+                LocalDate endingDate = LocalDate.of(month == 12 ? year + 1 : year, month == 12 ? 1 : month + 1, 1);
+
+                grc.loadDataIntoReport(startingDate.toString(), endingDate.toString(), "", "");
                 grc.reloadTableView();
                 reportWindow.setTitle("Monthly Report - HuaheeCheh");
                 break;

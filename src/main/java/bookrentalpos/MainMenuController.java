@@ -1,5 +1,8 @@
 package bookrentalpos;
 
+import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -11,10 +14,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import my.edu.tarc.dco.bookrentalpos.MemberManager;
 
 import java.io.IOException;
 import java.net.URL;
@@ -72,8 +76,24 @@ public class MainMenuController implements Initializable {
 
     public void toManageBook(MouseEvent event) throws IOException {
         Main.bm.reload();
-        Parent manageBookParent = FXMLLoader.load(getClass().getResource("/FXML/BookManager/bookManager.fxml"));
+        FXMLLoader fl = new FXMLLoader(getClass().getResource("/FXML/BookManager/bookManager.fxml"));
+        Parent manageBookParent = (Parent) fl.load();
+        BookManagerController bmc = fl.getController();
         Scene manageBookScene = new Scene(manageBookParent);
+
+        // Standard Keyboard shortcuts
+        // Ctrl + N - New records
+        manageBookScene.setOnKeyPressed(e -> {
+            if (new KeyCodeCombination(KeyCode.N,
+                    KeyCombination.CONTROL_DOWN).match((KeyEvent) e)) {
+                try {
+                    bmc.popAddBook();
+                } catch (IOException err) {
+                    err.printStackTrace();
+                    Dialog.alertBox("Corrupted JAR file. Please re-download the program");
+                }
+            }
+        });
 
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setTitle("Book Manager - HuaheeCheh");
@@ -82,12 +102,28 @@ public class MainMenuController implements Initializable {
 
     public void toManageMember(MouseEvent event) throws IOException {
         Main.mm.reload();
-        Parent manageBookParent = FXMLLoader.load(getClass().getResource("/FXML/MemberManager/memberManager.fxml"));
-        Scene manageBookScene = new Scene(manageBookParent);
+        FXMLLoader fl = new FXMLLoader(getClass().getResource("/FXML/MemberManager/memberManager.fxml"));
+        Parent manageBookParent = (Parent) fl.load();
+        MemberManagerController mmc = fl.getController();
+        Scene managerMemberScene = new Scene(manageBookParent);
+
+        // Standard Keyboard shortcuts
+        // Ctrl + N - New records
+        managerMemberScene.setOnKeyPressed(e -> {
+            if (new KeyCodeCombination(KeyCode.N,
+                    KeyCombination.CONTROL_DOWN).match((KeyEvent) e)) {
+                try {
+                    mmc.popAddMember();
+                } catch (IOException err) {
+                    err.printStackTrace();
+                    Dialog.alertBox("Corrupted JAR file. Please re-download the program");
+                }
+            }
+        });
 
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setTitle("Member Manager - HuaheeCheh");
-        window.setScene(manageBookScene);
+        window.setScene(managerMemberScene);
     }
 
     public void toGenerateReport(MouseEvent event) throws IOException {
@@ -104,12 +140,22 @@ public class MainMenuController implements Initializable {
     public void toManageStaff(MouseEvent event) throws IOException {
         FXMLLoader fl = new FXMLLoader(getClass().getResource("/FXML/StaffManager/staffManager.fxml"));
         Parent manageBookParent = (Parent) fl.load();
+        StaffManagerController smc = fl.getController();
 
-        Scene manageBookScene = new Scene(manageBookParent);
+        Scene managerStaffScene = new Scene(manageBookParent);
+
+        // Standard Keyboard shortcuts
+        // Ctrl + N - New records
+        managerStaffScene.setOnKeyPressed(e -> {
+            if (new KeyCodeCombination(KeyCode.N,
+                    KeyCombination.CONTROL_DOWN).match((KeyEvent) e)) {
+                smc.addButtonOnPressed(e);
+            }
+        });
 
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setTitle("Staff Manager - HuaheeCheh");
-        window.setScene(manageBookScene);
+        window.setScene(managerStaffScene);
     }
 
     public void popEditProfile() throws IOException {
