@@ -193,8 +193,8 @@ public class ReportController {
         }
 
         if (index.intValue() != 0) {
-            startDate = new DatePickerInput("Start Date");
-            endDate = new DatePickerInput("End Date");
+            startDate = new DatePickerInput("Start Date (Inclusive)");
+            endDate = new DatePickerInput("End Date (Exclusive)");
 
             // I will be honest, i got this part from somewhere
             // This part is suppose to prevent endDate from picking dates before startDate
@@ -247,7 +247,13 @@ public class ReportController {
 
     public void showReport() throws IOException {
         // Pretty much hard-coded, im tired
-        if (reportIndex != 4 && (startDate.getInputField().getValue() == null || endDate.getInputField().getValue() == null)) {
+        if (reportIndex == -1) {
+            Dialog.alertBox("Please select a report.");
+            return;
+        }
+
+        // Report at index 4 and 0 do not need dates
+        if (reportIndex != 4 && reportIndex != 0 && (startDate.getInputField().getValue() == null || endDate.getInputField().getValue() == null)) {
             Dialog.alertBox("Date has not been picked :(");
             return;
         }
@@ -259,10 +265,23 @@ public class ReportController {
         GenerateReportController grc;
         switch (reportIndex) {
             case 0:
+                // member ID validation before showing the report
+                int memID;
+                try {
+                    memID = Integer.parseInt(memberID.value());
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                    Dialog.alertBox("Invalid Member ID");
+                    return;
+                }
+                if (Main.mm.getById(memID) == null) {
+                    Dialog.alertBox("Member ID not found");
+                    return;
+                }
                 fl = new FXMLLoader(getClass().getResource("/FXML/Report/memberPointReport.fxml"));
                 reportParent = (Parent) fl.load();
                 grc = fl.getController();
-                grc.loadDataIntoReport(startDate.value(), endDate.value(), "", "");
+                grc.loadDataIntoReport("", "", memberID.value(), "");
                 grc.setReportType(ReportType.MEMBER_POINT);
                 grc.reloadTableView();
                 reportWindow.setTitle("Member Point Report - HuaheeCheh");
@@ -295,7 +314,7 @@ public class ReportController {
                     Dialog.alertBox("Invalid staff ID");
                     return;
                 }
-                if(Main.sm.getById(stfID) == null) {
+                if (Main.sm.getById(stfID) == null) {
                     Dialog.alertBox("Staff ID not found");
                     return;
                 }
