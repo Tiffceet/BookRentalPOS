@@ -125,7 +125,7 @@
                         <PropertyValueFactory property="transactionType" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn prefWidth="241.0" text="Amount (RM)">
+                <TableColumn prefWidth="241.0" style="-fx-alignment: CENTER-RIGHT;" text="Amount (RM)">
                     <cellValueFactory>
                         <PropertyValueFactory property="finalAmount" />
                     </cellValueFactory>

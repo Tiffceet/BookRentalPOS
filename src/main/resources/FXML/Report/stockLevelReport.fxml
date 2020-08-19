@@ -48,17 +48,17 @@
                         <PropertyValueFactory property="author" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn prefWidth="129.0" text="Amount in System">
+                <TableColumn prefWidth="129.0" style="-fx-alignment: CENTER;" text="Amount in System">
                     <cellValueFactory>
                         <PropertyValueFactory property="amountInSystem" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn prefWidth="125.0" text="Amount in Store">
+                <TableColumn prefWidth="125.0" style="-fx-alignment: CENTER;" text="Amount in Store">
                     <cellValueFactory>
                         <PropertyValueFactory property="amountInStore" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn prefWidth="209.0" text="Amount (RM)">
+                <TableColumn prefWidth="209.0" style="-fx-alignment: CENTER-RIGHT;" text="Amount (RM)">
                     <cellValueFactory>
                         <PropertyValueFactory property="finalAmount" />
                     </cellValueFactory>

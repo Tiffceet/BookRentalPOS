@@ -219,6 +219,9 @@ public class GenerateReportController implements TableInterface {
     }
 
     public void loadMonthlyReport(String year, String month) {
+        int rentCounter = 0;
+        int returnsCounter = 0;
+        double finalRevenue = 0;
         ObservableList ol = monthlyReportTable.getItems();
         monthlyReportTitle.setText(year + " " + month + " Monthly Report");
         Transaction[] t = Main.tm.getCache();
@@ -234,7 +237,13 @@ public class GenerateReportController implements TableInterface {
                             String.format("%.2f", t[a].getCashFlow())
                     )
             );
+            rentCounter += t[a].getType() == TransactionType.RENT ? 1 : 0;
+            returnsCounter += t[a].getType() == TransactionType.RETURN ? 1 : 0;
+            finalRevenue += t[a].getCashFlow();
         }
+        monthlyRented.setText(rentCounter + "");
+        monthlyReturn.setText(returnsCounter + "");
+        monthlyTotal.setText(String.format("%.2f", finalRevenue));
     }
 
     public void loadStockLevelReport() {
@@ -251,7 +260,7 @@ public class GenerateReportController implements TableInterface {
         }
         booksInStoreLabel.setText(totalBooksInStore + "");
         booksInSystemLabel.setText(totalBooksInSystem + "");
-        booksNetWorthLabel.setText(String.format("RM %.2f", finalAmount));
+        booksNetWorthLabel.setText("RM " + String.format("RM %.2f", finalAmount));
     }
 
     public void loadStaffTransactionReport() {

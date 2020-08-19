@@ -101,7 +101,7 @@ public class ReturnTransactionController {
             else memberDetailTextArea.setText("");
             double depositPaid = (t.getCashFlow() / (2.0 + (Main.tm.DEPOSIT_RATES.get(weeksRented > 4 ? 4 : weeksRented) / 100.0))) * 2;
             long daysSinceRented = CustomUtil.daysDifference(new Date(), CustomUtil.stringToDate(t.getDateCreated()));
-            long daysLate = daysSinceRented - t.getRentDurationInDays();
+            daysLate = daysSinceRented - t.getRentDurationInDays();
             double penalty = (daysLate * Main.tm.PENALTY_RATES) > 0 ? (daysLate * Main.tm.PENALTY_RATES) : 0;
 
             depositPaidLabel.setText("RM " + String.format("%.2f", depositPaid));

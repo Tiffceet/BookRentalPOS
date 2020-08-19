@@ -125,12 +125,12 @@
                         <PropertyValueFactory property="bookTitle" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn prefWidth="209.0" text="Transaction Type">
+                <TableColumn prefWidth="209.0" style="-fx-alignment: CENTER;" text="Transaction Type">
                     <cellValueFactory>
                         <PropertyValueFactory property="transactionType" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn prefWidth="201.0" text="Amount (RM)">
+                <TableColumn prefWidth="201.0" style="-fx-alignment: CENTER-RIGHT;" text="Amount (RM)">
                     <cellValueFactory>
                         <PropertyValueFactory property="finalAmount" />
                     </cellValueFactory>
