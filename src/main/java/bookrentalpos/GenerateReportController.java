@@ -2,8 +2,8 @@ package bookrentalpos;
 
 import javafx.collections.ObservableList;
 import javafx.event.Event;
-import javafx.scene.control.Label;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import my.edu.tarc.dco.bookrentalpos.Book;
 import my.edu.tarc.dco.bookrentalpos.Member;

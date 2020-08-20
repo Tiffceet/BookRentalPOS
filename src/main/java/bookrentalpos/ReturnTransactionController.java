@@ -3,11 +3,9 @@ package bookrentalpos;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -17,14 +15,11 @@ import my.edu.tarc.dco.bookrentalpos.CustomUtil;
 import my.edu.tarc.dco.bookrentalpos.Member;
 import my.edu.tarc.dco.bookrentalpos.Transaction;
 
-import java.io.IOException;
 import java.util.Date;
 
 public class ReturnTransactionController {
     @FXML
     private  Label dateTime;
-    @FXML
-    private  Button closeButton;
     @FXML
     private  TextArea bookDetailTextArea;
     @FXML
@@ -52,7 +47,7 @@ public class ReturnTransactionController {
         Clock.display(dateTime);
     }
 
-    public void closeReturn(MouseEvent event) throws IOException {
+    public void closeReturn(MouseEvent event) {
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.close();
     }
@@ -99,10 +94,10 @@ public class ReturnTransactionController {
             if ((member = Main.mm.getById(bk.getLastRentedBy())) != null) // if member was not deleted
                 memberDetailTextArea.setText(Main.mm.getById(bk.getLastRentedBy()).toString());
             else memberDetailTextArea.setText("");
-            double depositPaid = (t.getCashFlow() / (2.0 + (Main.tm.DEPOSIT_RATES.get(weeksRented > 4 ? 4 : weeksRented) / 100.0))) * 2;
-            long daysSinceRented = CustomUtil.daysDifference(new Date(), CustomUtil.stringToDate(t.getDateCreated()));
+            depositPaid = (t.getCashFlow() / (2.0 + (Main.tm.DEPOSIT_RATES.get(Math.min(weeksRented, 4)) / 100.0))) * 2;
+            daysSinceRented = CustomUtil.daysDifference(new Date(), CustomUtil.stringToDate(t.getDateCreated()));
             daysLate = daysSinceRented - t.getRentDurationInDays();
-            double penalty = (daysLate * Main.tm.PENALTY_RATES) > 0 ? (daysLate * Main.tm.PENALTY_RATES) : 0;
+            penalty = (daysLate * Main.tm.PENALTY_RATES) > 0 ? Math.min((daysLate * Main.tm.PENALTY_RATES), depositPaid) : 0;
 
             depositPaidLabel.setText("RM " + String.format("%.2f", depositPaid));
 
@@ -110,7 +105,7 @@ public class ReturnTransactionController {
                 bookReturnStatus.setText("In-time");
             } else if (daysSinceRented > t.getRentDurationInDays()) {
                 bookReturnStatus.setText(daysLate + " days late");
-                penaltyLabel.setText("RM " + String.format("%.2f", (double) daysLate * Main.tm.PENALTY_RATES));
+                penaltyLabel.setText("RM " + String.format("%.2f", penalty));
             } else {
                 bookReturnStatus.setText("Not yet returned.");
             }

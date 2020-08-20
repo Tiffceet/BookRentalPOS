@@ -5,8 +5,6 @@ import bookrentalpos._stockLevelReportTableData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Class used to load all the Book data from the database

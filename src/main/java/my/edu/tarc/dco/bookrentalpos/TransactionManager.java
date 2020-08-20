@@ -2,7 +2,6 @@ package my.edu.tarc.dco.bookrentalpos;
 
 import bookrentalpos.Dialog;
 
-import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -385,7 +384,7 @@ public class TransactionManager extends Manager<Transaction> {
      * @param staffID   staffID
      * @param startDate add filter to the records by specifying start date
      * @param endDate   add filter to the records by specifying end date
-     * @return
+     * @return an array list of transactions
      */
     public ArrayList<Transaction> getTransactionByStaffID(int staffID, Date startDate, Date endDate) {
         ArrayList<Transaction> trans = new ArrayList<Transaction>();

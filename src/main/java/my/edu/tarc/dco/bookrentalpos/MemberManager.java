@@ -1,7 +1,5 @@
 package my.edu.tarc.dco.bookrentalpos;
 
-import bookrentalpos.Main;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
