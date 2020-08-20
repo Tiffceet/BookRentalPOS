@@ -317,7 +317,17 @@ public class MemberManagerController implements Initializable, TableInterface {
         Dialog.alertBox("Search query cleared.");
     }
 
-    public void searchButtonClicked(MouseEvent event) throws IOException {
+    public void searchQueryOnKeyPressed(Event event) {
+        if (((KeyEvent) event).getCode() == KeyCode.ENTER) {
+            try {
+                searchButtonClicked(event);
+            } catch (IOException e) {
+                Dialog.alertBox("Corrupted JAR file, consider reinstalling the program");
+            }
+        }
+    }
+
+    public void searchButtonClicked(Event event) throws IOException {
         // clear the current list items first
         if (memberTableView == null)
             return;
@@ -333,7 +343,7 @@ public class MemberManagerController implements Initializable, TableInterface {
         boolean checkIC = !icQuery.isEmpty();
         boolean checkID = !idQuery.isEmpty();
 
-        if(!checkIC && !checkID && !checkName) {
+        if (!checkIC && !checkID && !checkName) {
             Dialog.alertBox("Please insert search query");
             reloadTableView();
             return;
@@ -370,6 +380,7 @@ public class MemberManagerController implements Initializable, TableInterface {
 
     /**
      * Referring to member pop up edit
+     *
      * @param memToEdit member object reference
      */
     public void loadDataToEdit(Member memToEdit) {

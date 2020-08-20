@@ -203,7 +203,7 @@ public class BookManagerController implements TableInterface, Initializable {
             for (int a = 0; a < ol.size(); a++) {
                 // if one of the books is rented
                 if (((Book) ol.get(a)).isRented()) {
-                    if(Dialog.confirmBox("The book(s) you are about to delete is currently rented, are you sure you still want to delete the book(s) ?")) {
+                    if (Dialog.confirmBox("The book(s) you are about to delete is currently rented, are you sure you still want to delete the book(s) ?")) {
                         break;
                     } else {
                         Dialog.alertBox("Delete canceled.");
@@ -291,6 +291,11 @@ public class BookManagerController implements TableInterface, Initializable {
         Dialog.alertBox("The book has successfully deleted!");
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.close();
+    }
+
+    public void searchQueryOnKeyPressed(Event event) {
+        if (((KeyEvent) event).getCode() == KeyCode.ENTER)
+            searchOnPressed(event);
     }
 
     public void searchOnPressed(Event evt) {

@@ -13,10 +13,8 @@ import my.edu.tarc.dco.bookrentalpos.TransactionType;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Month;
-import java.time.Year;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 enum ReportType {
@@ -37,6 +35,8 @@ public class GenerateReportController implements TableInterface {
     private Label endDateLabel;
     @FXML
     private Label reportTitle;
+    @FXML
+    private Label totalRecordsLabel;
 
     // Member point report.
     @FXML
@@ -160,13 +160,13 @@ public class GenerateReportController implements TableInterface {
         t = Main.tm.getTransactionsByMemberID(memID);
         for (int a = 0; a < t.size(); a++) {
             if (t.get(a).getType() == TransactionType.DISCOUNT) {
-                ol.add(new _memberPointReportTableData(t.get(a).getDateCreated(),
+                ol.add(new _MemberPointReportTableData(t.get(a).getDateCreated(),
                         t.get(a).getId() + "",
                         "-500")
                 );
             }
             if (t.get(a).getType() == TransactionType.RETURN) {
-                ol.add(new _memberPointReportTableData(t.get(a).getDateCreated(),
+                ol.add(new _MemberPointReportTableData(t.get(a).getDateCreated(),
                         t.get(a).getId() + "",
                         "+10")
                 );
@@ -174,6 +174,7 @@ public class GenerateReportController implements TableInterface {
         }
         pointMemberIDLabel.setText(mem.getId() + " (" + mem.getName() + ")");
         totalPointLabel.setText(mem.getMemberPoints() + "");
+        totalRecordsLabel.setText(ol.size() + " Record(s)");
     }
 
     public void loadMemberTransactionReport() {
@@ -205,7 +206,7 @@ public class GenerateReportController implements TableInterface {
         for (int a = 0; a < t.size(); a++) {
             Book b = Main.bm.getById(t.get(a).getBookInvovled());
             ol.add(
-                    new _memberTransactionTableData(
+                    new _MemberTransactionTableData(
                             t.get(a).getDateCreated(),
                             t.get(a).getId() + "",
                             b == null ? "<removed>" : b.getName(),
@@ -216,6 +217,7 @@ public class GenerateReportController implements TableInterface {
         }
         transactionNumberLabel.setText(t.size() + "");
         pointMemberIDLabel.setText(pointMemberIDLabel.getText() + " (" + mem.getName() + ")");
+        totalRecordsLabel.setText(ol.size() + " Record(s)");
     }
 
     public void loadMonthlyReport(String year, String month) {
@@ -229,7 +231,7 @@ public class GenerateReportController implements TableInterface {
             Member m = Main.mm.getById(t[a].getMemberInvovled());
             Book b = Main.bm.getById(t[a].getBookInvovled());
             ol.add(
-                    new _monthlyReportTableData(
+                    new _MonthlyReportTableData(
                             t[a].getDateCreated(),
                             m == null ? "<removed>" : m.getName(),
                             t[a].getType().toString(),
@@ -244,6 +246,7 @@ public class GenerateReportController implements TableInterface {
         monthlyRented.setText(rentCounter + "");
         monthlyReturn.setText(returnsCounter + "");
         monthlyTotal.setText(String.format("%.2f", finalRevenue));
+        totalRecordsLabel.setText(ol.size() + " Record(s)");
     }
 
     public void loadStockLevelReport() {
@@ -261,6 +264,7 @@ public class GenerateReportController implements TableInterface {
         booksInStoreLabel.setText(totalBooksInStore + "");
         booksInSystemLabel.setText(totalBooksInSystem + "");
         booksNetWorthLabel.setText("RM " + String.format("RM %.2f", finalAmount));
+        totalRecordsLabel.setText(ol.size() + " Record(s)");
     }
 
     public void loadStaffTransactionReport() {
@@ -288,7 +292,7 @@ public class GenerateReportController implements TableInterface {
             Member mem = Main.mm.getById(t.get(a).getMemberInvovled());
             Book b = Main.bm.getById(t.get(a).getBookInvovled());
             ol.add(
-                    new _staffTransactionReportTableData(
+                    new _StaffTransactionReportTableData(
                             t.get(a).getDateCreated(),
                             t.get(a).getId() + "",
                             mem == null ? "<removed>" : mem.getName(),
@@ -299,5 +303,6 @@ public class GenerateReportController implements TableInterface {
         }
         staffTransactionLabel.setText(ol.size() + "");
         staffIDLabel.setText(staffIDLabel.getText() + " (" + Main.sm.getById(staffID).getName() + ")");
+        totalRecordsLabel.setText(ol.size() + " Record(s)");
     }
 }

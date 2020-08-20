@@ -20,23 +20,23 @@ import java.io.IOException;
 
 public class StaffManagerController implements TableInterface {
     @FXML
-    private  Label dateTime;
+    private Label dateTime;
     @FXML
-    private  Label recordsCount;
+    private Label recordsCount;
     @FXML
-    private  Button backButton;
+    private Button backButton;
     @FXML
-    private  TableView staffManagerTable;
+    private TableView staffManagerTable;
     @FXML
-    private  TextField usernameField;
+    private TextField usernameField;
     @FXML
-    private  TextField searchByNameTextField;
+    private TextField searchByNameTextField;
     @FXML
-    private  TextField searchByIdTextField;
+    private TextField searchByIdTextField;
     @FXML
-    private  PasswordField passwordField;
+    private PasswordField passwordField;
     @FXML
-    private  PasswordField confirmPasswordField;
+    private PasswordField confirmPasswordField;
 
     public void initialize() {
         // Because some popup uses the controller class, we need to check if its null before allowing the clock to start
@@ -98,6 +98,11 @@ public class StaffManagerController implements TableInterface {
     // ========================================================================================================================
     // StaffManager Event Functions
     // ========================================================================================================================
+
+    public void searchQueryOnKeyPressed(Event event) {
+        if (((KeyEvent) event).getCode() == KeyCode.ENTER)
+            searchOnPressed(event);
+    }
 
     public void searchOnPressed(Event event) {
         String nameQuery = searchByNameTextField.getText();

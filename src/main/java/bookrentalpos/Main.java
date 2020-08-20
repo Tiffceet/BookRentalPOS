@@ -8,6 +8,8 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import my.edu.tarc.dco.bookrentalpos.*;
 
+import java.time.LocalDate;
+
 public class Main extends Application {
 
     public static DBManager db;

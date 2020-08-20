@@ -6,6 +6,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -13,17 +14,19 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<?import javafx.scene.image.Image?>
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" stylesheets="@../../ManagerStyle.css" vgap="5.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrentalpos.GenerateReportController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0"
+          prefWidth="1200.0" stylesheets="@../../ManagerStyle.css" vgap="5.0" xmlns="http://javafx.com/javafx/8.0.171"
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrentalpos.GenerateReportController">
     <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="125.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="75.0" vgrow="SOMETIMES" />
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="125.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="75.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="516.0" minHeight="10.0" prefHeight="510.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="260.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" vgrow="SOMETIMES"/>
     </rowConstraints>
     <children>
         <VBox prefHeight="200.0" prefWidth="100.0" styleClass="upper" GridPane.columnSpan="2">
@@ -32,133 +35,149 @@
                     <children>
                         <ImageView pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../Image/logo-small.png" />
+                                <Image url="@../../Image/logo-small.png"/>
                             </image>
                             <HBox.margin>
-                                <Insets left="10.0" right="10.0" />
-                            </HBox.margin></ImageView>
-                        <Label styleClass="upperTitle" text="HuaheeCheh" HBox.hgrow="ALWAYS" />
+                                <Insets left="10.0" right="10.0"/>
+                            </HBox.margin>
+                        </ImageView>
+                        <Label styleClass="upperTitle" text="HuaheeCheh" HBox.hgrow="ALWAYS"/>
                     </children>
                 </HBox>
-                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="upperTitle" text="Member Transaction Report" />
+                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="upperTitle"
+                       text="Member Transaction Report"/>
             </children>
         </VBox>
         <GridPane styleClass="transactionFont" GridPane.columnSpan="2" GridPane.rowIndex="1">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
             </rowConstraints>
             <children>
                 <GridPane>
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                     </rowConstraints>
                     <children>
-                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Member ID:" />
-                        <Label fx:id="pointMemberIDLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="M00001" GridPane.columnIndex="1" />
+                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Member ID:"/>
+                        <Label fx:id="pointMemberIDLabel" maxHeight="1.7976931348623157E308"
+                               maxWidth="1.7976931348623157E308" text="M00001" GridPane.columnIndex="1"/>
                     </children>
                 </GridPane>
                 <GridPane GridPane.rowIndex="1">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                     </rowConstraints>
                     <children>
-                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Start Date:" />
-                        <Label fx:id="startDateLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="0000/00/00" GridPane.columnIndex="1" />
+                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Start Date:"/>
+                        <Label fx:id="startDateLabel" maxHeight="1.7976931348623157E308"
+                               maxWidth="1.7976931348623157E308" text="0000/00/00" GridPane.columnIndex="1"/>
                     </children>
                 </GridPane>
                 <GridPane GridPane.columnIndex="1">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                     </rowConstraints>
                     <children>
-                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Number of transaction:" />
-                        <Label fx:id="transactionNumberLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="0" GridPane.columnIndex="1" />
+                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                               text="Number of transaction:"/>
+                        <Label fx:id="transactionNumberLabel" maxHeight="1.7976931348623157E308"
+                               maxWidth="1.7976931348623157E308" text="0" GridPane.columnIndex="1"/>
                     </children>
                 </GridPane>
                 <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                     </rowConstraints>
                     <children>
-                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="End Date:" />
-                        <Label fx:id="endDateLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="0000/00/00" GridPane.columnIndex="1" />
+                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="End Date:"/>
+                        <Label fx:id="endDateLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                               text="0000/00/00" GridPane.columnIndex="1"/>
                     </children>
                 </GridPane>
             </children>
             <padding>
-                <Insets left="10.0" right="10.0" />
+                <Insets left="10.0" right="10.0"/>
             </padding>
         </GridPane>
-        <TableView fx:id="memberTransactionTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="2">
+        <TableView fx:id="memberTransactionTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2"
+                   GridPane.rowIndex="2">
             <columns>
                 <TableColumn prefWidth="184.0" text="Date">
                     <cellValueFactory>
-                        <PropertyValueFactory property="date" />
+                        <PropertyValueFactory property="date"/>
                     </cellValueFactory>
                 </TableColumn>
                 <TableColumn prefWidth="103.0" text="Transaction ID">
                     <cellValueFactory>
-                        <PropertyValueFactory property="transactionID" />
+                        <PropertyValueFactory property="transactionID"/>
                     </cellValueFactory>
                 </TableColumn>
                 <TableColumn prefWidth="452.0" text="Book Title">
                     <cellValueFactory>
-                        <PropertyValueFactory property="bookTitle" />
+                        <PropertyValueFactory property="bookTitle"/>
                     </cellValueFactory>
                 </TableColumn>
                 <TableColumn prefWidth="219.0" text="Transaction Type">
                     <cellValueFactory>
-                        <PropertyValueFactory property="transactionType" />
+                        <PropertyValueFactory property="transactionType"/>
                     </cellValueFactory>
                 </TableColumn>
                 <TableColumn prefWidth="241.0" style="-fx-alignment: CENTER-RIGHT;" text="Amount (RM)">
                     <cellValueFactory>
-                        <PropertyValueFactory property="finalAmount" />
+                        <PropertyValueFactory property="finalAmount"/>
                     </cellValueFactory>
                 </TableColumn>
             </columns>
             <items>
-                <FXCollections fx:factory="observableArrayList" />
+                <FXCollections fx:factory="observableArrayList"/>
             </items>
         </TableView>
-        <GridPane alignment="CENTER" maxWidth="500.0" styleClass="transactionFont" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+        <GridPane alignment="CENTER" maxWidth="500.0" styleClass="transactionFont" GridPane.columnSpan="2"
+                  GridPane.halignment="CENTER" GridPane.rowIndex="4">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints />
-                <ColumnConstraints />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints/>
+                <ColumnConstraints/>
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
             </rowConstraints>
             <children>
-                <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="HuaheeCheh Sdn Bhd." GridPane.columnSpan="3" />
-                <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="018-4612707 ~ huaheecheh@gmail.com ~ huaheecheh.com" GridPane.rowIndex="1" />
+                <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                       text="HuaheeCheh Sdn Bhd." GridPane.columnSpan="3"/>
+                <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                       text="018-4612707 ~ huaheecheh@gmail.com ~ huaheecheh.com" GridPane.rowIndex="1"/>
             </children>
             <padding>
-                <Insets bottom="5.0" />
+                <Insets bottom="5.0"/>
             </padding>
         </GridPane>
+        <Label fx:id="totalRecordsLabel" text="0 Record(s)" textFill="#5e00ff" GridPane.rowIndex="3">
+            <GridPane.margin>
+                <Insets left="10.0"/>
+            </GridPane.margin>
+        </Label>
     </children>
 </GridPane>

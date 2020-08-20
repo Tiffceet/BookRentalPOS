@@ -1,13 +1,13 @@
 package bookrentalpos;
 
-public class _monthlyReportTableData {
+public class _MonthlyReportTableData {
     private String date;
     private String memberName;
     private String type;
     private String bookTitle;
     private String finalAmount;
 
-    public _monthlyReportTableData(String date, String memberName, String type, String bookTitle, String finalAmount) {
+    public _MonthlyReportTableData(String date, String memberName, String type, String bookTitle, String finalAmount) {
         this.date = date;
         this.memberName = memberName;
         this.type = type;

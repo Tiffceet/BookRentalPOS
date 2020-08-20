@@ -4,6 +4,9 @@ import java.security.MessageDigest;
 import javax.xml.bind.DatatypeConverter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -97,6 +100,7 @@ public class CustomUtil {
 
     /**
      * Convert date time generated in sqlite database to java date object
+     *
      * @param date - date in String from database
      * @return date object if parsed successfully, null if ParseException was thrown
      */
@@ -111,17 +115,37 @@ public class CustomUtil {
 
     /**
      * Calculate the date difference between 2 java date object
+     *
      * @param date1 java.util.Date object
      * @param date2 java.util.Date object
      * @return days difference in long, throw NullPointerException if date1 or date2 is null
      */
     public static long daysDifference(Date date1, Date date2) {
-        if(date1 == null || date2 == null) {
+        if (date1 == null || date2 == null) {
             throw new NullPointerException();
         }
         long diffInMillies = Math.abs(date1.getTime() - date2.getTime());
         long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
         return diff;
+    }
+
+    /**
+     * This method will increment the provided localdate object by specified days
+     *
+     * @param date      Localdate object
+     * @param increment days to increment
+     * @return LocalDate of the incremented date
+     */
+    public static LocalDate daysIncrement(LocalDate date, int increment) {
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            c.setTime(sdf.parse(date.getYear() + "-" + date.getMonthValue() + "-" + date.getDayOfMonth()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        c.add(Calendar.DAY_OF_MONTH, increment);
+        return c.getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     }
 
 }

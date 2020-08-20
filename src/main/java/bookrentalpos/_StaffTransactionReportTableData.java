@@ -1,15 +1,17 @@
 package bookrentalpos;
 
-public class _memberTransactionTableData {
-    private String date;
-    private String transactionID;
-    private String bookTitle;
-    private String transactionType;
-    private String finalAmount;
+public class _StaffTransactionReportTableData {
+    String date;
+    String transactionID;
+    String customerName;
+    String bookTitle;
+    String transactionType;
+    String finalAmount;
 
-    public _memberTransactionTableData(String date, String transactionID, String bookTitle, String transactionType, String finalAmount) {
+    public _StaffTransactionReportTableData(String date, String transactionID, String customerName, String bookTitle, String transactionType, String finalAmount) {
         this.date = date;
         this.transactionID = transactionID;
+        this.customerName = customerName;
         this.bookTitle = bookTitle;
         this.transactionType = transactionType;
         this.finalAmount = finalAmount;
@@ -29,6 +31,14 @@ public class _memberTransactionTableData {
 
     public void setTransactionID(String transactionID) {
         this.transactionID = transactionID;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public String getBookTitle() {

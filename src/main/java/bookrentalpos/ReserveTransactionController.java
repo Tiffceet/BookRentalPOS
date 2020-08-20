@@ -14,23 +14,25 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import my.edu.tarc.dco.bookrentalpos.Book;
+import my.edu.tarc.dco.bookrentalpos.CustomUtil;
 import my.edu.tarc.dco.bookrentalpos.Member;
 import my.edu.tarc.dco.bookrentalpos.Transaction;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class ReserveTransactionController implements Initializable, TableInterface {
     @FXML
-    private ChoiceBox<String> choiceDropDown;
-    @FXML
     private Label dateTime;
     @FXML
-    private TextField bookIDField;
+    private TextField bookTitleField;
     @FXML
-    private TextArea bookDetailTextArea;
+    private TextField bookAuthorField;
+    @FXML
+    private TableView reserveBookTable;
     @FXML
     private TextField memberIDField;
     @FXML
@@ -38,19 +40,56 @@ public class ReserveTransactionController implements Initializable, TableInterfa
     @FXML
     private Button backButton;
     @FXML
-    private TableView reserveTransactionTable;
+    private TableView memberReservationsTable;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Clock.display(dateTime);
         Main.tm.updateBookReservationStatus();
-        choiceDropDown.getItems().addAll("Book Name", "Book Author");
-        choiceDropDown.setValue("Book Name");
     }
 
     @Override
     public void reloadTableView() {
-        ObservableList ol = reserveTransactionTable.getItems();
+        reloadBookTable();
+        reloadMemberTable();
+    }
+
+    public void reloadBookTable() {
+        ObservableList ol = reserveBookTable.getItems();
+        ol.remove(0, ol.size());
+        String bookTitleQuery = bookTitleField.getText();
+        String bookAuthorQuery = bookAuthorField.getText();
+
+        boolean checkTitle = !bookTitleQuery.isEmpty();
+        boolean checkAuthor = !bookAuthorQuery.isEmpty();
+
+        Book[] bk = Main.bm.getCache();
+        for (int a = 0; a < Main.bm.getBookCount(); a++) {
+            if (checkTitle && !bk[a].getName().contains(bookTitleQuery)) {
+                continue;
+            }
+            if (checkAuthor && !bk[a].getAuthor().contains(bookAuthorQuery)) {
+                continue;
+            }
+            Transaction t = Main.tm.getBookLastRentTransaction(bk[a].getId());
+
+
+            // Very dangerous way of parsing date
+            LocalDate rentDate = t == null ? null : LocalDate.parse(t.getDateCreated().split(" ")[0]);
+            ol.add(
+                    new _ReserveTransactionBookTableData(
+                            bk[a].getId() + "",
+                            bk[a].getName(),
+                            bk[a].getAuthor(),
+                            t == null ? " - " : CustomUtil.daysIncrement(rentDate, t.getRentDurationInDays()).toString()
+                    )
+            );
+        }
+        Dialog.alertBox(ol.size() + " record(s) found.");
+    }
+
+    public void reloadMemberTable() {
+        ObservableList ol = memberReservationsTable.getItems();
         ol.remove(0, ol.size());
         String memID_str = memberIDField.getText();
         if (memID_str.trim().isEmpty()) {
@@ -74,7 +113,7 @@ public class ReserveTransactionController implements Initializable, TableInterfa
 
         ArrayList<Book> reservedBooks = Main.tm.getMemberActiveReservations(memID);
         for (int a = 0; a < reservedBooks.size(); a++) {
-            _ReserveTransactionTableData rttd = new _ReserveTransactionTableData(
+            _ReserveTransactionMemberTableData rttd = new _ReserveTransactionMemberTableData(
                     Main.tm.getBookLastReservedTransaction(reservedBooks.get(a).getId()).getDateCreated(),
                     reservedBooks.get(a).getId() + "",
                     reservedBooks.get(a).getName(),
@@ -82,7 +121,6 @@ public class ReserveTransactionController implements Initializable, TableInterfa
             );
             ol.add(rttd);
         }
-
     }
 
     @Override
@@ -107,18 +145,30 @@ public class ReserveTransactionController implements Initializable, TableInterfa
     // =================================================================================================================
     // Event functions
     // =================================================================================================================
-    public void bookIDFieldOnReleased(Event event) {
-        reloadBookDetailTextArea();
+    public void bookFieldOnKeyPressed(Event event) {
+        if(((KeyEvent) event).getCode() == KeyCode.ENTER) {
+            searchButtonOnAction(event);
+        }
+    }
+
+    public void searchButtonOnAction(Event event) {
+        if (bookTitleField.getText().isEmpty() && bookAuthorField.getText().isEmpty()) {
+            Dialog.alertBox("Please insert search query");
+            return;
+        }
+        reloadTableView();
+    }
+
+    public void clearButtonOnAction(Event event) {
+        reserveBookTable.getItems().clear();
+        bookTitleField.setText("");
+        bookAuthorField.setText("");
     }
 
     public void memberIDFieldOnReleased(Event event) {
         reloadMemberDetailTextArea();
     }
 
-    public void bookIDFieldOnPressed(Event event) {
-        if (((KeyEvent) event).getCode() == KeyCode.ENTER)
-            reloadBookDetailTextArea();
-    }
 
     public void memberIDFieldOnPressed(Event event) {
         if (((KeyEvent) event).getCode() == KeyCode.ENTER)
@@ -138,14 +188,25 @@ public class ReserveTransactionController implements Initializable, TableInterfa
             Dialog.alertBox("Member ID not found");
             return;
         }
-        reloadTableView();
+        reloadMemberTable();
     }
 
     public void addReservationOnPressed(Event event) {
         int bookID;
+        if(reserveBookTable.getItems().size() <= 0) {
+            Dialog.alertBox("Please search for book in the table above");
+            return;
+        }
+        ObservableList ol = reserveBookTable.getSelectionModel().getSelectedItems();
+        if(ol.size() <= 0) {
+            Dialog.alertBox("Please select book to reserve from the table above.");
+            return;
+        }
+
+        bookID = Integer.parseInt(((_ReserveTransactionBookTableData) ol.get(0)).getId());
+
         int memID;
         try {
-            bookID = Integer.parseInt(bookIDField.getText());
             memID = Integer.parseInt(memberIDField.getText());
         } catch (NumberFormatException e) {
             Dialog.alertBox("Invalid bookID or memID");
@@ -182,8 +243,7 @@ public class ReserveTransactionController implements Initializable, TableInterfa
         if (Main.tm.add(t)) {
             Dialog.alertBox("Book reserved successfully;\nNote: book reservation will be cancelled if the book is not rented 7 days after its returned.");
         } else Dialog.alertBox("Something went wrong when trying to reserve the book");
-        reloadTableView();
-
+        reloadMemberTable();
     }
     // =================================================================================================================
     // =================================================================================================================
@@ -201,22 +261,6 @@ public class ReserveTransactionController implements Initializable, TableInterfa
             memberDetailTextArea.setText(mem.toString());
         } else {
             memberDetailTextArea.setText("");
-        }
-    }
-
-    public void reloadBookDetailTextArea() {
-        String bookID_str = bookIDField.getText();
-        int bookID;
-        try {
-            bookID = Integer.parseInt(bookID_str);
-        } catch (NumberFormatException e) {
-            return;
-        }
-        Book bk;
-        if ((bk = Main.bm.getById(bookID)) != null) {
-            bookDetailTextArea.setText(bk.toString());
-        } else {
-            bookDetailTextArea.setText("");
         }
     }
 }

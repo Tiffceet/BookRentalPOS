@@ -1,11 +1,11 @@
 package bookrentalpos;
 
-public class _memberPointReportTableData {
+public class _MemberPointReportTableData {
     private String date;
     private String transactionID;
     private String point;
 
-    public _memberPointReportTableData(String date, String transactionID, String point) {
+    public _MemberPointReportTableData(String date, String transactionID, String point) {
         this.date = date;
         this.transactionID = transactionID;
         this.point = point;
