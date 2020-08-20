@@ -24,6 +24,8 @@ import java.util.ResourceBundle;
 
 public class ReserveTransactionController implements Initializable, TableInterface {
     @FXML
+    private ChoiceBox<String> choiceDropDown;
+    @FXML
     private Label dateTime;
     @FXML
     private TextField bookIDField;
@@ -42,6 +44,8 @@ public class ReserveTransactionController implements Initializable, TableInterfa
     public void initialize(URL location, ResourceBundle resources) {
         Clock.display(dateTime);
         Main.tm.updateBookReservationStatus();
+        choiceDropDown.getItems().addAll("Book Name", "Book Author");
+        choiceDropDown.setValue("Book Name");
     }
 
     @Override
