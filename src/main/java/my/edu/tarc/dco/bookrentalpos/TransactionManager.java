@@ -364,8 +364,8 @@ public class TransactionManager extends Manager<Transaction> {
      * @param memID     member id
      * @param startDate date filter to filter out record before this date
      * @param endDate   date filter to filter out record after this date
-     * @see #getTransactionsByMemberID(int)
      * @return an array list of reference to transactions
+     * @see #getTransactionsByMemberID(int)
      */
     public ArrayList<Transaction> getTransactionsByMemberID(int memID, Date startDate, Date endDate) {
         ArrayList<Transaction> trans = new ArrayList<Transaction>();
@@ -393,6 +393,23 @@ public class TransactionManager extends Manager<Transaction> {
                 if (!CustomUtil.stringToDate(transactionList[a].getDateCreated()).before(startDate) && !CustomUtil.stringToDate(transactionList[a].getDateCreated()).after(endDate))
                     trans.add(transactionList[a]);
             }
+        }
+        return trans;
+    }
+
+    /**
+     * This function returns an array list of transactions between specified date range
+     *
+     * @param startDate add filter to the records by specifying start date
+     * @param endDate   add filter to the records by specifying end date
+     * @return an arraylist of transaction
+     */
+    public ArrayList<Transaction> getTransactionByDate(Date startDate, Date endDate) {
+        ArrayList<Transaction> trans = new ArrayList<Transaction>();
+        for (int a = 0; a < this.transactionCount; a++) {
+            if (!CustomUtil.stringToDate(transactionList[a].getDateCreated()).before(startDate) && !CustomUtil.stringToDate(transactionList[a].getDateCreated()).after(endDate))
+                trans.add(transactionList[a]);
+
         }
         return trans;
     }

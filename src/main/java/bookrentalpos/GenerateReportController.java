@@ -224,24 +224,36 @@ public class GenerateReportController implements TableInterface {
         int rentCounter = 0;
         int returnsCounter = 0;
         double finalRevenue = 0;
+
+        // Start and end date label was set preemptively during Report choosing
+        Date strDate, endDate;
+        try {
+            strDate = new SimpleDateFormat("yyyy-MM-dd").parse(startDateLabel.getText());
+            endDate = new SimpleDateFormat("yyyy-MM-dd").parse(endDateLabel.getText());
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+            Dialog.alertBox("This is not suppose to happen");
+            return;
+        }
+
         ObservableList ol = monthlyReportTable.getItems();
         monthlyReportTitle.setText(year + " " + month + " Monthly Report");
-        Transaction[] t = Main.tm.getCache();
-        for (int a = 0; a < Main.tm.getTransactionCount(); a++) {
-            Member m = Main.mm.getById(t[a].getMemberInvovled());
-            Book b = Main.bm.getById(t[a].getBookInvovled());
+        ArrayList<Transaction> t = Main.tm.getTransactionByDate(strDate, endDate);
+        for (int a = 0; a < t.size(); a++) {
+            Member m = Main.mm.getById(t.get(a).getMemberInvovled());
+            Book b = Main.bm.getById(t.get(a).getBookInvovled());
             ol.add(
                     new _MonthlyReportTableData(
-                            t[a].getDateCreated(),
+                            t.get(a).getDateCreated(),
                             m == null ? "<removed>" : m.getName(),
-                            t[a].getType().toString(),
+                            t.get(a).getType().toString(),
                             b == null ? "<removed>" : b.getName(),
-                            String.format("%.2f", t[a].getCashFlow())
+                            String.format("%.2f", t.get(a).getCashFlow())
                     )
             );
-            rentCounter += t[a].getType() == TransactionType.RENT ? 1 : 0;
-            returnsCounter += t[a].getType() == TransactionType.RETURN ? 1 : 0;
-            finalRevenue += t[a].getCashFlow();
+            rentCounter += t.get(a).getType() == TransactionType.RENT ? 1 : 0;
+            returnsCounter += t.get(a).getType() == TransactionType.RETURN ? 1 : 0;
+            finalRevenue += t.get(a).getCashFlow();
         }
         monthlyRented.setText(rentCounter + "");
         monthlyReturn.setText(returnsCounter + "");
