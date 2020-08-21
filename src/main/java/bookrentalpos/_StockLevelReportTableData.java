@@ -1,13 +1,13 @@
 package bookrentalpos;
 
-public class _stockLevelReportTableData {
+public class _StockLevelReportTableData {
     private String bookTitle;
     private String author;
     private String amountInSystem;
     private String amountInStore;
     private String finalAmount;
 
-    public _stockLevelReportTableData(String bookTitle, String author, String amountInSystem, String amountInStore, String finalAmount) {
+    public _StockLevelReportTableData(String bookTitle, String author, String amountInSystem, String amountInStore, String finalAmount) {
         this.bookTitle = bookTitle;
         this.author = author;
         this.amountInSystem = amountInSystem;

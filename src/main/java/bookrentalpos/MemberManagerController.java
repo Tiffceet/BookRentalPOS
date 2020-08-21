@@ -331,9 +331,9 @@ public class MemberManagerController implements Initializable, TableInterface {
 
         // load the cache from MemberManager
         Member[] mem = Main.mm.getCache();
-        String nameQuery = searchByNameField.getText();
-        String icQuery = searchByICField.getText();
-        String idQuery = searchByIDField.getText();
+        String nameQuery = searchByNameField.getText().toLowerCase();
+        String icQuery = searchByICField.getText().toLowerCase();
+        String idQuery = searchByIDField.getText().toLowerCase();
 
         boolean checkName = !nameQuery.isEmpty();
         boolean checkIC = !icQuery.isEmpty();
@@ -347,17 +347,17 @@ public class MemberManagerController implements Initializable, TableInterface {
 
         for (int a = 0; a < Main.mm.getMemberCount(); a++) {
             if (checkName) {
-                if (!mem[a].getName().contains(nameQuery)) {
+                if (!mem[a].getName().toLowerCase().startsWith(nameQuery)) {
                     continue;
                 }
             }
             if (checkIC) {
-                if (!mem[a].getIcNo().contains(icQuery)) {
+                if (!mem[a].getIcNo().toLowerCase().startsWith(icQuery)) {
                     continue;
                 }
             }
             if (checkID) {
-                if (!(mem[a].getId() + "").contains(idQuery)) {
+                if (!(mem[a].getId() + "").toLowerCase().startsWith(idQuery)) {
                     continue;
                 }
             }

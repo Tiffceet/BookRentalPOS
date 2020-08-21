@@ -1,6 +1,6 @@
 package my.edu.tarc.dco.bookrentalpos;
 
-import bookrentalpos._stockLevelReportTableData;
+import bookrentalpos._StockLevelReportTableData;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -202,14 +202,14 @@ public class BookManager extends Manager<Book> {
      *
      * @return Arraylist of type _stockLevelReportTableData
      */
-    public ArrayList<_stockLevelReportTableData> getBookCountInSystem() {
+    public ArrayList<_StockLevelReportTableData> getBookCountInSystem() {
         // Set books that are not rented as null
         db.execQuery("UPDATE book SET isRented = null WHERE isRented == 0;");
 
         // Bad naming, yes, im sorry
-        ArrayList<_stockLevelReportTableData> rlrtd = new ArrayList<_stockLevelReportTableData>();
+        ArrayList<_StockLevelReportTableData> rlrtd = new ArrayList<_StockLevelReportTableData>();
         // How I abused COUNT()
-        String sql = "SELECT DISTINCT title, author, COUNT(isRented) as booksRented, COUNT(title) AS bookCount, retailPrice * COUNT(title) AS amountInMYR FROM book GROUP BY title, author;";
+        String sql = "SELECT DISTINCT title, author, COUNT(isRented) as booksRented, COUNT(title) AS bookCount, SUM(retailPrice) AS amountInMYR FROM book GROUP BY title, author;";
         ResultSet rs;
         if ((rs = db.resultQuery(sql)) == null) {
             // Set books that are not rented back to 0
@@ -219,7 +219,7 @@ public class BookManager extends Manager<Book> {
         try {
             while (rs.next()) {
                 rlrtd.add(
-                        new _stockLevelReportTableData(rs.getString("title"),
+                        new _StockLevelReportTableData(rs.getString("title"),
                                 rs.getString("author"),
                                 rs.getInt("bookCount") + "",
                                 (rs.getInt("bookCount") - rs.getInt("booksRented")) + "",

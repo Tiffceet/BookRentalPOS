@@ -301,8 +301,8 @@ public class BookManagerController implements TableInterface, Initializable {
         bookTableView.getItems().clear();
         // load the cache from MemberManager
         Book[] books = Main.bm.getCache();
-        String nameQuery = searchByNameField.getText();
-        String authorQuery = searchByAuthorField.getText();
+        String nameQuery = searchByNameField.getText().toLowerCase();
+        String authorQuery = searchByAuthorField.getText().toLowerCase();
 
         boolean checkName = !nameQuery.isEmpty();
         boolean checkAuthor = !authorQuery.isEmpty();
@@ -315,12 +315,12 @@ public class BookManagerController implements TableInterface, Initializable {
 
         for (int a = 0; a < Main.bm.getBookCount(); a++) {
             if (checkName) {
-                if (!books[a].getName().contains(nameQuery)) {
+                if (!books[a].getName().toLowerCase().startsWith(nameQuery)) {
                     continue;
                 }
             }
             if (checkAuthor) {
-                if (!books[a].getAuthor().contains(authorQuery)) {
+                if (!books[a].getAuthor().toLowerCase().startsWith(authorQuery)) {
                     continue;
                 }
             }

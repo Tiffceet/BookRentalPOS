@@ -105,8 +105,8 @@ public class StaffManagerController implements TableInterface {
     }
 
     public void searchOnPressed(Event event) {
-        String nameQuery = searchByNameTextField.getText();
-        String idQuery = searchByIdTextField.getText();
+        String nameQuery = searchByNameTextField.getText().toLowerCase();
+        String idQuery = searchByIdTextField.getText().toLowerCase();
         ObservableList ol = staffManagerTable.getItems();
         ol.clear();
         boolean checkName = !nameQuery.isEmpty();
@@ -118,10 +118,10 @@ public class StaffManagerController implements TableInterface {
         }
         Staff[] stfList = Main.sm.getCache();
         for (int a = 0; a < Main.sm.getStaffCount(); a++) {
-            if (checkName && !stfList[a].getName().contains(nameQuery)) {
+            if (checkName && !stfList[a].getName().toLowerCase().startsWith(nameQuery)) {
                 continue;
             }
-            if (checkID && !(stfList[a].getId() + "").contains(idQuery)) {
+            if (checkID && !(stfList[a].getId() + "").toLowerCase().startsWith(idQuery)) {
                 continue;
             }
             ol.add(stfList[a]);

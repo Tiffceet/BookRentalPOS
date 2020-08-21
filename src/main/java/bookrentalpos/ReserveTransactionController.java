@@ -57,18 +57,18 @@ public class ReserveTransactionController implements Initializable, TableInterfa
     public void reloadBookTable() {
         ObservableList ol = reserveBookTable.getItems();
         ol.remove(0, ol.size());
-        String bookTitleQuery = bookTitleField.getText();
-        String bookAuthorQuery = bookAuthorField.getText();
+        String bookTitleQuery = bookTitleField.getText().toLowerCase();
+        String bookAuthorQuery = bookAuthorField.getText().toLowerCase();
 
         boolean checkTitle = !bookTitleQuery.isEmpty();
         boolean checkAuthor = !bookAuthorQuery.isEmpty();
 
         Book[] bk = Main.bm.getCache();
         for (int a = 0; a < Main.bm.getBookCount(); a++) {
-            if (checkTitle && !bk[a].getName().contains(bookTitleQuery)) {
+            if (checkTitle && !bk[a].getName().toLowerCase().startsWith(bookTitleQuery)) {
                 continue;
             }
-            if (checkAuthor && !bk[a].getAuthor().contains(bookAuthorQuery)) {
+            if (checkAuthor && !bk[a].getAuthor().toLowerCase().startsWith(bookAuthorQuery)) {
                 continue;
             }
             Transaction t = Main.tm.getBookLastRentTransaction(bk[a].getId());
@@ -146,7 +146,7 @@ public class ReserveTransactionController implements Initializable, TableInterfa
     // Event functions
     // =================================================================================================================
     public void bookFieldOnKeyPressed(Event event) {
-        if(((KeyEvent) event).getCode() == KeyCode.ENTER) {
+        if (((KeyEvent) event).getCode() == KeyCode.ENTER) {
             searchButtonOnAction(event);
         }
     }
@@ -193,12 +193,12 @@ public class ReserveTransactionController implements Initializable, TableInterfa
 
     public void addReservationOnPressed(Event event) {
         int bookID;
-        if(reserveBookTable.getItems().size() <= 0) {
+        if (reserveBookTable.getItems().size() <= 0) {
             Dialog.alertBox("Please search for book in the table above");
             return;
         }
         ObservableList ol = reserveBookTable.getSelectionModel().getSelectedItems();
-        if(ol.size() <= 0) {
+        if (ol.size() <= 0) {
             Dialog.alertBox("Please select book to reserve from the table above.");
             return;
         }

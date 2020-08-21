@@ -122,7 +122,6 @@ public class RentTransactionController implements TableInterface {
 
     public void bookIDOnKeyPressed(Event event) {
         reloadBookDetailsField();
-
     }
 
     public void bookIDOnKeyReleased(Event event) {
@@ -298,6 +297,7 @@ public class RentTransactionController implements TableInterface {
         clearInputFields();
         reloadTableView();
     }
+
     // ================================================================================================================
     // ================================================================================================================
 

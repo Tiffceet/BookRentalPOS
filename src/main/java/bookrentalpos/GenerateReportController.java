@@ -254,7 +254,7 @@ public class GenerateReportController implements TableInterface {
         int totalBooksInStore = 0;
         double finalAmount = 0;
         ObservableList ol = stockLevelReportTable.getItems();
-        ArrayList<_stockLevelReportTableData> sllrtd = Main.bm.getBookCountInSystem();
+        ArrayList<_StockLevelReportTableData> sllrtd = Main.bm.getBookCountInSystem();
         for (int a = 0; a < sllrtd.size(); a++) {
             ol.add(sllrtd.get(a));
             totalBooksInStore += Integer.parseInt(sllrtd.get(a).getAmountInStore());
