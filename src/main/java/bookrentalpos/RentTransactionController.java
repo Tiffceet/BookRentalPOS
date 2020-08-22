@@ -85,7 +85,7 @@ public class RentTransactionController implements TableInterface {
             memberOutstandingRentCounterLabel.setText("Count: 0");
             return;
         }
-        ArrayList<Book> b = Main.bm.getBooksRentedByMember(memID);
+        ArrayList<Book> b = Main.bm.getBooksRentedByMember(Main.mm.getById(memID));
         for (int a = 0; a < b.size(); a++) {
             ol.add(b.get(a));
         }
@@ -114,7 +114,7 @@ public class RentTransactionController implements TableInterface {
                 });
 
                 sessionTransactions.removeIf((data) -> {
-                    return ((Transaction) data).getBookInvovled() == rttd.getBookId();
+                    return ((Transaction) data).getBookInvovled().getId() == rttd.getBookId();
                 });
             }
         }
@@ -187,8 +187,8 @@ public class RentTransactionController implements TableInterface {
             return;
         }
 
-        if (book.isReserved() && book.getLastReservedBy() != mem.getId()) {
-            Dialog.alertBox("This book was reserved by " + Main.mm.getById(book.getLastReservedBy()).getName());
+        if (book.isReserved() && book.getLastReservedBy().getId() != mem.getId()) {
+            Dialog.alertBox("This book was reserved by " + book.getLastReservedBy().getName());
             return;
         }
 
@@ -214,9 +214,9 @@ public class RentTransactionController implements TableInterface {
         // add to sessionTransaction
         sessionTransactions.add(
                 new Transaction(
-                        Main.sm.getLogOnStaff().getId(),
-                        mem.getId(),
-                        book.getId(),
+                        Main.sm.getLogOnStaff(),
+                        mem,
+                        book,
                         rentDuration * 7,
                         book.getRetailPrice() + book.getRetailPrice() * (100 + Main.tm.DEPOSIT_RATES.get(rentDuration > 4 ? 4 : rentDuration)) / 100.0
                 )

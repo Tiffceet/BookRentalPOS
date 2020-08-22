@@ -28,9 +28,9 @@ public class Main extends Application {
 
     public static void loadDB() {
         Main.db = new DBManager();
-        Main.bm = new BookManager(db);
         Main.sm = new StaffManager(db);
         Main.mm = new MemberManager(db);
+        Main.bm = new BookManager(db);
         Main.tm = new TransactionManager(db, bm, mm);
     }
 

@@ -1,5 +1,6 @@
 package my.edu.tarc.dco.bookrentalpos;
 
+import bookrentalpos.Main;
 import bookrentalpos._StockLevelReportTableData;
 
 import java.sql.ResultSet;
@@ -41,8 +42,8 @@ public class BookManager extends Manager<Book> {
                         rs.getString("title"),
                         rs.getString("author"),
                         rs.getDouble("retailPrice"),
-                        rs.getInt("lastRentedBy"),
-                        rs.getInt("lastReservedBy"),
+                        Main.mm.getById(rs.getInt("lastRentedBy")),
+                        Main.mm.getById(rs.getInt("lastReservedBy")),
                         rs.getInt("isRented") == 0 ? false : true,
                         rs.getInt("isReserved") == 0 ? false : true
                 );
@@ -111,8 +112,8 @@ public class BookManager extends Manager<Book> {
                 book.getName(),
                 book.getRetailPrice(),
                 book.getAuthor(),
-                book.getLastRentedBy() == 0 ? "null" : book.getLastRentedBy() + "",
-                book.getLastReservedBy() == 0 ? "null" : book.getLastReservedBy() + "",
+                book.getLastRentedBy() == null ? "null" : book.getLastRentedBy().getId() + "",
+                book.getLastReservedBy() == null ? "null" : book.getLastReservedBy().getId() + "",
                 book.isRented() ? 1 : 0,
                 book.isReserved() ? 1 : 0
         );
@@ -153,8 +154,8 @@ public class BookManager extends Manager<Book> {
                 bk.getName(),
                 bk.getAuthor(),
                 bk.getRetailPrice(),
-                bk.getLastRentedBy() == 0 ? "null" : bk.getLastRentedBy() + "",
-                bk.getLastReservedBy() == 0 ? "null" : bk.getLastReservedBy() + "",
+                bk.getLastRentedBy() == null ? "null" : bk.getLastRentedBy().getId() + "",
+                bk.getLastReservedBy() == null ? "null" : bk.getLastReservedBy().getId() + "",
                 bk.isRented() ? 1 : 0,
                 bk.isReserved() ? 1 : 0,
                 bk.getId());
@@ -237,13 +238,13 @@ public class BookManager extends Manager<Book> {
 
     /**
      * This function returns an array list of reference to the books record where it is currently rented by specifed member
-     * @param memID member ID
+     * @param mem member object
      * @return arraylist of type Book
      */
-    public ArrayList<Book> getBooksRentedByMember(int memID) {
+    public ArrayList<Book> getBooksRentedByMember(Member mem) {
         ArrayList<Book> b = new ArrayList<Book>();
         for (int a = 0; a < this.bookCount; a++) {
-            if (bookList[a].isRented() && bookList[a].getLastRentedBy() == memID) {
+            if (bookList[a].isRented() && bookList[a].getLastRentedBy().equals(mem)) {
                 b.add(bookList[a]);
             }
         }

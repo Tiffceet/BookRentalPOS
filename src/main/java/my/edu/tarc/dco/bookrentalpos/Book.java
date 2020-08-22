@@ -21,8 +21,8 @@ public class Book extends Entity {
     private String reservedText;
 
     private double retailPrice;
-    private int lastRentedBy;
-    private int lastReservedBy;
+    private Member lastRentedBy;
+    private Member lastReservedBy;
     private String author;
 
     /**
@@ -55,15 +55,15 @@ public class Book extends Entity {
      * @param name           Book Title
      * @param author         Book Author
      * @param retailPrice    Book's rental price per day
-     * @param lastRentedBy   MemberID of whoever last rented the book
-     * @param lastReservedBy MemberID of whoever last reserved the book
+     * @param lastRentedBy   Member object of whoever last rented the book
+     * @param lastReservedBy Member object of whoever last reserved the book
      * @param isRented       Although int is used in database, it is stored as boolean
      *                       in the system
      * @param isReserved     Although int is used in database, it is stored as
      *                       boolean in the system
      * @see #Book(String, String, double)
      */
-    public Book(int id, String date, String name, String author, double retailPrice, int lastRentedBy, int lastReservedBy, boolean isRented, boolean isReserved) {
+    public Book(int id, String date, String name, String author, double retailPrice, Member lastRentedBy, Member lastReservedBy, boolean isRented, boolean isReserved) {
         super(id, name, date);
         setAuthor(author);
         setRetailPrice(retailPrice);
@@ -89,28 +89,28 @@ public class Book extends Entity {
      * @return MemberID of whoever last rented this book. Can be 0 if the member
      * was previously removed
      */
-    public int getLastRentedBy() {
+    public Member getLastRentedBy() {
         return this.lastRentedBy;
     }
 
     /**
      * @param lastRentedBy MemberID of the person rented this book
      */
-    public void setLastRentedBy(int lastRentedBy) {
+    public void setLastRentedBy(Member lastRentedBy) {
         this.lastRentedBy = lastRentedBy;
     }
 
     /**
-     * @return Member ID of whoever reserved this book
+     * @return Member object of whoever reserved this book
      */
-    public int getLastReservedBy() {
+    public Member getLastReservedBy() {
         return this.lastReservedBy;
     }
 
     /**
      * @param lastReservedBy MemberID of the person who reserved this book
      */
-    public void setLastReservedBy(int lastReservedBy) {
+    public void setLastReservedBy(Member lastReservedBy) {
         this.lastReservedBy = lastReservedBy;
     }
 

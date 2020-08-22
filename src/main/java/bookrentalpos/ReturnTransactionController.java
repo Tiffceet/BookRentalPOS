@@ -71,7 +71,7 @@ public class ReturnTransactionController {
         Transaction t;
         int weeksRented = 0;
         if ((bk = Main.bm.getById(bookID)) != null) {
-            t = Main.tm.getBookLastRentTransaction(bookID);
+            t = Main.tm.getBookLastRentTransaction(Main.bm.getById(bookID));
             if (t != null) {
                 weeksRented = t.getRentDurationInDays() / 7;
                 bookDetailTextArea.setText(String.format("Book Title: %s\nRented on: %s\nRent Duration: %s",
@@ -91,8 +91,8 @@ public class ReturnTransactionController {
 
         if (bk.isRented()) {
             Member member;
-            if ((member = Main.mm.getById(bk.getLastRentedBy())) != null) // if member was not deleted
-                memberDetailTextArea.setText(Main.mm.getById(bk.getLastRentedBy()).toString());
+            if ((member = bk.getLastRentedBy()) != null) // if member was not deleted
+                memberDetailTextArea.setText(bk.getLastRentedBy().toString());
             else memberDetailTextArea.setText("");
             depositPaid = (t.getCashFlow() / (2.0 + (Main.tm.DEPOSIT_RATES.get(Math.min(weeksRented, 4)) / 100.0))) * 2;
             daysSinceRented = CustomUtil.daysDifference(new Date(), CustomUtil.stringToDate(t.getDateCreated()));
@@ -141,15 +141,15 @@ public class ReturnTransactionController {
             Dialog.alertBox("The book is not rented hence cant be returned.");
             return;
         }
-        Transaction rentTrans = Main.tm.getBookLastRentTransaction(bookID);
+        Transaction rentTrans = Main.tm.getBookLastRentTransaction(Main.bm.getById(bookID));
         if (rentTrans == null) {
             Dialog.alertBox("Unable to find who rented this book");
             return;
         }
-        Transaction t = new Transaction(Main.sm.getLogOnStaff().getId(), rentTrans.getMemberInvovled(), bookID, -netDepositReturn);
+        Transaction t = new Transaction(Main.sm.getLogOnStaff(), rentTrans.getMemberInvovled(), Main.bm.getById(bookID), -netDepositReturn);
         if (Main.tm.add(t)) {
             Member member;
-            if ((member = Main.mm.getById(bk.getLastRentedBy())) != null && daysLate <= 0) { // if member was not removed
+            if ((member = bk.getLastRentedBy()) != null && daysLate <= 0) { // if member was not removed
                 Dialog.alertBox("Book returned successfully\n" + member.getName() + " gained 10 points for returning the book in time.");
                 member.setMemberPoints(member.getMemberPoints() + 10);
                 if (!Main.mm.update(member)) {

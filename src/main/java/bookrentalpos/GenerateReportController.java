@@ -157,7 +157,7 @@ public class GenerateReportController implements TableInterface {
 
         ObservableList ol = memberPointReportTable.getItems();
         ArrayList<Transaction> t;
-        t = Main.tm.getTransactionsByMemberID(memID);
+        t = Main.tm.getTransactionsByMember(mem);
         for (int a = 0; a < t.size(); a++) {
             if (t.get(a).getType() == TransactionType.DISCOUNT) {
                 ol.add(new _MemberPointReportTableData(t.get(a).getDateCreated(),
@@ -202,9 +202,9 @@ public class GenerateReportController implements TableInterface {
         }
 
         ObservableList ol = memberTransactionTable.getItems();
-        ArrayList<Transaction> t = Main.tm.getTransactionsByMemberID(memID, strDate, endDate);
+        ArrayList<Transaction> t = Main.tm.getTransactionsByMember(mem, strDate, endDate);
         for (int a = 0; a < t.size(); a++) {
-            Book b = Main.bm.getById(t.get(a).getBookInvovled());
+            Book b = t.get(a).getBookInvovled();
             ol.add(
                     new _MemberTransactionTableData(
                             t.get(a).getDateCreated(),
@@ -240,8 +240,8 @@ public class GenerateReportController implements TableInterface {
         monthlyReportTitle.setText(year + " " + month + " Monthly Report");
         ArrayList<Transaction> t = Main.tm.getTransactionByDate(strDate, endDate);
         for (int a = 0; a < t.size(); a++) {
-            Member m = Main.mm.getById(t.get(a).getMemberInvovled());
-            Book b = Main.bm.getById(t.get(a).getBookInvovled());
+            Member m = t.get(a).getMemberInvovled();
+            Book b = t.get(a).getBookInvovled();
             ol.add(
                     new _MonthlyReportTableData(
                             t.get(a).getDateCreated(),
@@ -290,7 +290,7 @@ public class GenerateReportController implements TableInterface {
 
         ArrayList<Transaction> t;
         try {
-            t = Main.tm.getTransactionByStaffID(staffID,
+            t = Main.tm.getTransactionByStaff(Main.sm.getById(staffID),
                     new SimpleDateFormat("yyyy-MM-dd").parse(startDateLabel.getText()),
                     new SimpleDateFormat("yyyy-MM-dd").parse(endDateLabel.getText()));
         } catch (java.text.ParseException e) {
@@ -301,8 +301,8 @@ public class GenerateReportController implements TableInterface {
 
         ObservableList ol = staffTransactionReportTable.getItems();
         for (int a = 0; a < t.size(); a++) {
-            Member mem = Main.mm.getById(t.get(a).getMemberInvovled());
-            Book b = Main.bm.getById(t.get(a).getBookInvovled());
+            Member mem = t.get(a).getMemberInvovled();
+            Book b = t.get(a).getBookInvovled();
             ol.add(
                     new _StaffTransactionReportTableData(
                             t.get(a).getDateCreated(),

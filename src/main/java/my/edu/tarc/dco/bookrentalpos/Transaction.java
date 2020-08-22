@@ -10,9 +10,9 @@ public class Transaction extends Entity {
 
     private int rentDurationInDays;
     private TransactionType type;
-    private int staffHandled;
-    private int memberInvovled;
-    private int bookInvovled;
+    private Staff staffHandled;
+    private Member memberInvovled;
+    private Book bookInvovled;
     private double cashFlow;
 
     /**
@@ -29,7 +29,7 @@ public class Transaction extends Entity {
      * @param memberInvovled memberID
      * @param bookInvovled   bookID
      */
-    public Transaction(int staff, int memberInvovled, int bookInvovled) {
+    public Transaction(Staff staff, Member memberInvovled, Book bookInvovled) {
         this.type = TransactionType.RESERVE;
         this.staffHandled = staff;
         this.memberInvovled = memberInvovled;
@@ -44,9 +44,9 @@ public class Transaction extends Entity {
      * @param memberInvovled memberID
      * @param bookInvovled   bookID
      * @param cashFlow       deposit returned to customer - penalty(if any)
-     * @see #Transaction(int, int, int)
+     * @see #Transaction(Staff, Member, Book)
      */
-    public Transaction(int staff, int memberInvovled, int bookInvovled, double cashFlow) {
+    public Transaction(Staff staff, Member memberInvovled, Book bookInvovled, double cashFlow) {
         this.type = TransactionType.RETURN;
         this.staffHandled = staff;
         this.memberInvovled = memberInvovled;
@@ -63,10 +63,10 @@ public class Transaction extends Entity {
      * @param rentDurationInDays integer, you may set this to 0 if this field is
      *                           not needed
      * @param cashFlow           Double, you may set it to 0 if this field is not needed
-     * @see #Transaction(int, int, int, int, double)
-     * @see #Transaction(int, int, int, double)
+     * @see #Transaction(Staff, Member, Book, int, double)
+     * @see #Transaction(Staff, Member, Book, double)
      */
-    public Transaction(int staff, int memberInvovled, int bookInvovled, int rentDurationInDays, double cashFlow) {
+    public Transaction(Staff staff, Member memberInvovled, Book bookInvovled, int rentDurationInDays, double cashFlow) {
         this.type = TransactionType.RENT;
         this.rentDurationInDays = rentDurationInDays;
         this.staffHandled = staff;
@@ -81,7 +81,7 @@ public class Transaction extends Entity {
      * @param memberInvovled memberID
      * @param cashFlow       amount of discount amount given
      */
-    public Transaction(int memberInvovled, double cashFlow) {
+    public Transaction(Member memberInvovled, double cashFlow) {
         this.memberInvovled = memberInvovled;
         this.type = TransactionType.DISCOUNT;
         this.cashFlow = cashFlow;
@@ -100,10 +100,10 @@ public class Transaction extends Entity {
      * @param rentDurationInDays integer, you may set this to 0 if this field is
      *                           not needed
      * @param cashFlow           Double, you may set it to 0 if this field is not needed
-     * @see #Transaction(int, int, int, int, double)
-     * @see #Transaction(int, int, int, double)
+     * @see #Transaction(Staff, Member, Book, int, double)
+     * @see #Transaction(Staff, Member, Book, double)
      */
-    public Transaction(int id, String date, TransactionType type, int staff, int memberInvovled, int bookInvovled, int rentDurationInDays, double cashFlow) {
+    public Transaction(int id, String date, TransactionType type, Staff staff, Member memberInvovled, Book bookInvovled, int rentDurationInDays, double cashFlow) {
         super(id, null, date);
         this.type = type;
         this.rentDurationInDays = rentDurationInDays;
@@ -146,7 +146,7 @@ public class Transaction extends Entity {
     /**
      * @return StaffID will be returned
      */
-    public int getStaffHandled() {
+    public Staff getStaffHandled() {
         return staffHandled;
     }
 
@@ -154,14 +154,14 @@ public class Transaction extends Entity {
      * @param staffHandled staffID of this transaction, note that this will not
      *                     validate with database whether if staffID is valid
      */
-    public void setStaffHandled(int staffHandled) {
+    public void setStaffHandled(Staff staffHandled) {
         this.staffHandled = staffHandled;
     }
 
     /**
      * @return return MemberID, can be 0 if the member was removed previously
      */
-    public int getMemberInvovled() {
+    public Member getMemberInvovled() {
         return memberInvovled;
     }
 
@@ -169,7 +169,7 @@ public class Transaction extends Entity {
      * @param memberInvovled MemberID of this transaction, note that this will
      *                       not validate with database whether if MemberID is valid
      */
-    public void setMemberInvovled(int memberInvovled) {
+    public void setMemberInvovled(Member memberInvovled) {
         this.memberInvovled = memberInvovled;
     }
 
@@ -177,7 +177,7 @@ public class Transaction extends Entity {
      * @return return BookID of this transaction, can be 0 if the book was
      * previously removed
      */
-    public int getBookInvovled() {
+    public Book getBookInvovled() {
         return bookInvovled;
     }
 
@@ -185,14 +185,14 @@ public class Transaction extends Entity {
      * @param bookInvovled bookID of this transaction, note that this will not
      *                     validate with database whether if BookID is valid
      */
-    public void setBookInvovled(int bookInvovled) {
+    public void setBookInvovled(Book bookInvovled) {
         this.bookInvovled = bookInvovled;
     }
 
     /**
      * @return cash flow of this transaction. Refer to constructor for how its being used
-     * @see #Transaction(int, int, int, double)
-     * @see #Transaction(int, int, int, int, double)
+     * @see #Transaction(Staff, Member, Book, int, double)
+     * @see #Transaction(Staff, Member, Book, double)
      */
     public double getCashFlow() {
         return cashFlow;

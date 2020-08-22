@@ -1,6 +1,7 @@
 package my.edu.tarc.dco.bookrentalpos;
 
 import bookrentalpos.Dialog;
+import bookrentalpos.Main;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -71,9 +72,9 @@ public class TransactionManager extends Manager<Transaction> {
                         rs.getInt("id"),
                         rs.getString("date"),
                         TransactionType.valueOf(rs.getString("type")),
-                        rs.getInt("staffHandled"),
-                        rs.getInt("memberInvolved"),
-                        rs.getInt("bookInvolved"),
+                        Main.sm.getById(rs.getInt("staffHandled")),
+                        Main.mm.getById(rs.getInt("memberInvolved")),
+                        Main.bm.getById(rs.getInt("bookInvolved")),
                         rs.getInt("rentDurationInDays"),
                         rs.getDouble("cashFlow")
                 );
@@ -93,11 +94,11 @@ public class TransactionManager extends Manager<Transaction> {
     @Override
     public boolean add(Transaction trans) {
         String sql = String.format(
-                "INSERT INTO transactions(type, staffHandled, memberInvolved, bookInvolved, rentDurationInDays, cashFlow) VALUES('%s',%d,%d,%d,%d,%f)",
+                "INSERT INTO transactions(type, staffHandled, memberInvolved, bookInvolved, rentDurationInDays, cashFlow) VALUES('%s',%s,%s,%s,%d,%f)",
                 trans.getType(),
-                trans.getStaffHandled(),
-                trans.getMemberInvovled(),
-                trans.getBookInvovled(),
+                trans.getStaffHandled() == null ? "null" : trans.getStaffHandled().getId() + "",
+                trans.getMemberInvovled() == null ? "null" : trans.getMemberInvovled().getId() + "",
+                trans.getBookInvovled() == null ? "null" : trans.getBookInvovled().getId() + "",
                 trans.getRentDurationInDays(),
                 trans.getCashFlow());
         if (db.updateQuery(sql) == 1) {
@@ -112,7 +113,7 @@ public class TransactionManager extends Manager<Transaction> {
                 transactionList[transactionCount++] = trans;
 
                 // Update respective table based on the transaction type
-                Book b = bm.getById(trans.getBookInvovled());
+                Book b = trans.getBookInvovled();
                 switch (trans.getType()) {
                     case RENT:
                         b.setLastRentedBy(trans.getMemberInvovled());
@@ -130,7 +131,7 @@ public class TransactionManager extends Manager<Transaction> {
                         bm.update(b);
                         break;
                     case DISCOUNT:
-                        Member memberToEdit = mm.getById(trans.getMemberInvovled());
+                        Member memberToEdit = trans.getMemberInvovled();
                         if (memberToEdit != null) {
                             memberToEdit.setMemberPoints(memberToEdit.getMemberPoints() - 500);
                             this.mm.update(memberToEdit);
@@ -190,9 +191,9 @@ public class TransactionManager extends Manager<Transaction> {
                         "WHERE id=%d",
                 ref.getRentDurationInDays(),
                 ref.getType(),
-                ref.getStaffHandled() == 0 ? "null" : ref.getStaffHandled() + "",
-                ref.getMemberInvovled() == 0 ? "null" : ref.getMemberInvovled() + "",
-                ref.getBookInvovled() == 0 ? "null" : ref.getBookInvovled() + "",
+                ref.getStaffHandled() == null ? "null" : ref.getStaffHandled().getId() + "",
+                ref.getMemberInvovled() == null ? "null" : ref.getMemberInvovled().getId() + "",
+                ref.getBookInvovled() == null ? "null" : ref.getBookInvovled().getId() + "",
                 ref.getCashFlow(),
                 ref.getId());
         if (db.updateQuery(sql) != 1) {
@@ -282,17 +283,16 @@ public class TransactionManager extends Manager<Transaction> {
     /**
      * This function returns transaction of the last renting record of a specific book
      *
-     * @param bookID bookID to be checked
-     * @return Transaction reference object to the last renting record, return null if bookid is not valid or the book is not currently rented
+     * @param bk book object to be checked
+     * @return Transaction reference object to the last renting record, return null if book is null or the book is not currently rented
      */
-    public Transaction getBookLastRentTransaction(int bookID) {
-        Book bk;
-        if ((bk = bm.getById(bookID)) == null) {
+    public Transaction getBookLastRentTransaction(Book bk) {
+        if (bk == null) {
             return null;
         }
         if (!bk.isRented()) return null;
         for (int a = this.transactionCount - 1; a != -1; a--) {
-            if (transactionList[a].getType() == TransactionType.RENT && transactionList[a].getBookInvovled() == bookID) {
+            if (transactionList[a].getType() == TransactionType.RENT && transactionList[a].getBookInvovled().equals(bk)) {
                 return transactionList[a];
             }
         }
@@ -302,18 +302,18 @@ public class TransactionManager extends Manager<Transaction> {
     /**
      * This function returns Transaction of the last reserve record of a specific book
      *
-     * @param bookID bookID to be checked
-     * @return Transaction reference object to the last reserve record, return null if bookid is not valid or the book is not reserved
+     * @param bk book object to be checked
+     * @return Transaction reference object to the last reserve record, return null if book is null or the book is not reserved
      */
-    public Transaction getBookLastReservedTransaction(int bookID) {
-        Book bk;
-        if ((bk = bm.getById(bookID)) == null) {
+    public Transaction getBookLastReservedTransaction(Book bk) {
+
+        if (bk == null) {
             return null;
         }
         if (!bk.isReserved()) return null;
 
         for (int a = this.transactionCount - 1; a != -1; a--) {
-            if (transactionList[a].getType() == TransactionType.RESERVE && transactionList[a].getBookInvovled() == bookID) {
+            if (transactionList[a].getType() == TransactionType.RESERVE && transactionList[a].getBookInvovled().equals(bk)) {
                 return transactionList[a];
             }
         }
@@ -323,13 +323,13 @@ public class TransactionManager extends Manager<Transaction> {
     /**
      * This function return an array list of books currently reserved by this member
      *
-     * @param memID member ID
+     * @param mem member object
      * @return an arraylist of book reference from BookManager
      */
-    public ArrayList<Book> getMemberActiveReservations(int memID) {
+    public ArrayList<Book> getMemberActiveReservations(Member mem) {
         ArrayList<Book> books = new ArrayList<Book>();
 
-        String sql = "SELECT * FROM book WHERE isReserved=1 AND lastReservedBy=" + memID;
+        String sql = "SELECT * FROM book WHERE isReserved=1 AND lastReservedBy=" + mem.getId();
         ResultSet rs = db.resultQuery(sql);
         try {
             while (rs.next()) {
@@ -347,7 +347,7 @@ public class TransactionManager extends Manager<Transaction> {
      * @param memID member id
      * @return an array list of reference to transactions
      */
-    public ArrayList<Transaction> getTransactionsByMemberID(int memID) {
+    public ArrayList<Transaction> getTransactionsByMember(Member memID) {
         ArrayList<Transaction> trans = new ArrayList<Transaction>();
         for (int a = 0; a < this.transactionCount; a++) {
             if (transactionList[a].getMemberInvovled() == memID) {
@@ -361,16 +361,16 @@ public class TransactionManager extends Manager<Transaction> {
     /**
      * This function have the same behavior as getTransactionsByMemberID(int) except it accepts startDate and endDate filter
      *
-     * @param memID     member id
+     * @param mem       member object
      * @param startDate date filter to filter out record before this date
      * @param endDate   date filter to filter out record after this date
      * @return an array list of reference to transactions
-     * @see #getTransactionsByMemberID(int)
+     * @see #getTransactionsByMember(Member)
      */
-    public ArrayList<Transaction> getTransactionsByMemberID(int memID, Date startDate, Date endDate) {
+    public ArrayList<Transaction> getTransactionsByMember(Member mem, Date startDate, Date endDate) {
         ArrayList<Transaction> trans = new ArrayList<Transaction>();
         for (int a = 0; a < this.transactionCount; a++) {
-            if (transactionList[a].getMemberInvovled() == memID) {
+            if (transactionList[a].getMemberInvovled().equals(mem)) {
                 if (!CustomUtil.stringToDate(transactionList[a].getDateCreated()).before(startDate) && !CustomUtil.stringToDate(transactionList[a].getDateCreated()).after(endDate))
                     trans.add(transactionList[a]);
             }
@@ -381,15 +381,15 @@ public class TransactionManager extends Manager<Transaction> {
     /**
      * This function returns an array list of transactions for specific staff ID
      *
-     * @param staffID   staffID
+     * @param staff     staff Object
      * @param startDate add filter to the records by specifying start date
      * @param endDate   add filter to the records by specifying end date
      * @return an array list of transactions
      */
-    public ArrayList<Transaction> getTransactionByStaffID(int staffID, Date startDate, Date endDate) {
+    public ArrayList<Transaction> getTransactionByStaff(Staff staff, Date startDate, Date endDate) {
         ArrayList<Transaction> trans = new ArrayList<Transaction>();
         for (int a = 0; a < this.transactionCount; a++) {
-            if (transactionList[a].getStaffHandled() == staffID) {
+            if (transactionList[a].getStaffHandled().equals(staff)) {
                 if (!CustomUtil.stringToDate(transactionList[a].getDateCreated()).before(startDate) && !CustomUtil.stringToDate(transactionList[a].getDateCreated()).after(endDate))
                     trans.add(transactionList[a]);
             }

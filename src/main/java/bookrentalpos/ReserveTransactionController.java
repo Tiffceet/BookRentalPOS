@@ -71,7 +71,7 @@ public class ReserveTransactionController implements Initializable, TableInterfa
             if (checkAuthor && !bk[a].getAuthor().toLowerCase().startsWith(bookAuthorQuery)) {
                 continue;
             }
-            Transaction t = Main.tm.getBookLastRentTransaction(bk[a].getId());
+            Transaction t = Main.tm.getBookLastRentTransaction(bk[a]);
 
 
             // Very dangerous way of parsing date
@@ -111,10 +111,10 @@ public class ReserveTransactionController implements Initializable, TableInterfa
             return;
         }
 
-        ArrayList<Book> reservedBooks = Main.tm.getMemberActiveReservations(memID);
+        ArrayList<Book> reservedBooks = Main.tm.getMemberActiveReservations(mem);
         for (int a = 0; a < reservedBooks.size(); a++) {
             _ReserveTransactionMemberTableData rttd = new _ReserveTransactionMemberTableData(
-                    Main.tm.getBookLastReservedTransaction(reservedBooks.get(a).getId()).getDateCreated(),
+                    Main.tm.getBookLastReservedTransaction(reservedBooks.get(a)).getDateCreated(),
                     reservedBooks.get(a).getId() + "",
                     reservedBooks.get(a).getName(),
                     reservedBooks.get(a).getAuthor()
@@ -230,16 +230,16 @@ public class ReserveTransactionController implements Initializable, TableInterfa
         }
 
         if (bk.isReserved()) {
-            Dialog.alertBox("Sorry but this book was reserved by " + Main.mm.getById(bk.getLastReservedBy()).getName());
+            Dialog.alertBox("Sorry but this book was reserved by " + bk.getLastReservedBy().getName());
             return;
         }
 
-        if (bk.getLastRentedBy() == mem.getId()) {
+        if (bk.getLastRentedBy().equals(mem)) {
             Dialog.alertBox("Uhh, but you are the one renting this book... (._.)");
             return;
         }
 
-        Transaction t = new Transaction(Main.sm.getLogOnStaff().getId(), mem.getId(), bk.getId());
+        Transaction t = new Transaction(Main.sm.getLogOnStaff(), mem, bk);
         if (Main.tm.add(t)) {
             Dialog.alertBox("Book reserved successfully;\nNote: book reservation will be cancelled if the book is not rented 7 days after its returned.");
         } else Dialog.alertBox("Something went wrong when trying to reserve the book");
