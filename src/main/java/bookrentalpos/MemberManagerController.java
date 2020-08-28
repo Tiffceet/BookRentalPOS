@@ -142,6 +142,7 @@ public class MemberManagerController implements Initializable, TableInterface {
 
         addMemberWindow.initModality(Modality.APPLICATION_MODAL);
         addMemberWindow.setTitle("Add Member - HuaheeCheh");
+        addMemberWindow.setResizable(false);
         addMemberWindow.getIcons().add(new Image(Main.class.getResourceAsStream("/Image/icon.png")));
         addMemberWindow.setScene(new Scene(addMemberParent, 800, 600));
         addMemberWindow.showAndWait();
@@ -176,6 +177,7 @@ public class MemberManagerController implements Initializable, TableInterface {
         Stage editMemberWindow = new Stage();
 
         editMemberWindow.initModality(Modality.APPLICATION_MODAL);
+        editMemberWindow.setResizable(false);
         editMemberWindow.setTitle("Edit Member - HuaheeCheh");
         editMemberWindow.getIcons().add(new Image(Main.class.getResourceAsStream("/Image/icon.png")));
         editMemberWindow.setScene(new Scene(editMemberParent, 800, 600));
