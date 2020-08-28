@@ -141,21 +141,21 @@ public class MemberManager extends Manager<Member> {
      * NOTE: The removed member's data will be removed from other related table
      * as well
      *
-     * @param memID MemberID which to be removed
+     * @param member MemberID which to be removed
      * @return true if member was removed successfully
      */
     @Override
-    public boolean remove(int memID) {
+    public boolean remove(Member member) {
         db.execQuery("UPDATE book\n"
                 + "SET lastRentedBy=NULL\n"
-                + "WHERE lastRentedBy=" + memID);
+                + "WHERE lastRentedBy=" + member.getId());
         db.execQuery("UPDATE book\n"
                 + "SET lastReservedBy=NULL, isReserved=0\n"
-                + "WHERE lastReservedBy=" + memID);
+                + "WHERE lastReservedBy=" + member.getId());
         db.execQuery("UPDATE transactions\n"
                 + "SET memberInvolved=NULL\n"
-                + "WHERE memberInvolved=" + memID);
-        String sql = String.format("DELETE FROM member WHERE id=%d", memID);
+                + "WHERE memberInvolved=" + member.getId());
+        String sql = String.format("DELETE FROM member WHERE id=%d", member.getId());
         Member[] tmpList = new Member[ARRAY_SIZE];
 
         // [1,23,4,5,6]
@@ -163,7 +163,7 @@ public class MemberManager extends Manager<Member> {
         if (db.updateQuery(sql) == 1) {
             int b = 0;
             for (int a = 0; a < memberCount; a++) {
-                if (memberList[a].getId() != memID) {
+                if (!memberList[a].equals(member)) {
                     tmpList[b++] = memberList[a];
                 }
             }

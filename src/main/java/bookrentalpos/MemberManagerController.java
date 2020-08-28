@@ -197,7 +197,7 @@ public class MemberManagerController implements Initializable, TableInterface {
 
         if (Dialog.confirmBox("Are you sure you want to delete " + ol.size() + " record(s) ?")) {
             for (int a = 0; a < ol.size(); a++) {
-                if (Main.mm.remove(((Member) ol.get(a)).getId())) {
+                if (Main.mm.remove(((Member) ol.get(a)))) {
                     // do nothing yet
                 } else {
                     // Somewhere in the database went wrong

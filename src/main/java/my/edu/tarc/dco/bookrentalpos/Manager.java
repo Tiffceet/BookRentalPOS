@@ -12,6 +12,6 @@ public abstract class Manager<T> {
     public abstract T[] getCache();
     public abstract boolean add(T entry);
     public abstract boolean update(T ref);
-    public abstract boolean remove(int id);
+    public abstract boolean remove(T ref);
     public abstract void reload();
 }

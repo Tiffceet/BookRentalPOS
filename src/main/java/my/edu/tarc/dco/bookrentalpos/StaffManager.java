@@ -187,20 +187,20 @@ public class StaffManager extends Manager<Staff> {
      * Remove staff from the database<br>
      * NOTE: The removed staff will not appear in other table as well
      *
-     * @param staffID int
+     * @param staff int
      * @return true if staff was removed successfully
      */
     @Override
-    public boolean remove(int staffID) {
+    public boolean remove(Staff staff) {
         db.execQuery("UPDATE transactions\n"
                 + "SET staffHandled=NULL\n"
-                + "WHERE staffHandled=" + staffID);
-        String sql = String.format("DELETE FROM staff WHERE id=%d", staffID);
+                + "WHERE staffHandled=" + staff.getId());
+        String sql = String.format("DELETE FROM staff WHERE id=%d", staff.getId());
         Staff[] tmpList = new Staff[ARRAY_SIZE];
         if (db.updateQuery(sql) == 1) {
             int b = 0;
             for (int a = 0; a < staffCount; a++) {
-                if (staffList[a].getId() != staffID) {
+                if (!staffList[a].equals(staff)) {
                     tmpList[b++] = staffList[a];
                 }
             }

@@ -203,14 +203,14 @@ public class TransactionManager extends Manager<Transaction> {
     }
 
     /**
-     * Remove transaction of specific id from database
+     * Remove transaction of specific trans from database
      *
-     * @param id transaction id
+     * @param trans transaction trans
      * @return true if it was removed successfully, false if otherwise
      */
     @Override
-    public boolean remove(int id) {
-        String sql = "DELETE FROM transactions WHERE id=" + id;
+    public boolean remove(Transaction trans) {
+        String sql = "DELETE FROM transactions WHERE trans=" + trans.getId();
         if (db.updateQuery(sql) != 1) {
             return false;
         }
@@ -220,7 +220,7 @@ public class TransactionManager extends Manager<Transaction> {
         int b = 0;
         Transaction[] tmpList = new Transaction[ARRAY_SIZE];
         for (int a = 0; a < this.transactionCount; a++) {
-            if (transactionList[a].getId() != id) {
+            if (!transactionList[a].equals(trans)) {
                 tmpList[b++] = transactionList[a];
             }
         }

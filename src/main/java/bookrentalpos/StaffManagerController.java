@@ -213,7 +213,7 @@ public class StaffManagerController implements TableInterface {
             return;
         }
         for (int a = 0; a < ol.size(); a++) {
-            if (Main.sm.remove(((Staff) ol.get(a)).getId())) {
+            if (Main.sm.remove(((Staff) ol.get(a)))) {
 
             } else {
                 // not sure how to handle this

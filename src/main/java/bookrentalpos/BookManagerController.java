@@ -208,7 +208,7 @@ public class BookManagerController implements TableInterface, Initializable {
                 }
             }
             for (int a = 0; a < ol.size(); a++) {
-                if (Main.bm.remove(((Book) ol.get(a)).getId())) {
+                if (Main.bm.remove(((Book) ol.get(a)))) {
 
                 } else {
 

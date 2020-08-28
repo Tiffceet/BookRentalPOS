@@ -169,20 +169,20 @@ public class BookManager extends Manager<Book> {
      * Remove the book from the database<br>
      * NOTE: All the related table will have this book removed as well
      *
-     * @param bookID BookID to be removed
+     * @param book BookID to be removed
      * @return True if the book is removed successfully
      */
     @Override
-    public boolean remove(int bookID) {
+    public boolean remove(Book book) {
         db.execQuery("UPDATE transactions\n"
                 + "SET bookInvolved=NULL\n"
-                + "WHERE bookInvolved=" + bookID);
-        String sql = String.format("DELETE FROM book WHERE id=%d", bookID);
+                + "WHERE bookInvolved=" + book.getId());
+        String sql = String.format("DELETE FROM book WHERE id=%d", book.getId());
         Book[] tmpList = new Book[ARRAY_SIZE];
         if (db.updateQuery(sql) == 1) {
             int b = 0;
             for (int a = 0; a < bookCount; a++) {
-                if (bookList[a].getId() != bookID) {
+                if (!bookList[a].equals(book)) {
                     tmpList[b++] = bookList[a];
                 }
             }
