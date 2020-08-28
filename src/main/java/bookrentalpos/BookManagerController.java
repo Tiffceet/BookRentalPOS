@@ -239,6 +239,11 @@ public class BookManagerController implements TableInterface, Initializable {
             return;
         }
 
+        if(newRentPrice < 0) {
+            Dialog.alertBox("Retail Price cannot be less than 0");
+            return;
+        }
+
         newRentPrice = Double.parseDouble(String.format("%.2f", newRentPrice));
 
         if (!Main.bm.add(new Book(bookName, bookAuthor, newRentPrice))) {
