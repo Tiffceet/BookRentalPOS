@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import my.edu.tarc.dco.bookrentalpos.CustomUtil;
 import my.edu.tarc.dco.bookrentalpos.Staff;
 
 public class EditProfileController {
@@ -35,7 +36,7 @@ public class EditProfileController {
         String newUsername = nameField.getText();
         String newPW = passwordField.getText();
 
-        if(newUsername.trim().isEmpty()) {
+        if (newUsername.trim().isEmpty()) {
             Dialog.alertBox("Username cannot be empty");
             return;
         }
@@ -55,7 +56,10 @@ public class EditProfileController {
 
         // leave blank to stay unchanged
         if (!newPW.isEmpty()) {
-            stfToEdit.setPassword(passwordField.getText());
+            if (!CustomUtil.checkPassword(passwordField.getText())) {
+                Dialog.alertBox("Password should have at least 8 characters, a number and a capital letter.");
+                return;
+            }
         }
 
         stfToEdit.setName(newUsername);
@@ -71,11 +75,11 @@ public class EditProfileController {
 
     }
 
-    public void textFieldOnKeyPressed(Event event){
-        if(((KeyEvent) event).getCode() == KeyCode.ESCAPE) {
+    public void textFieldOnKeyPressed(Event event) {
+        if (((KeyEvent) event).getCode() == KeyCode.ESCAPE) {
             cancelEdit(event);
         }
-        if(((KeyEvent) event).getCode() == KeyCode.ENTER) {
+        if (((KeyEvent) event).getCode() == KeyCode.ENTER) {
             confirmEdit(event);
         }
     }
