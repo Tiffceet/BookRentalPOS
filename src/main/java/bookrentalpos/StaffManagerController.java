@@ -14,6 +14,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import my.edu.tarc.dco.bookrentalpos.CustomUtil;
 import my.edu.tarc.dco.bookrentalpos.Staff;
 
 import java.io.IOException;
@@ -245,6 +246,11 @@ public class StaffManagerController implements TableInterface {
 
         if (newPassword.trim().isEmpty()) {
             Dialog.alertBox("Password cannot be empty");
+            return;
+        }
+
+        if (!CustomUtil.checkPassword(newPassword)) {
+            Dialog.alertBox("Password should have at least a number and a capital letter.");
             return;
         }
 

@@ -79,6 +79,10 @@ public class CustomUtil {
         }
     }
 
+    public static boolean checkPassword(String password) {
+        return password.matches("^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])([a-zA-Z0-9]+)$");
+    }
+
     /**
      * Check if email is valid
      *
