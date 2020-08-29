@@ -244,13 +244,18 @@ public class StaffManagerController implements TableInterface {
             return;
         }
 
+        if (newUsername.length() < 8) {
+            Dialog.alertBox("Username should have at least 8 characters.");
+            return;
+        }
+
         if (newPassword.trim().isEmpty()) {
             Dialog.alertBox("Password cannot be empty");
             return;
         }
 
         if (!CustomUtil.checkPassword(newPassword)) {
-            Dialog.alertBox("Password should have at least a number and a capital letter.");
+            Dialog.alertBox("Password should have at least 8 characters, a number and a capital letter.");
             return;
         }
 
