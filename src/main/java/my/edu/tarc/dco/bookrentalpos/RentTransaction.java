@@ -1,7 +1,20 @@
 package my.edu.tarc.dco.bookrentalpos;
 
+/**
+ * Class used to store Rent Transaction
+ *
+ * @author Looz
+ * @version 1.0
+ */
 public class RentTransaction extends Transaction {
     private int rentDurationInDays;
+
+    /**
+     * Blank
+     */
+    public RentTransaction() {
+
+    }
 
     /**
      * Constructor used to create a new RentTransaction

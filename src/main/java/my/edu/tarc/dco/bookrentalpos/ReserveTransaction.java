@@ -1,6 +1,21 @@
 package my.edu.tarc.dco.bookrentalpos;
 
+/**
+ * Class used to store reserve Transaction
+ *
+ * @author Looz
+ * @version 1.0
+ */
 public class ReserveTransaction extends Transaction {
+
+
+    /**
+     * Blank
+     */
+    public ReserveTransaction() {
+
+    }
+
     /**
      * Constructor for Reserve Transaction
      *
