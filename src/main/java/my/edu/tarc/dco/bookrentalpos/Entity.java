@@ -38,8 +38,8 @@ public class Entity {
      */
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof Integer) {
-            return getId() == (Integer) obj;
+        if(obj instanceof Entity) {
+            return getId() == ((Entity) obj).getId();
         }
         return super.equals(obj);
     }
