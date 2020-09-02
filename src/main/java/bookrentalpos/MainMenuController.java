@@ -123,6 +123,10 @@ public class MainMenuController implements Initializable {
     }
 
     public void toGenerateReport(MouseEvent event) throws IOException {
+        Main.mm.reload();
+        Main.sm.reload();
+        Main.bm.reload();
+        Main.tm.reload();
         FXMLLoader fl = new FXMLLoader(getClass().getResource("/FXML/Report/reportInterface.fxml"));
         Parent generateReportParent = (Parent) fl.load();
 
