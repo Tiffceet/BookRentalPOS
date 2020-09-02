@@ -204,7 +204,7 @@ public class GenerateReportController implements TableInterface {
         ObservableList ol = memberTransactionTable.getItems();
         ArrayList<Transaction> t = Main.tm.getTransactionsByMember(mem, strDate, endDate);
         for (int a = 0; a < t.size(); a++) {
-            Book b = t.get(a).getBookInvovled();
+            Book b = t.get(a).getBookInvolved();
             ol.add(
                     new _MemberTransactionTableData(
                             t.get(a).getDateCreated(),
@@ -240,8 +240,8 @@ public class GenerateReportController implements TableInterface {
         monthlyReportTitle.setText(year + " " + month + " Monthly Report");
         ArrayList<Transaction> t = Main.tm.getTransactionByDate(strDate, endDate);
         for (int a = 0; a < t.size(); a++) {
-            Member m = t.get(a).getMemberInvovled();
-            Book b = t.get(a).getBookInvovled();
+            Member m = t.get(a).getMemberInvolved();
+            Book b = t.get(a).getBookInvolved();
             ol.add(
                     new _MonthlyReportTableData(
                             t.get(a).getDateCreated(),
@@ -301,8 +301,8 @@ public class GenerateReportController implements TableInterface {
 
         ObservableList ol = staffTransactionReportTable.getItems();
         for (int a = 0; a < t.size(); a++) {
-            Member mem = t.get(a).getMemberInvovled();
-            Book b = t.get(a).getBookInvovled();
+            Member mem = t.get(a).getMemberInvolved();
+            Book b = t.get(a).getBookInvolved();
             ol.add(
                     new _StaffTransactionReportTableData(
                             t.get(a).getDateCreated(),

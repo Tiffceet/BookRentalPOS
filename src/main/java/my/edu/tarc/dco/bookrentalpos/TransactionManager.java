@@ -97,8 +97,8 @@ public class TransactionManager extends Manager<Transaction> {
                 "INSERT INTO transactions(type, staffHandled, memberInvolved, bookInvolved, rentDurationInDays, cashFlow) VALUES('%s',%s,%s,%s,%d,%f)",
                 trans.getType(),
                 trans.getStaffHandled() == null ? "null" : trans.getStaffHandled().getId() + "",
-                trans.getMemberInvovled() == null ? "null" : trans.getMemberInvovled().getId() + "",
-                trans.getBookInvovled() == null ? "null" : trans.getBookInvovled().getId() + "",
+                trans.getMemberInvolved() == null ? "null" : trans.getMemberInvolved().getId() + "",
+                trans.getBookInvolved() == null ? "null" : trans.getBookInvolved().getId() + "",
                 trans.getRentDurationInDays(),
                 trans.getCashFlow());
         if (db.updateQuery(sql) == 1) {
@@ -113,10 +113,10 @@ public class TransactionManager extends Manager<Transaction> {
                 transactionList[transactionCount++] = trans;
 
                 // Update respective table based on the transaction type
-                Book b = trans.getBookInvovled();
+                Book b = trans.getBookInvolved();
                 switch (trans.getType()) {
                     case RENT:
-                        b.setLastRentedBy(trans.getMemberInvovled());
+                        b.setLastRentedBy(trans.getMemberInvolved());
                         b.setRented(true);
                         b.setReserved(false);
                         bm.update(b);
@@ -126,12 +126,12 @@ public class TransactionManager extends Manager<Transaction> {
                         bm.update(b);
                         break;
                     case RESERVE:
-                        b.setLastReservedBy(trans.getMemberInvovled());
+                        b.setLastReservedBy(trans.getMemberInvolved());
                         b.setReserved(true);
                         bm.update(b);
                         break;
                     case DISCOUNT:
-                        Member memberToEdit = trans.getMemberInvovled();
+                        Member memberToEdit = trans.getMemberInvolved();
                         if (memberToEdit != null) {
                             memberToEdit.setMemberPoints(memberToEdit.getMemberPoints() - 500);
                             this.mm.update(memberToEdit);
@@ -192,8 +192,8 @@ public class TransactionManager extends Manager<Transaction> {
                 ref.getRentDurationInDays(),
                 ref.getType(),
                 ref.getStaffHandled() == null ? "null" : ref.getStaffHandled().getId() + "",
-                ref.getMemberInvovled() == null ? "null" : ref.getMemberInvovled().getId() + "",
-                ref.getBookInvovled() == null ? "null" : ref.getBookInvovled().getId() + "",
+                ref.getMemberInvolved() == null ? "null" : ref.getMemberInvolved().getId() + "",
+                ref.getBookInvolved() == null ? "null" : ref.getBookInvolved().getId() + "",
                 ref.getCashFlow(),
                 ref.getId());
         if (db.updateQuery(sql) != 1) {
@@ -292,7 +292,7 @@ public class TransactionManager extends Manager<Transaction> {
         }
         if (!bk.isRented()) return null;
         for (int a = this.transactionCount - 1; a != -1; a--) {
-            if (transactionList[a].getType() == TransactionType.RENT && transactionList[a].getBookInvovled().equals(bk)) {
+            if (transactionList[a].getType() == TransactionType.RENT && transactionList[a].getBookInvolved().equals(bk)) {
                 return transactionList[a];
             }
         }
@@ -313,7 +313,7 @@ public class TransactionManager extends Manager<Transaction> {
         if (!bk.isReserved()) return null;
 
         for (int a = this.transactionCount - 1; a != -1; a--) {
-            if (transactionList[a].getType() == TransactionType.RESERVE && transactionList[a].getBookInvovled().equals(bk)) {
+            if (transactionList[a].getType() == TransactionType.RESERVE && transactionList[a].getBookInvolved().equals(bk)) {
                 return transactionList[a];
             }
         }
@@ -350,7 +350,7 @@ public class TransactionManager extends Manager<Transaction> {
     public ArrayList<Transaction> getTransactionsByMember(Member memID) {
         ArrayList<Transaction> trans = new ArrayList<Transaction>();
         for (int a = 0; a < this.transactionCount; a++) {
-            if (transactionList[a].getMemberInvovled() == memID) {
+            if (transactionList[a].getMemberInvolved() == memID) {
                 // if (!CustomUtil.stringToDate(transactionList[a].getDateCreated()).before(startDate) && !CustomUtil.stringToDate(transactionList[a].getDateCreated()).after(endDate))
                 trans.add(transactionList[a]);
             }
@@ -370,7 +370,7 @@ public class TransactionManager extends Manager<Transaction> {
     public ArrayList<Transaction> getTransactionsByMember(Member mem, Date startDate, Date endDate) {
         ArrayList<Transaction> trans = new ArrayList<Transaction>();
         for (int a = 0; a < this.transactionCount; a++) {
-            if (transactionList[a].getMemberInvovled().equals(mem)) {
+            if (transactionList[a].getMemberInvolved().equals(mem)) {
                 if (!CustomUtil.stringToDate(transactionList[a].getDateCreated()).before(startDate) && !CustomUtil.stringToDate(transactionList[a].getDateCreated()).after(endDate))
                     trans.add(transactionList[a]);
             }

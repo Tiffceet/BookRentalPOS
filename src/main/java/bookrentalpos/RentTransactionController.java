@@ -114,7 +114,7 @@ public class RentTransactionController implements TableInterface {
                 });
 
                 sessionTransactions.removeIf((data) -> {
-                    return ((Transaction) data).getBookInvovled().getId() == rttd.getBookId();
+                    return ((Transaction) data).getBookInvolved().getId() == rttd.getBookId();
                 });
             }
         }
@@ -288,7 +288,7 @@ public class RentTransactionController implements TableInterface {
             }
         }
         if (haveDiscount) {
-            Main.tm.add(new Transaction(sessionTransactions.get(0).getMemberInvovled(), -discount));
+            Main.tm.add(new Transaction(sessionTransactions.get(0).getMemberInvolved(), -discount));
         }
 
         Dialog.alertBox("Transaction completed.");

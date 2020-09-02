@@ -146,7 +146,7 @@ public class ReturnTransactionController {
             Dialog.alertBox("Unable to find who rented this book");
             return;
         }
-        Transaction t = new Transaction(Main.sm.getLogOnStaff(), rentTrans.getMemberInvovled(), Main.bm.getById(bookID), -netDepositReturn);
+        Transaction t = new Transaction(Main.sm.getLogOnStaff(), rentTrans.getMemberInvolved(), Main.bm.getById(bookID), -netDepositReturn);
         if (Main.tm.add(t)) {
             Member member;
             if ((member = bk.getLastRentedBy()) != null && daysLate <= 0) { // if member was not removed
