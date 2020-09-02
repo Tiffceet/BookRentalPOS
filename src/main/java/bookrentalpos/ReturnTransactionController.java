@@ -10,10 +10,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import my.edu.tarc.dco.bookrentalpos.Book;
-import my.edu.tarc.dco.bookrentalpos.CustomUtil;
-import my.edu.tarc.dco.bookrentalpos.Member;
-import my.edu.tarc.dco.bookrentalpos.Transaction;
+import my.edu.tarc.dco.bookrentalpos.*;
 
 import java.util.Date;
 
@@ -68,7 +65,7 @@ public class ReturnTransactionController {
             return;
         }
         Book bk;
-        Transaction t;
+        RentTransaction t;
         int weeksRented = 0;
         if ((bk = Main.bm.getById(bookID)) != null) {
             t = Main.tm.getBookLastRentTransaction(Main.bm.getById(bookID));
@@ -146,7 +143,7 @@ public class ReturnTransactionController {
             Dialog.alertBox("Unable to find who rented this book");
             return;
         }
-        Transaction t = new Transaction(Main.sm.getLogOnStaff(), rentTrans.getMemberInvolved(), Main.bm.getById(bookID), -netDepositReturn);
+        ReturnTransaction t = new ReturnTransaction(Main.sm.getLogOnStaff(), rentTrans.getMemberInvolved(), Main.bm.getById(bookID), -netDepositReturn);
         if (Main.tm.add(t)) {
             Member member;
             if ((member = bk.getLastRentedBy()) != null && daysLate <= 0) { // if member was not removed

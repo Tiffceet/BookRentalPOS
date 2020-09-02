@@ -12,9 +12,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import my.edu.tarc.dco.bookrentalpos.Book;
-import my.edu.tarc.dco.bookrentalpos.Member;
-import my.edu.tarc.dco.bookrentalpos.Transaction;
+import my.edu.tarc.dco.bookrentalpos.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -213,7 +211,7 @@ public class RentTransactionController implements TableInterface {
 
         // add to sessionTransaction
         sessionTransactions.add(
-                new Transaction(
+                new RentTransaction(
                         Main.sm.getLogOnStaff(),
                         mem,
                         book,
@@ -288,7 +286,7 @@ public class RentTransactionController implements TableInterface {
             }
         }
         if (haveDiscount) {
-            Main.tm.add(new Transaction(sessionTransactions.get(0).getMemberInvolved(), -discount));
+            Main.tm.add(new DiscountTransaction(sessionTransactions.get(0).getMemberInvolved(), -discount));
         }
 
         Dialog.alertBox("Transaction completed.");

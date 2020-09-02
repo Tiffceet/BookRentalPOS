@@ -329,14 +329,14 @@ public class TransactionManager extends Manager<Transaction> {
      * @param bk book object to be checked
      * @return Transaction reference object to the last renting record, return null if book is null or the book is not currently rented
      */
-    public Transaction getBookLastRentTransaction(Book bk) {
+    public RentTransaction getBookLastRentTransaction(Book bk) {
         if (bk == null) {
             return null;
         }
         if (!bk.isRented()) return null;
         for (int a = this.transactionCount - 1; a != -1; a--) {
             if (transactionList[a].getType() == TransactionType.RENT && transactionList[a].getBookInvolved().equals(bk)) {
-                return transactionList[a];
+                return (RentTransaction) transactionList[a];
             }
         }
         return null;
