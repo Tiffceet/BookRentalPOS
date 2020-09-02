@@ -310,7 +310,8 @@ public class GenerateReportController implements TableInterface {
                             mem == null ? "<removed>" : mem.getName(),
                             b == null ? "<removed>" : b.getName(),
                             t.get(a).getType().toString(),
-                            t.get(a).getCashFlow() + "")
+                            String.format("%.2f", t.get(a).getCashFlow())
+                    )
             );
         }
         staffTransactionLabel.setText(ol.size() + "");
