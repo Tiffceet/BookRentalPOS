@@ -59,6 +59,8 @@ public class MainMenuController implements Initializable {
     }
 
     public void toManageTransaction(MouseEvent event) throws IOException {
+        Main.bm.reload();
+        Main.mm.reload();
         Main.tm.reload();
         Parent manageBookParent = FXMLLoader.load(getClass().getResource("/FXML/TransactionManager/transactionChoose.fxml"));
         Scene manageBookScene = new Scene(manageBookParent);
@@ -121,6 +123,10 @@ public class MainMenuController implements Initializable {
     }
 
     public void toGenerateReport(MouseEvent event) throws IOException {
+        Main.mm.reload();
+        Main.sm.reload();
+        Main.bm.reload();
+        Main.tm.reload();
         FXMLLoader fl = new FXMLLoader(getClass().getResource("/FXML/Report/reportInterface.fxml"));
         Parent generateReportParent = (Parent) fl.load();
 

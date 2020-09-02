@@ -1,14 +1,15 @@
 package my.edu.tarc.dco.bookrentalpos;
-/**
- * Class used to load Staff Data into the POS system
- *
- * @author Looz
- * @version 1.0
- */
+
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Class to load Staff data for the POS system
+ *
+ * @author Looz
+ * @version 1.0
+ */
 public class StaffManager extends Manager<Staff> {
 
     private Staff[] staffList;

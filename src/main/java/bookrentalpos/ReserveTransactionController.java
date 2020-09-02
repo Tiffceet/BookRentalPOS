@@ -13,10 +13,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import my.edu.tarc.dco.bookrentalpos.Book;
-import my.edu.tarc.dco.bookrentalpos.CustomUtil;
-import my.edu.tarc.dco.bookrentalpos.Member;
-import my.edu.tarc.dco.bookrentalpos.Transaction;
+import my.edu.tarc.dco.bookrentalpos.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -71,7 +68,7 @@ public class ReserveTransactionController implements Initializable, TableInterfa
             if (checkAuthor && !bk[a].getAuthor().toLowerCase().startsWith(bookAuthorQuery)) {
                 continue;
             }
-            Transaction t = Main.tm.getBookLastRentTransaction(bk[a]);
+            RentTransaction t = Main.tm.getBookLastRentTransaction(bk[a]);
 
 
             // Very dangerous way of parsing date
