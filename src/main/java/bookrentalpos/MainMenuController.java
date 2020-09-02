@@ -59,6 +59,8 @@ public class MainMenuController implements Initializable {
     }
 
     public void toManageTransaction(MouseEvent event) throws IOException {
+        Main.bm.reload();
+        Main.mm.reload();
         Main.tm.reload();
         Parent manageBookParent = FXMLLoader.load(getClass().getResource("/FXML/TransactionManager/transactionChoose.fxml"));
         Scene manageBookScene = new Scene(manageBookParent);
