@@ -34,6 +34,23 @@ Then in the working directory, do `mvn -f jdk11-pom/pom-jdk11.xml clean package`
 
 The built jar will then be located in `jdk11-pom/target/BookRentalPOS-JRE11+.jar`
 
+## To use mvn javadoc:javadoc in JDK 13+
+Copy the src folder into `jdk11-pom` folder
+
+Rename `pom-jdk11.xml` to `pom.xml`
+
+In the copied src folder, copy `module-info.java` into the following 2 dir
+1. src\main\java\my\edu\tarc\dco\bookrentalpos
+2. src\main\java\bookrentalpos
+
+Uncomment the module and rename it to the correct module name
+1. my.edu.tarc.dco.bookrentalpos
+2. bookrentalpos
+
+Remove the `module-info.java` file from src\main\java folder
+
+Run `mvn javadoc:javadoc`
+
 ## To run
 
 The built jar should be able to be opened directly. If not, use the following command line
