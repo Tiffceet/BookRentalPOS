@@ -13,6 +13,8 @@ A fairly simple POS system to handle day-to-day transactions of a Book Rental St
 - sqlite jdbc driver 3.32.3 (https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc/3.32.3)
 - JFoeniX 9.0.10 (https://mvnrepository.com/artifact/com.jfoenix/jfoenix/9.0.10)
 
+# For developers
+
 ## How to build (Using Apache Maven)
 Download Maven binaries here https://maven.apache.org/download.cgi 
 
@@ -56,3 +58,6 @@ Run `mvn javadoc:javadoc`
 The built jar should be able to be opened directly. If not, use the following command line
 
 `java -jar <jarfile>`
+
+## Code Documentation
+https://tiffceet.github.io/BookRentalPOS/
