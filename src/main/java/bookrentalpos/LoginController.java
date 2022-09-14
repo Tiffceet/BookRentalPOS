@@ -1,10 +1,12 @@
 package bookrentalpos;
 
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -13,8 +15,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class LoginController {
+public class LoginController implements Initializable {
 
     @FXML
     private JFXTextField usernameTextField;
@@ -22,6 +26,13 @@ public class LoginController {
     private JFXPasswordField passwordTextField;
     @FXML
     private Button loginButton;
+    @FXML
+    private JFXComboBox<String> organizationComboBox;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        organizationComboBox.getItems().setAll("Ali Book Rental Sdn. Bhd.", "Knowledged Book Shop Sdn. Bhd.", "Nerds Sdn. Bhd.");
+    }
 
     public void validateAccount(Event event) throws IOException {
         String username = usernameTextField.getText();
@@ -50,4 +61,5 @@ public class LoginController {
     public void forgetPassword(MouseEvent event) {
         Dialog.alertBox("Please contact the admin to reset your password");
     }
+
 }

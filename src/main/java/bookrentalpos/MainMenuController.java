@@ -23,6 +23,8 @@ public class MainMenuController implements Initializable {
     @FXML
     private Button transactionButton;
     @FXML
+    private Button manageOrganizationButton;
+    @FXML
     private Button bookButton;
     @FXML
     private Button memberButton;
@@ -135,6 +137,21 @@ public class MainMenuController implements Initializable {
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setTitle("Report Menu - HuaheeCheh");
         window.setScene(generateReportScene);
+    }
+
+    public void toManageOrganization(MouseEvent event) throws IOException {
+        Main.mm.reload();
+        Main.sm.reload();
+        Main.bm.reload();
+        Main.tm.reload();
+        FXMLLoader fl = new FXMLLoader(getClass().getResource("/FXML/ManageOrganization/manageOrganizationInterface.fxml"));
+        Parent manageOrgParent = (Parent) fl.load();
+
+        Scene manageOrgScene = new Scene(manageOrgParent);
+
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setTitle("Manage Organization - HuaheeCheh");
+        window.setScene(manageOrgScene);
     }
 
     public void toManageStaff(MouseEvent event) throws IOException {
