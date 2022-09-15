@@ -1,5 +1,9 @@
 package bookrentalpos;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -10,13 +14,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class MainMenuController implements Initializable {
 
@@ -32,6 +36,8 @@ public class MainMenuController implements Initializable {
     private Button profileButton;
     @FXML
     private Button logOutButton;
+    @FXML
+    private Button userViewButton;
     @FXML
     private Button confirmLogOutButton;
     @FXML
@@ -64,7 +70,8 @@ public class MainMenuController implements Initializable {
         Main.bm.reload();
         Main.mm.reload();
         Main.tm.reload();
-        Parent manageBookParent = FXMLLoader.load(getClass().getResource("/FXML/TransactionManager/transactionChoose.fxml"));
+        Parent manageBookParent = FXMLLoader
+                .load(getClass().getResource("/FXML/TransactionManager/transactionChoose.fxml"));
         Scene manageBookScene = new Scene(manageBookParent);
 
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -144,7 +151,8 @@ public class MainMenuController implements Initializable {
         Main.sm.reload();
         Main.bm.reload();
         Main.tm.reload();
-        FXMLLoader fl = new FXMLLoader(getClass().getResource("/FXML/ManageOrganization/manageOrganizationInterface.fxml"));
+        FXMLLoader fl = new FXMLLoader(
+                getClass().getResource("/FXML/ManageOrganization/manageOrganizationInterface.fxml"));
         Parent manageOrgParent = (Parent) fl.load();
 
         Scene manageOrgScene = new Scene(manageOrgParent);
@@ -206,6 +214,19 @@ public class MainMenuController implements Initializable {
         logOutWindow.setScene(new Scene(logOutParent, 400, 150));
         logOutWindow.setResizable(false);
         logOutWindow.showAndWait();
+    }
+
+    public void popUserView(MouseEvent event) throws IOException {
+        Main.bm.reload();
+        Main.mm.reload();
+        Main.tm.reload();
+        Parent memberParent = FXMLLoader
+                .load(getClass().getResource("/FXML/memberInterface.fxml"));
+        Scene memberScene = new Scene(memberParent);
+
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setTitle("Member View - HuaheeCheh");
+        window.setScene(memberScene);
     }
 
     public void confirmLogOut(MouseEvent event) throws IOException {

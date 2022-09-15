@@ -185,14 +185,15 @@
       </HBox>
       <GridPane GridPane.rowIndex="1">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1274.0" minWidth="10.0" prefWidth="1245.0" />
-          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="678.0" minWidth="10.0" prefWidth="121.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1274.0" minWidth="10.0" prefWidth="1134.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1274.0" minWidth="10.0" prefWidth="136.0" />
+          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="678.0" minWidth="10.0" prefWidth="149.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="logOutButton" mnemonicParsing="false" onMouseClicked="#popLogOut" text="Log Out" GridPane.columnIndex="1">
+            <Button fx:id="logOutButton" mnemonicParsing="false" onMouseClicked="#popLogOut" text="Log Out" GridPane.columnIndex="2">
                <GridPane.margin>
                   <Insets right="15.0" />
                </GridPane.margin>
@@ -202,6 +203,7 @@
                   <Insets left="10.0" />
                </padding>
             </Label>
+            <Button fx:id="userViewButton" layoutX="1289.0" layoutY="17.0" mnemonicParsing="false" onMouseClicked="#popUserView" text="Member View" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
          </children>
       </GridPane>
    </children>

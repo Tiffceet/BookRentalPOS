@@ -40,8 +40,8 @@ public class ManageOrganizationController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         systemLangComboBox.setItems(FXCollections.observableArrayList("English", "Malay", "Chinese"));
         currencyComboBox.setItems(FXCollections.observableArrayList("MYR", "USD", "GBP"));
-        bookType1.setItems(FXCollections.observableArrayList("Fiction", "Recipe", "Personal Planning"));
-        bookType2.setItems(FXCollections.observableArrayList("Fiction", "Recipe", "Personal Planning"));
-        bookType3.setItems(FXCollections.observableArrayList("Fiction", "Recipe", "Personal Planning"));
+        bookType1.setItems(FXCollections.observableArrayList("String", "Number", "Decimal", "Dropdown"));
+        bookType2.setItems(FXCollections.observableArrayList("String", "Number", "Decimal", "Dropdown"));
+        bookType3.setItems(FXCollections.observableArrayList("String", "Number", "Decimal", "Dropdown"));
     }
 }
